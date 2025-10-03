@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../automotive-tire-prediction-model-on-aws"
+		}
+	],
+	"settings": {}
+}
