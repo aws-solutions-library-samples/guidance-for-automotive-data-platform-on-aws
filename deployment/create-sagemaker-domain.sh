@@ -21,6 +21,32 @@ echo -e "${GREEN}SageMaker Unified Studio Domain Setup${NC}"
 echo -e "${GREEN}========================================${NC}"
 echo ""
 
+# Check for existing domain first
+EXISTING_DOMAIN=$(aws datazone list-domains --region $AWS_REGION --query 'items[0].{Id:id,Name:name}' --output json 2>/dev/null || echo '{}')
+DOMAIN_ID=$(echo "$EXISTING_DOMAIN" | jq -r '.Id // empty')
+
+if [ ! -z "$DOMAIN_ID" ] && [ "$DOMAIN_ID" != "null" ]; then
+    DOMAIN_NAME=$(echo "$EXISTING_DOMAIN" | jq -r '.Name')
+    echo -e "${GREEN}✓ Found existing domain: $DOMAIN_NAME ($DOMAIN_ID)${NC}"
+    
+    # Create outputs file
+    ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+    cat > deployment/datazone-outputs.env << EOF
+DOMAIN_ID=$DOMAIN_ID
+DOMAIN_ARN=arn:aws:datazone:$AWS_REGION:$ACCOUNT_ID:domain/$DOMAIN_ID
+DOMAIN_PORTAL_URL=https://$DOMAIN_ID.datazone.$AWS_REGION.on.aws
+EOF
+    
+    echo -e "${GREEN}✓ Using existing domain${NC}"
+    exit 0
+fi
+
+echo "No existing domain found. Creating new domain..."
+echo ""
+
+echo -e "${GREEN}========================================${NC}"
+echo ""
+
 # Load stack outputs
 if [ -f "deployment/stack-outputs.env" ]; then
     source deployment/stack-outputs.env
@@ -36,16 +62,23 @@ if [ -z "$VPC_ID" ]; then
     exit 1
 fi
 
-# Get subnet IDs as array
+# Get subnet IDs as array - get first 3 subnets in VPC
 SUBNET_ARRAY=($(aws ec2 describe-subnets \
-    --filters "Name=vpc-id,Values=$VPC_ID" "Name=tag:aws:cloudformation:logical-id,Values=SageMakerUnifiedStudioPrivateSubnet*" \
+    --filters "Name=vpc-id,Values=$VPC_ID" \
     --query 'Subnets[0:3].SubnetId' \
     --output text \
     --region $AWS_REGION \
     --profile $AWS_PROFILE))
 
-if [ ${#SUBNET_ARRAY[@]} -lt 3 ]; then
-    echo -e "${RED}Error: Need at least 3 subnets, found ${#SUBNET_ARRAY[@]}${NC}"
+if [ ${#SUBNET_ARRAY[@]} -lt 2 ]; then
+    echo -e "${RED}Error: Need at least 2 subnets, found ${#SUBNET_ARRAY[@]}${NC}"
+    echo "Available subnets in VPC $VPC_ID:"
+    aws ec2 describe-subnets \
+        --filters "Name=vpc-id,Values=$VPC_ID" \
+        --query 'Subnets[*].[SubnetId,AvailabilityZone,CidrBlock]' \
+        --output table \
+        --region $AWS_REGION \
+        --profile $AWS_PROFILE
     exit 1
 fi
 
@@ -143,7 +176,7 @@ echo -e "${YELLOW}Creating SageMaker Unified Studio domain...${NC}"
 cat > /tmp/domain-settings.json << EOF
 {
   "ExecutionRole": "$EXECUTION_ROLE_ARN",
-  "SecurityGroupIds": [],
+  "SecurityGroups": [],
   "SharingSettings": {
     "NotebookOutputOption": "Allowed",
     "S3OutputPath": "s3://sagemaker-$AWS_REGION-$(aws sts get-caller-identity --query Account --output text --profile $AWS_PROFILE)/studio"
@@ -151,29 +184,41 @@ cat > /tmp/domain-settings.json << EOF
 }
 EOF
 
-# Create domain
-DOMAIN_ID=$(aws sagemaker create-domain \
+# Create domain with SSO authentication
+echo -e "${YELLOW}Creating domain with SSO authentication...${NC}"
+DOMAIN_OUTPUT=$(aws sagemaker create-domain \
     --domain-name $DOMAIN_NAME \
-    --auth-mode IAM \
+    --auth-mode SSO \
     --default-user-settings file:///tmp/domain-settings.json \
     --subnet-ids ${SUBNET_ARRAY[@]} \
     --vpc-id $VPC_ID \
     --region $AWS_REGION \
-    --profile $AWS_PROFILE \
-    --query 'DomainArn' \
-    --output text 2>&1 | grep -oP 'domain/\K[^"]+' || echo "")
+    --profile $AWS_PROFILE 2>&1)
+
+# Check for errors
+if echo "$DOMAIN_OUTPUT" | grep -qi "error"; then
+    echo -e "${RED}Error creating domain:${NC}"
+    echo "$DOMAIN_OUTPUT"
+    echo ""
+    echo -e "${YELLOW}Possible issues:${NC}"
+    echo "1. Domain with same name may exist"
+    echo "2. IAM Identity Center configuration issue"
+    echo "3. VPC/subnet configuration issue"
+    echo ""
+    exit 1
+fi
+
+# Extract domain ID
+DOMAIN_ID=$(echo "$DOMAIN_OUTPUT" | grep -o '"DomainId": *"[^"]*"' | cut -d'"' -f4)
 
 if [ -z "$DOMAIN_ID" ]; then
-    echo -e "${RED}Error: Failed to create domain${NC}"
-    echo -e "${YELLOW}Note: SageMaker Unified Studio may require manual setup via console${NC}"
-    echo ""
-    echo "Please create domain manually with these values:"
-    echo "  Domain Name: $DOMAIN_NAME"
-    echo "  VPC ID: $VPC_ID"
-    echo "  Subnets: ${SUBNET_ARRAY[@]}"
-    echo "  Execution Role: $EXECUTION_ROLE_ARN"
-    echo ""
-    echo "Console URL: https://console.aws.amazon.com/sagemaker/unified-studio"
+    # Try alternative extraction
+    DOMAIN_ID=$(echo "$DOMAIN_OUTPUT" | grep -o 'd-[a-z0-9]*' | head -1)
+fi
+
+if [ -z "$DOMAIN_ID" ]; then
+    echo -e "${RED}Error: Could not extract domain ID${NC}"
+    echo "Response: $DOMAIN_OUTPUT"
     exit 1
 fi
 
@@ -182,10 +227,25 @@ echo ""
 
 # Wait for domain to be ready
 echo -e "${YELLOW}Waiting for domain to be ready (this may take 10-15 minutes)...${NC}"
-aws sagemaker wait domain-in-service \
-    --domain-id $DOMAIN_ID \
-    --region $AWS_REGION \
-    --profile $AWS_PROFILE || true
+while true; do
+    STATUS=$(aws sagemaker describe-domain \
+        --domain-id $DOMAIN_ID \
+        --region $AWS_REGION \
+        --profile $AWS_PROFILE \
+        --query 'Status' \
+        --output text 2>&1 || echo "UNKNOWN")
+    
+    if [ "$STATUS" == "InService" ]; then
+        echo -e "${GREEN}✓ Domain is ready${NC}"
+        break
+    elif echo "$STATUS" | grep -q "does not exist"; then
+        echo -e "${RED}Error: Domain creation failed${NC}"
+        exit 1
+    else
+        echo "Domain status: $STATUS - waiting..."
+        sleep 30
+    fi
+done
 
 # Get domain URL
 DOMAIN_URL=$(aws sagemaker describe-domain \
