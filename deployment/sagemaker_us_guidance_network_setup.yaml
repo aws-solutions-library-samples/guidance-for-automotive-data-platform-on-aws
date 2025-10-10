@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >
-  Cloudformation template to create a dedicated VPC to provide connectivity between SageMaker Unified Studio and your AWS Resources this is needed to run the Guidance for a Unified Development Experience for AWS Data, Analytics, and Machine Learning with Amazon SageMaker Unified Studio (SO9562).
+  Cloudformation template to create a dedicated VPC to provide connectivity between SageMaker Unified Studio and your AWS Resources this is needed to run the Guidance for a Unified Development Experience for AWS Data, Analytics, and Machine Learning with Amazon SageMaker Unified Studio (SOXXXX).
   In particular this template creates a VPC, 3 private subnets in 3 different availability zones (to be used with SageMaker Unified Studio), and a public subnet to allow connectivity to internet. 
   The template also creates a route from each private subnets to a NAT gateway with EIP in the public subnet, and a route in the public subnet to an IGW.
-  This setup enables internet connectivity from SageMaker Unified Studio VPC which allows usage of all AWS services (SO9562).
+  This setup enables internet connectivity from SageMaker Unified Studio VPC which allows usage of all AWS services (SOXXXX).
 
 Mappings:
   AvailabilityZonesId:

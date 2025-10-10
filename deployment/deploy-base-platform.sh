@@ -75,43 +75,56 @@ if [ "$ACTION" == "create" ]; then
         --profile $AWS_PROFILE
 else
     echo -e "${GREEN}Updating CloudFormation stack...${NC}"
-    aws cloudformation update-stack \
+    UPDATE_OUTPUT=$(aws cloudformation update-stack \
         --stack-name $STACK_NAME \
         --template-body file://$TEMPLATE_FILE \
         --capabilities CAPABILITY_IAM \
         --region $AWS_REGION \
-        --profile $AWS_PROFILE || true
+        --profile $AWS_PROFILE 2>&1 || true)
     
-    echo -e "${YELLOW}Waiting for stack update to complete...${NC}"
-    aws cloudformation wait stack-update-complete \
-        --stack-name $STACK_NAME \
-        --region $AWS_REGION \
-        --profile $AWS_PROFILE || true
+    if echo "$UPDATE_OUTPUT" | grep -q "No updates are to be performed"; then
+        echo -e "${GREEN}✓ Stack is already up to date${NC}"
+        ACTION="none"
+    elif echo "$UPDATE_OUTPUT" | grep -q "error\|Error"; then
+        echo -e "${RED}Error updating stack: $UPDATE_OUTPUT${NC}"
+        exit 1
+    else
+        echo -e "${YELLOW}Waiting for stack update to complete...${NC}"
+        aws cloudformation wait stack-update-complete \
+            --stack-name $STACK_NAME \
+            --region $AWS_REGION \
+            --profile $AWS_PROFILE || true
+    fi
 fi
 
 # Get stack outputs
-echo -e "${GREEN}========================================${NC}"
-echo -e "${GREEN}Deployment Complete!${NC}"
-echo -e "${GREEN}========================================${NC}"
-echo ""
+if [ "$ACTION" != "none" ]; then
+    echo -e "${GREEN}========================================${NC}"
+    echo -e "${GREEN}Deployment Complete!${NC}"
+    echo -e "${GREEN}========================================${NC}"
+    echo ""
+fi
+
 echo -e "${GREEN}Stack Outputs:${NC}"
 
-VPC_ID=$(aws cloudformation describe-stacks \
+# Get VPC ID from stack resources (not outputs)
+VPC_ID=$(aws cloudformation describe-stack-resources \
     --stack-name $STACK_NAME \
-    --query 'Stacks[0].Outputs[?OutputKey==`VpcId`].OutputValue' \
-    --output text \
     --region $AWS_REGION \
-    --profile $AWS_PROFILE)
+    --profile $AWS_PROFILE \
+    --query 'StackResources[?ResourceType==`AWS::EC2::VPC`].PhysicalResourceId' \
+    --output text)
 
-SUBNET_IDS=$(aws cloudformation describe-stacks \
+# Get Subnet IDs from stack resources
+SUBNET_IDS=$(aws cloudformation describe-stack-resources \
     --stack-name $STACK_NAME \
-    --query 'Stacks[0].Outputs[?OutputKey==`PrivateSubnetIds`].OutputValue' \
-    --output text \
     --region $AWS_REGION \
-    --profile $AWS_PROFILE)
+    --profile $AWS_PROFILE \
+    --query 'StackResources[?ResourceType==`AWS::EC2::Subnet`].PhysicalResourceId' \
+    --output text | tr '\t' ',')
 
 echo "VPC ID: $VPC_ID"
-echo "Private Subnet IDs: $SUBNET_IDS"
+echo "Subnet IDs: $SUBNET_IDS"
 echo ""
 
 # Save outputs to file
