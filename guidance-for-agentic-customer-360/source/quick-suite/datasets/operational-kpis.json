@@ -1,0 +1,131 @@
+{
+    "Status": 200,
+    "DataSet": {
+        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/operational-kpis",
+        "DataSetId": "operational-kpis",
+        "Name": "Operational KPIs",
+        "CreatedTime": 1765550209.553,
+        "LastUpdatedTime": 1767719623.918,
+        "PhysicalTableMap": {
+            "kpis": {
+                "RelationalTable": {
+                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "Catalog": "AwsDataCatalog",
+                    "Schema": "cx_analytics",
+                    "Name": "operational_kpis_with_health",
+                    "InputColumns": [
+                        {
+                            "Name": "month_date",
+                            "Type": "DATETIME"
+                        },
+                        {
+                            "Name": "month_label",
+                            "Type": "STRING"
+                        },
+                        {
+                            "Name": "first_contact_resolution_rate",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "avg_case_resolution_days",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "service_wait_days",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "warranty_claim_rate",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "repeat_service_rate",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "churn_risk_customers",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "churn_risk_revenue",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "operational_health_score",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        }
+                    ]
+                }
+            }
+        },
+        "LogicalTableMap": {
+            "kpis": {
+                "Alias": "operational_kpis",
+                "Source": {
+                    "PhysicalTableId": "kpis"
+                }
+            }
+        },
+        "OutputColumns": [
+            {
+                "Name": "month_date",
+                "Type": "DATETIME"
+            },
+            {
+                "Name": "month_label",
+                "Type": "STRING"
+            },
+            {
+                "Name": "first_contact_resolution_rate",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "avg_case_resolution_days",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "service_wait_days",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "warranty_claim_rate",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "repeat_service_rate",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "churn_risk_customers",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "churn_risk_revenue",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "operational_health_score",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            }
+        ],
+        "ImportMode": "SPICE",
+        "ConsumedSpiceCapacityInBytes": 1820,
+        "DataSetUsageConfiguration": {
+            "DisableUseAsDirectQuerySource": false,
+            "DisableUseAsImportedSource": false
+        }
+    },
+    "RequestId": "fa551c13-b637-4b19-8966-8525c6e3bf65"
+}

@@ -1,0 +1,87 @@
+{
+    "Status": 200,
+    "DataSet": {
+        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/issue-categories",
+        "DataSetId": "issue-categories",
+        "Name": "Issue Categories",
+        "CreatedTime": 1765557710.462,
+        "LastUpdatedTime": 1767719627.511,
+        "PhysicalTableMap": {
+            "issues": {
+                "RelationalTable": {
+                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "Catalog": "AwsDataCatalog",
+                    "Schema": "cx_analytics",
+                    "Name": "issue_categories_monthly",
+                    "InputColumns": [
+                        {
+                            "Name": "month_date",
+                            "Type": "DATETIME"
+                        },
+                        {
+                            "Name": "month_label",
+                            "Type": "STRING"
+                        },
+                        {
+                            "Name": "battery_cases",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "adas_cases",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "connectivity_cases",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "infotainment_cases",
+                            "Type": "INTEGER"
+                        }
+                    ]
+                }
+            }
+        },
+        "LogicalTableMap": {
+            "issues": {
+                "Alias": "issue_categories",
+                "Source": {
+                    "PhysicalTableId": "issues"
+                }
+            }
+        },
+        "OutputColumns": [
+            {
+                "Name": "month_date",
+                "Type": "DATETIME"
+            },
+            {
+                "Name": "month_label",
+                "Type": "STRING"
+            },
+            {
+                "Name": "battery_cases",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "adas_cases",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "connectivity_cases",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "infotainment_cases",
+                "Type": "INTEGER"
+            }
+        ],
+        "ImportMode": "SPICE",
+        "ConsumedSpiceCapacityInBytes": 1104,
+        "DataSetUsageConfiguration": {
+            "DisableUseAsDirectQuerySource": false,
+            "DisableUseAsImportedSource": false
+        }
+    },
+    "RequestId": "eabf940e-3bd6-4ca6-86f6-5cff08198ec7"
+}

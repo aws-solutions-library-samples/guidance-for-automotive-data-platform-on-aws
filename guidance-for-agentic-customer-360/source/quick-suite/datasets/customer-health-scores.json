@@ -1,0 +1,239 @@
+{
+    "Status": 200,
+    "DataSet": {
+        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/customer-health-scores",
+        "DataSetId": "customer-health-scores",
+        "Name": "customer-health-scores",
+        "CreatedTime": 1762376202.502,
+        "LastUpdatedTime": 1768372295.621,
+        "PhysicalTableMap": {
+            "health": {
+                "RelationalTable": {
+                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "Catalog": "AwsDataCatalog",
+                    "Schema": "cx_analytics",
+                    "Name": "customer_health",
+                    "InputColumns": [
+                        {
+                            "Name": "customer_id",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "user_id",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "total_revenue",
+                            "Type": "DECIMAL",
+                            "SubType": "FLOAT"
+                        },
+                        {
+                            "Name": "avg_satisfaction_score",
+                            "Type": "DECIMAL",
+                            "SubType": "FLOAT"
+                        },
+                        {
+                            "Name": "total_cases",
+                            "Type": "DECIMAL",
+                            "SubType": "FLOAT"
+                        },
+                        {
+                            "Name": "open_cases",
+                            "Type": "DECIMAL",
+                            "SubType": "FLOAT"
+                        },
+                        {
+                            "Name": "total_vehicles",
+                            "Type": "DECIMAL",
+                            "SubType": "FLOAT"
+                        },
+                        {
+                            "Name": "total_service_spend",
+                            "Type": "DECIMAL",
+                            "SubType": "FLOAT"
+                        },
+                        {
+                            "Name": "total_service_appointments",
+                            "Type": "DECIMAL",
+                            "SubType": "FLOAT"
+                        },
+                        {
+                            "Name": "opportunity_count",
+                            "Type": "DECIMAL",
+                            "SubType": "FLOAT"
+                        },
+                        {
+                            "Name": "health_score",
+                            "Type": "DECIMAL",
+                            "SubType": "FLOAT"
+                        },
+                        {
+                            "Name": "health_segment",
+                            "Type": "STRING"
+                        }
+                    ]
+                }
+            }
+        },
+        "LogicalTableMap": {
+            "health": {
+                "Alias": "health",
+                "DataTransforms": [
+                    {
+                        "CreateColumnsOperation": {
+                            "Columns": [
+                                {
+                                    "ColumnName": "customer_count",
+                                    "ColumnId": "cust_count",
+                                    "Expression": "1"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "CreateColumnsOperation": {
+                            "Columns": [
+                                {
+                                    "ColumnName": "is_at_risk",
+                                    "ColumnId": "is_at_risk_calc",
+                                    "Expression": "ifelse(locate({health_segment}, 'At-Risk') > 0 OR locate({health_segment}, 'Needs Attention') > 0 OR locate({health_segment}, 'Critical') > 0, 1, 0)"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "CreateColumnsOperation": {
+                            "Columns": [
+                                {
+                                    "ColumnName": "at_risk_revenue",
+                                    "ColumnId": "at_risk_rev_calc",
+                                    "Expression": "ifelse(locate({health_segment}, 'At-Risk') > 0 OR locate({health_segment}, 'Needs Attention') > 0 OR locate({health_segment}, 'Critical') > 0, {total_revenue}, 0)"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "CreateColumnsOperation": {
+                            "Columns": [
+                                {
+                                    "ColumnName": "satisfaction_bucket",
+                                    "ColumnId": "8fc9c50b-9cf8-4501-a8b3-ac64bd9e7090",
+                                    "Expression": "ifelse(\n     avg_satisfaction_score < 3, '0-3',\n     avg_satisfaction_score < 5, '3-5',\n     avg_satisfaction_score < 7, '5-7',\n     avg_satisfaction_score < 9, '7-9',\n     '9-10'\n   )"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "ProjectOperation": {
+                            "ProjectedColumns": [
+                                "customer_id",
+                                "user_id",
+                                "total_revenue",
+                                "avg_satisfaction_score",
+                                "total_cases",
+                                "open_cases",
+                                "total_vehicles",
+                                "total_service_spend",
+                                "total_service_appointments",
+                                "opportunity_count",
+                                "health_score",
+                                "health_segment",
+                                "customer_count",
+                                "is_at_risk",
+                                "at_risk_revenue",
+                                "satisfaction_bucket"
+                            ]
+                        }
+                    }
+                ],
+                "Source": {
+                    "PhysicalTableId": "health"
+                }
+            }
+        },
+        "OutputColumns": [
+            {
+                "Name": "customer_id",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "user_id",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "total_revenue",
+                "Type": "DECIMAL",
+                "SubType": "FLOAT"
+            },
+            {
+                "Name": "avg_satisfaction_score",
+                "Type": "DECIMAL",
+                "SubType": "FLOAT"
+            },
+            {
+                "Name": "total_cases",
+                "Type": "DECIMAL",
+                "SubType": "FLOAT"
+            },
+            {
+                "Name": "open_cases",
+                "Type": "DECIMAL",
+                "SubType": "FLOAT"
+            },
+            {
+                "Name": "total_vehicles",
+                "Type": "DECIMAL",
+                "SubType": "FLOAT"
+            },
+            {
+                "Name": "total_service_spend",
+                "Type": "DECIMAL",
+                "SubType": "FLOAT"
+            },
+            {
+                "Name": "total_service_appointments",
+                "Type": "DECIMAL",
+                "SubType": "FLOAT"
+            },
+            {
+                "Name": "opportunity_count",
+                "Type": "DECIMAL",
+                "SubType": "FLOAT"
+            },
+            {
+                "Name": "health_score",
+                "Type": "DECIMAL",
+                "SubType": "FLOAT"
+            },
+            {
+                "Name": "health_segment",
+                "Type": "STRING"
+            },
+            {
+                "Name": "customer_count",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "is_at_risk",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "at_risk_revenue",
+                "Type": "DECIMAL",
+                "SubType": "FLOAT"
+            },
+            {
+                "Name": "satisfaction_bucket",
+                "Type": "STRING"
+            }
+        ],
+        "ImportMode": "SPICE",
+        "ConsumedSpiceCapacityInBytes": 25236481,
+        "FieldFolders": {},
+        "DataSetUsageConfiguration": {
+            "DisableUseAsDirectQuerySource": false,
+            "DisableUseAsImportedSource": false
+        }
+    },
+    "RequestId": "b99764eb-7029-40e7-ba00-d6587d503078"
+}

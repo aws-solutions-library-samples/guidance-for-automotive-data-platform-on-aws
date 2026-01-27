@@ -1,0 +1,159 @@
+{
+    "Status": 200,
+    "DataSet": {
+        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/customer-360",
+        "DataSetId": "customer-360",
+        "Name": "Customer 360",
+        "CreatedTime": 1765550220.348,
+        "LastUpdatedTime": 1766165060.545,
+        "PhysicalTableMap": {
+            "customer": {
+                "RelationalTable": {
+                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "Catalog": "AwsDataCatalog",
+                    "Schema": "cx_analytics",
+                    "Name": "customer_360_view",
+                    "InputColumns": [
+                        {
+                            "Name": "customer_id",
+                            "Type": "STRING"
+                        },
+                        {
+                            "Name": "health_score",
+                            "Type": "DECIMAL"
+                        },
+                        {
+                            "Name": "health_segment",
+                            "Type": "STRING"
+                        },
+                        {
+                            "Name": "clv",
+                            "Type": "DECIMAL"
+                        },
+                        {
+                            "Name": "avg_satisfaction_score",
+                            "Type": "DECIMAL"
+                        },
+                        {
+                            "Name": "total_cases",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "open_cases",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "total_vehicles",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "total_service_spend",
+                            "Type": "DECIMAL"
+                        },
+                        {
+                            "Name": "total_service_appointments",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "battery_related_cases",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "last_interaction_date",
+                            "Type": "DATETIME"
+                        },
+                        {
+                            "Name": "avg_sentiment",
+                            "Type": "DECIMAL"
+                        },
+                        {
+                            "Name": "first_purchase_date",
+                            "Type": "DATETIME"
+                        },
+                        {
+                            "Name": "last_purchase_date",
+                            "Type": "DATETIME"
+                        }
+                    ]
+                }
+            }
+        },
+        "LogicalTableMap": {
+            "customer": {
+                "Alias": "customer_360_view",
+                "Source": {
+                    "PhysicalTableId": "customer"
+                }
+            }
+        },
+        "OutputColumns": [
+            {
+                "Name": "customer_id",
+                "Type": "STRING"
+            },
+            {
+                "Name": "health_score",
+                "Type": "DECIMAL"
+            },
+            {
+                "Name": "health_segment",
+                "Type": "STRING"
+            },
+            {
+                "Name": "clv",
+                "Type": "DECIMAL"
+            },
+            {
+                "Name": "avg_satisfaction_score",
+                "Type": "DECIMAL"
+            },
+            {
+                "Name": "total_cases",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "open_cases",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "total_vehicles",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "total_service_spend",
+                "Type": "DECIMAL"
+            },
+            {
+                "Name": "total_service_appointments",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "battery_related_cases",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "last_interaction_date",
+                "Type": "DATETIME"
+            },
+            {
+                "Name": "avg_sentiment",
+                "Type": "DECIMAL"
+            },
+            {
+                "Name": "first_purchase_date",
+                "Type": "DATETIME"
+            },
+            {
+                "Name": "last_purchase_date",
+                "Type": "DATETIME"
+            }
+        ],
+        "ImportMode": "DIRECT_QUERY",
+        "ConsumedSpiceCapacityInBytes": 0,
+        "DataSetUsageConfiguration": {
+            "DisableUseAsDirectQuerySource": false,
+            "DisableUseAsImportedSource": false
+        }
+    },
+    "RequestId": "6554dfb5-561d-40b4-8b79-8632cecd831e"
+}
