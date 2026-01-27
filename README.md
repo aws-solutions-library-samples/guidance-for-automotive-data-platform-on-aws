@@ -2,453 +2,221 @@
 
 ## Overview
 
-This repository provides the **foundational infrastructure** for an Automotive Data Platform using Amazon SageMaker Unified Studio. It creates the base networking, security, and organizational structure that enables data engineers and ML engineers to collaborate on automotive use cases.
+This repository provides AWS guidance and reference implementations for building comprehensive automotive data platforms. It includes foundational infrastructure and specialized guidance for specific use cases.
 
-### Architecture
+## Repository Structure
+
+### 🏗️ Platform Foundation
+**Path**: [`platform-foundation/`](platform-foundation/)
+
+Base infrastructure for automotive data platforms using Amazon SageMaker Unified Studio:
+- Unified data workspace for data engineers and ML engineers
+- VPC networking with private subnets and service endpoints
+- IAM Identity Center integration for team collaboration
+- DataZone domain for data governance and cataloging
+- Blueprint enablement for common automotive patterns
+
+**Use this when**: Setting up a new automotive data platform from scratch
+
+[View Platform Foundation Documentation →](platform-foundation/README.md)
+
+---
+
+### 🎯 Guidance: Agentic Customer 360
+**Path**: [`guidance-for-agentic-customer-360/`](guidance-for-agentic-customer-360/)
+
+**Status**: ✅ Production Ready
+
+AI-powered Customer 360 analytics platform demonstrating declining business metrics and root cause analysis:
+- **Synthetic data** with realistic declining trends (NPS 52→42, Health 65→56)
+- **Battery issue analysis** (15%→40% over 12 months) for root cause demonstration
+- **QuickSight dashboards** with 8 pre-built datasets and automated deployment
+- **Bedrock Agent** with Aurora pgvector knowledge base for natural language queries
+- **500K customers** with 1.4M interactions and 900K service records
+- **Interactive Makefile** deployment with AWS profile/region selection
+
+**Use this when**: Building customer analytics platforms with AI-powered insights
+
+[View Customer 360 Documentation →](guidance-for-agentic-customer-360/README.md)
+
+**Quick Start**:
+```bash
+cd guidance-for-agentic-customer-360
+make deploy
+# Select profile, region, and deployment option from interactive menu
+```
+
+---
+
+### 🔧 Guidance: Predictive Maintenance
+**Path**: [`guidance-for-predictive-maintenance/`](guidance-for-predictive-maintenance/)
+
+**Status**: ✅ Production Ready
+
+ML-powered predictive maintenance for vehicle tires using anomaly detection:
+- Real-time tire pressure and temperature monitoring
+- Random Cut Forest model for anomaly detection
+- Automated alert system for slow leaks and failures
+- REST API for real-time inference
+- Batch processing pipeline for daily analysis
+- Step Functions orchestration for ML workflows
+
+**Use this when**: Building predictive maintenance and vehicle health monitoring
+
+[View Predictive Maintenance Documentation →](guidance-for-predictive-maintenance/README.md)
+
+**Quick Start**:
+```bash
+cd guidance-for-predictive-maintenance
+make deploy
+```
+
+---
+
+### 📊 Shared Data Sources
+**Path**: [`datasource/`](datasource/)
+
+Synthetic data generators for automotive use cases:
+- CRM data (customers, contacts, accounts)
+- Vehicle telemetry and service records
+- Sales and transaction history
+- Configurable data profiles (small/medium/large)
+
+**Use this when**: Testing and development without production data
+
+[View Data Source Documentation →](datasource/README.md)
+
+---
+
+## Getting Started
+
+### For Customer 360 Analytics
+If you want to deploy the Customer 360 platform:
+
+```bash
+cd guidance-for-agentic-customer-360
+make help
+```
+
+### For Base Platform Infrastructure
+If you want to set up the foundational SageMaker Unified Studio environment:
+
+```bash
+cd platform-foundation
+./deployment/deploy-complete-platform.sh
+```
+
+## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  Automotive Data Platform (This Repository)                 │
-│  - SageMaker Unified Studio Domain                          │
-│  - VPC with Private Subnets                                 │
-│  - IAM Identity Center Integration                          │
-│  - Base Security & Networking                               │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│  Platform Foundation (SageMaker Unified Studio)                 │
+│  - Unified data workspace                                       │
+│  - VPC networking & security                                    │
+│  - IAM Identity Center                                          │
+│  - DataZone governance                                          │
+└─────────────────────────────────────────────────────────────────┘
                             │
                             │ Hosts Projects
                             ▼
         ┌───────────────────────────────────────┐
-        │  Project 1: Tire Prediction Model     │
-        │  Repository: automotive-tire-         │
-        │  prediction-model-on-aws              │
-        │  - Data ingestion from CMS simulator  │
-        │  - ML model training & deployment     │
-        │  - Real-time inference                │
+        │  Guidance: Agentic Customer 360       │
+        │  - Customer health scoring            │
+        │  - Churn prediction                   │
+        │  - Bedrock AI agents                  │
+        │  - Quick Suite dashboards             │
         └───────────────────────────────────────┘
                             │
         ┌───────────────────────────────────────┐
-        │  Project 2: Battery Health (Future)   │
+        │  Guidance: Predictive Maintenance     │
+        │  - Tire anomaly detection             │
+        │  - ML-powered alerts                  │
+        │  - Real-time inference API            │
+        │  - Batch processing pipeline          │
         └───────────────────────────────────────┘
                             │
         ┌───────────────────────────────────────┐
-        │  Project 3: Predictive Maintenance    │
-        │            (Future)                    │
+        │  Future: Connected Mobility           │
+        │  - Vehicle telemetry analytics        │
+        │  - Fleet management                   │
+        └───────────────────────────────────────┘
+                            │
+        ┌───────────────────────────────────────┐
+        │  Future: Supply Chain Optimization    │
+        │  - Inventory forecasting              │
+        │  - Demand planning                    │
         └───────────────────────────────────────┘
 ```
 
-### What This Repository Provides
-
-**Base Infrastructure**
-- Amazon SageMaker Unified Studio domain setup
-- VPC with 3 private subnets across availability zones
-- NAT Gateway and Internet Gateway for connectivity
-- VPC endpoints for AWS services (S3, Redshift, SageMaker, etc.)
-- Security groups and network ACLs
-
-**Organizational Structure**
-- IAM Identity Center integration for user management
-- Domain configuration for team collaboration
-- Project profiles and environment blueprints
-- Base IAM roles and policies
-
-**What This Repository Does NOT Provide**
-- Specific ML models or use cases (those are in separate project repositories)
-- Data ingestion pipelines (defined per project)
-- Business logic (implemented in project repositories)
-
-### Data Source: Connected Mobility Simulator
-
-This platform uses vehicle telemetry data generated by the Connected Mobility Solution simulator:
-
-**Data Types**:
-- Tire pressure, temperature, tread depth
-- Vehicle speed, acceleration, braking
-- Mileage, load, driving patterns
-- Environmental conditions
-- Maintenance history
-
-**Data Flow**:
-```
-Connected Mobility Simulator
-    ↓ (IoT Core → MSK → S3)
-Vehicle Telemetry Data Lake
-    ↓ (Ingested by projects)
-SageMaker Unified Studio Projects
-    ↓ (Data Engineers prepare)
-Curated Datasets
-    ↓ (ML Engineers consume)
-ML Models & Predictions
-```
-
-## Prerequisites
-
-### Required AWS Setup
-
-1. **IAM Identity Center** (Choose one):
-   - **Option A**: Organization instance in AWS Organization management account
-   - **Option B**: Account instance in AWS Organization member account
-   
-   **Important**: Must be in the same region as deployment
-
-2. **AWS Account Requirements**:
-   - Administrative permissions
-   - Service quotas for SageMaker, Redshift, VPC
-   - Budget alerts configured
-
-3. **Connected Mobility Solution** (Data Source):
-   - Deployed and generating telemetry data
-   - S3 bucket with vehicle telemetry accessible
-   - Data format: Parquet or CSV in S3
-
-### Supported Regions
-
-- US East (N. Virginia) - us-east-1 ✅ **Recommended**
-- US West (Oregon) - us-west-2
-- Europe (Ireland) - eu-west-1
-- Asia Pacific (Tokyo) - ap-northeast-1
-
-### Required Tools
-
-- AWS CLI v2
-- AWS account with admin permissions
-- Access to IAM Identity Center
-
-## Deployment Steps
-
-### Quick Start with Makefile (Recommended)
-
-```bash
-# View all available commands
-make help
-
-# Deploy complete platform (network + domain)
-make deploy
-
-# Check deployment status
-make status
-
-# Verify all resources
-make verify
-```
-
-**Available Commands:**
-- `make deploy` - Deploy complete platform (~20 minutes)
-- `make deploy-network` - Deploy VPC and networking only
-- `make deploy-domain` - Create SageMaker domain only
-- `make status` - Show deployment status and outputs
-- `make verify` - Verify all resources are healthy
-- `make logs` - View CloudFormation stack events
-- `make cost` - Show estimated monthly costs
-- `make clean` - Delete all resources
-- `make help` - Show all commands
-
-### Option 1: Automated Deployment (Script-based)
-
-Deploy the complete platform with a single command:
-
-```bash
-cd automotive-data-platform-on-aws
-
-# Set your AWS profile and region
-export AWS_PROFILE=default
-export AWS_REGION=us-east-1
-
-# Deploy everything
-./deployment/deploy-complete-platform.sh
-```
-
-**What it deploys:**
-- ✅ VPC with private subnets and NAT Gateway
-- ✅ VPC endpoints for AWS services
-- ✅ IAM execution roles
-- ✅ SageMaker Unified Studio domain
-- ⏱️ Total time: ~20 minutes
-
-**Note**: If SageMaker domain creation fails (API limitations), the script will provide manual instructions.
-
-### Option 2: Step-by-Step Deployment
-
-For more control, deploy components individually:
-
-### Step 1: Deploy Base Infrastructure
-
-This creates the VPC, subnets, and networking required for SageMaker Unified Studio.
-
-```bash
-# Set your AWS region
-export AWS_REGION=us-east-1
-export AWS_PROFILE=default
-
-# Deploy the CloudFormation stack
-aws cloudformation create-stack \
-  --stack-name automotive-data-platform-network \
-  --template-body file://deployment/sagemaker_us_guidance_network_setup.yaml \
-  --capabilities CAPABILITY_IAM \
-  --region $AWS_REGION \
-  --profile $AWS_PROFILE
-
-# Wait for stack creation
-aws cloudformation wait stack-create-complete \
-  --stack-name automotive-data-platform-network \
-  --region $AWS_REGION \
-  --profile $AWS_PROFILE
-```
-
-### Step 2: Get Stack Outputs
-
-Capture the VPC and subnet IDs for SageMaker Unified Studio configuration:
-
-```bash
-# Get VPC ID
-export VPC_ID=$(aws cloudformation describe-stacks \
-  --stack-name automotive-data-platform-network \
-  --query 'Stacks[0].Outputs[?OutputKey==`VpcId`].OutputValue' \
-  --output text \
-  --region $AWS_REGION \
-  --profile $AWS_PROFILE)
-
-# Get Private Subnet IDs
-export SUBNET_IDS=$(aws cloudformation describe-stacks \
-  --stack-name automotive-data-platform-network \
-  --query 'Stacks[0].Outputs[?OutputKey==`PrivateSubnetIds`].OutputValue' \
-  --output text \
-  --region $AWS_REGION \
-  --profile $AWS_PROFILE)
-
-echo "VPC ID: $VPC_ID"
-echo "Subnet IDs: $SUBNET_IDS"
-```
-
-### Step 3: Create SageMaker Unified Studio Domain
-
-1. **Open AWS Console** → Navigate to SageMaker Unified Studio
-2. **Create Domain**:
-   - Domain name: `automotive-data-platform`
-   - VPC: Use `$VPC_ID` from Step 2
-   - Subnets: Use `$SUBNET_IDS` from Step 2
-   - IAM Identity Center: Select your instance
-3. **Configure Domain Settings**:
-   - Enable Amazon Redshift Serverless
-   - Enable Amazon Athena
-   - Enable AWS Glue Data Catalog
-   - Enable SageMaker Studio
-4. **Create Domain** (takes 10-15 minutes)
-
-### Step 4: Configure IAM Identity Center Users
-
-1. **Create User Groups**:
-   - `automotive-data-engineers`
-   - `automotive-ml-engineers`
-   - `automotive-admins`
-
-2. **Add Users** to appropriate groups
-
-3. **Assign Groups to Domain**:
-   - Go to SageMaker Unified Studio console
-   - Select your domain
-   - Add groups with appropriate permissions
-
-### Step 5: Get Portal URL
-
-```bash
-# Get the SageMaker Unified Studio portal URL
-aws sagemaker describe-domain \
-  --domain-id <your-domain-id> \
-  --query 'Url' \
-  --output text \
-  --region $AWS_REGION \
-  --profile $AWS_PROFILE
-```
-
-Share this URL with your data engineers and ML engineers.
-
-## Deployment Validation
-
-### Verify Network Infrastructure
-
-```bash
-# Check stack status
-aws cloudformation describe-stacks \
-  --stack-name automotive-data-platform-network \
-  --query 'Stacks[0].StackStatus' \
-  --output text
-
-# Verify VPC
-aws ec2 describe-vpcs \
-  --vpc-ids $VPC_ID \
-  --query 'Vpcs[0].State' \
-  --output text
-
-# Verify subnets
-aws ec2 describe-subnets \
-  --filters "Name=vpc-id,Values=$VPC_ID" \
-  --query 'Subnets[*].[SubnetId,AvailabilityZone,State]' \
-  --output table
-```
-
-### Verify SageMaker Unified Studio Domain
-
-1. Open SageMaker Unified Studio console
-2. Verify domain status is "InService"
-3. Check that IAM Identity Center groups are assigned
-4. Test portal URL access
-
-### Verify Connectivity to Data Source
-
-```bash
-# List Connected Mobility telemetry data
-aws s3 ls s3://your-cms-bucket/telemetry/ --recursive | head -20
-
-# Verify data format
-aws s3 cp s3://your-cms-bucket/telemetry/sample.parquet . --region $AWS_REGION
-```
-
-## Next Steps
-
-### Deploy Your First Project
-
-Once the base platform is deployed, deploy the tire prediction project:
-
-```bash
-# Clone the tire prediction project
-git clone <tire-prediction-repo-url>
-cd automotive-tire-prediction-model-on-aws
-
-# Follow the project-specific deployment guide
-# See project README for details
-```
-
-### Create Additional Projects
-
-Use the base platform to create new automotive ML projects:
-
-1. **Battery Health Prediction**
-2. **Predictive Engine Maintenance**
-3. **Driver Behavior Scoring**
-4. **Fuel Efficiency Optimization**
-
-Each project will:
-- Use the same SageMaker Unified Studio domain
-- Share the base VPC and networking
-- Access the Connected Mobility data lake
-- Collaborate within the platform
-
-## Cost
-
-### Base Platform Costs
-
-_You are responsible for the cost of AWS services used. As of October 2024, the base platform costs approximately **$150/month** with minimal usage._
-
-| AWS Service | Dimensions | Monthly Cost [USD] |
-| ----------- | ---------- | ------------------ |
-| VPC | NAT Gateway (1), Data transfer (10 GB) | $45.00 |
-| VPC Endpoints | 5 endpoints, minimal data transfer | $36.50 |
-| SageMaker Unified Studio | Domain (no charge for domain itself) | $0.00 |
-| IAM Identity Center | 10 users | $0.00 |
-| CloudWatch Logs | 5 GB logs | $2.50 |
-| **Base Platform Total** | | **~$84.00** |
-
-**Note**: Project-specific costs (compute, storage, ML training) are additional and billed per project.
-
-### Cost Optimization
-
-- Delete NAT Gateway when not in use (save $32/month)
-- Use VPC endpoints only for frequently accessed services
-- Set up budget alerts for cost monitoring
-- Use Redshift Serverless with auto-pause
-
-## Cleanup
-
-### Delete Projects First
-
-Before deleting the base platform, delete all projects:
-
-```bash
-# Delete project resources (example for tire prediction)
-cd automotive-tire-prediction-model-on-aws
-# Follow project cleanup instructions
-```
-
-### Delete SageMaker Unified Studio Domain
-
-1. Open SageMaker Unified Studio console
-2. Select domain
-3. Delete all projects within domain
-4. Delete domain (takes 10-15 minutes)
-
-### Delete Base Infrastructure
-
-```bash
-# Delete CloudFormation stack
-aws cloudformation delete-stack \
-  --stack-name automotive-data-platform-network \
-  --region $AWS_REGION \
-  --profile $AWS_PROFILE
-
-# Wait for deletion
-aws cloudformation wait stack-delete-complete \
-  --stack-name automotive-data-platform-network \
-  --region $AWS_REGION \
-  --profile $AWS_PROFILE
-```
-
-## Architecture Details
-
-### Network Design
-
-- **VPC CIDR**: 10.38.0.0/16
-- **Private Subnets**: 3 subnets across 3 AZs
-- **Public Subnet**: 1 subnet for NAT Gateway
-- **NAT Gateway**: Single NAT for cost optimization
-- **Internet Gateway**: For public subnet connectivity
-
-### VPC Endpoints
-
-The template creates VPC endpoints for:
-- Amazon S3 (Gateway endpoint)
-- Amazon Redshift (Interface endpoint)
-- Amazon SageMaker (Interface endpoints)
-- AWS Glue (Interface endpoint)
-- Amazon Athena (Interface endpoint)
-
-### Security
-
-- Private subnets have no direct internet access
-- All AWS service access via VPC endpoints
-- Security groups restrict traffic to necessary ports
-- IAM Identity Center for user authentication
-- IAM roles with least privilege access
-
-## FAQ
-
-**Q: Can I use an existing VPC?**
-A: Yes, but you'll need to manually configure VPC endpoints and security groups per SageMaker Unified Studio requirements.
-
-**Q: How many projects can I deploy?**
-A: No hard limit. Each project is a separate repository and deployment within the same domain.
-
-**Q: Can I use data from sources other than Connected Mobility?**
-A: Yes. Projects can ingest data from any S3 bucket, streaming source, or database.
-
-**Q: What if I don't have IAM Identity Center?**
-A: You must set up IAM Identity Center before deploying. It's required for SageMaker Unified Studio.
-
-**Q: Can I deploy in multiple regions?**
-A: Yes, but each region requires a separate base platform deployment.
-
-## Support
-
-For issues or questions:
-- Check AWS SageMaker Unified Studio documentation
-- Review CloudFormation stack events for errors
-- Verify IAM Identity Center configuration
-- Contact AWS Support for service-specific issues
+## Use Cases
+
+### Customer Analytics & Retention
+→ Use **Guidance: Agentic Customer 360**
+- Analyze declining customer metrics and trends
+- Root cause analysis with AI-powered insights
+- Interactive dashboards with QuickSight
+- Natural language queries with Bedrock Agent
+- Demonstrate data-driven decision making
+
+### Predictive Maintenance & Vehicle Health
+→ Use **Guidance: Predictive Maintenance**
+- Monitor tire pressure and temperature
+- Detect slow leaks and anomalies
+- Real-time alerts for failures
+- ML-powered anomaly detection
+
+### Vehicle Data & IoT
+→ Use **Platform Foundation** + Custom Project
+- Ingest vehicle telemetry
+- Fleet analytics
+- Connected vehicle insights
+
+### Sales & Marketing
+→ Use **Platform Foundation** + **Shared Data Sources**
+- Sales forecasting
+- Marketing campaign optimization
+- Customer segmentation
+
+## Documentation
+
+- [Platform Foundation Guide](platform-foundation/README.md)
+- [Customer 360 Deployment Guide](guidance-for-agentic-customer-360/docs/DEPLOYMENT.md)
+- [Predictive Maintenance Deployment Guide](guidance-for-predictive-maintenance/docs/DEPLOYMENT.md)
+- [Customer 360 + Predictive Maintenance Integration](guidance-for-predictive-maintenance/docs/CUSTOMER_360_INTEGRATION.md)
+- [Data Model Specification](guidance-for-agentic-customer-360/docs/DATA_MODEL_SPEC.md)
+- [Bedrock Agents Guide](guidance-for-agentic-customer-360/docs/BEDROCK_AGENTS.md)
+- [Quick Suite Security](guidance-for-agentic-customer-360/docs/QUICK_SUITE_SECURITY.md)
+
+## Cost Estimates
+
+### Customer 360 Platform
+- **Data Layer**: ~$20/month (S3, Glue, Athena)
+- **Analytics**: $24+/user/month (QuickSight Enterprise)
+- **AI Layer**: ~$70/month (Aurora Serverless, Bedrock)
+- **Total**: ~$114/month + QuickSight users
+
+### Predictive Maintenance
+- **Standalone**: $118-245/month (SageMaker, Step Functions, Glue, API Gateway)
+- **With Platform**: $113-235/month (shared infrastructure)
+
+### Platform Foundation
+- **Base**: $50-250/month (VPC, NAT Gateway, SageMaker domain)
+- **Per User**: +$18/month (SageMaker Unified Studio)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
-This solution is licensed under the MIT-0 License. See LICENSE file for details.
+This project is licensed under the MIT-0 License. See [LICENSE](LICENSE) file.
 
-## Authors
+## Support
 
-- AWS Solutions Architecture Team
-- AWS Automotive Industry Team
+For issues and questions:
+- Customer 360: See [guidance-for-agentic-customer-360/README.md](guidance-for-agentic-customer-360/README.md)
+- Platform Foundation: See [platform-foundation/README.md](platform-foundation/README.md)
+
+---
+
+**Note**: The Platform Foundation provides the base infrastructure. The Guidance projects are self-contained and can be deployed independently or on top of the foundation.
