@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create DataZone domain with SSO user assignment
+
+Parameters:
+  DomainName:
+    Type: String
+    Default: automotive-data-platform
+  ExecutionRoleArn:
+    Type: String
+    Default: arn:aws:iam::195026230833:role/automotive-data-platform-execution-role
+
+Resources:
+  DataZoneDomain:
+    Type: AWS::DataZone::Domain
+    Properties:
+      Name: !Ref DomainName
+      Description: Automotive data platform for ML and analytics
+      DomainExecutionRole: !Ref ExecutionRoleArn
+      SingleSignOn:
+        Type: IAM_IDC
+        UserAssignment: AUTOMATIC
+
+Outputs:
+  DomainId:
+    Value: !Ref DataZoneDomain
+    Export:
+      Name: !Sub ${AWS::StackName}-DomainId
+  DomainArn:
+    Value: !GetAtt DataZoneDomain.Arn
+  PortalUrl:
+    Value: !GetAtt DataZoneDomain.PortalUrl
