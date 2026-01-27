@@ -1,0 +1,86 @@
+{
+    "Status": 200,
+    "DataSet": {
+        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/top-revenue-stream",
+        "DataSetId": "top-revenue-stream",
+        "Name": "Top Revenue Stream",
+        "CreatedTime": 1763585827.907,
+        "LastUpdatedTime": 1763590837.879,
+        "PhysicalTableMap": {
+            "top-stream-table": {
+                "RelationalTable": {
+                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "Schema": "cx_analytics",
+                    "Name": "top_revenue_stream",
+                    "InputColumns": [
+                        {
+                            "Name": "revenue_stream",
+                            "Type": "STRING"
+                        },
+                        {
+                            "Name": "current_revenue",
+                            "Type": "DECIMAL"
+                        },
+                        {
+                            "Name": "previous_revenue",
+                            "Type": "DECIMAL"
+                        },
+                        {
+                            "Name": "revenue_change",
+                            "Type": "DECIMAL"
+                        },
+                        {
+                            "Name": "growth_rate",
+                            "Type": "DECIMAL"
+                        }
+                    ]
+                }
+            }
+        },
+        "LogicalTableMap": {
+            "top-stream-logical": {
+                "Alias": "Top Revenue Stream",
+                "DataTransforms": [
+                    {
+                        "CastColumnTypeOperation": {
+                            "ColumnName": "revenue_stream",
+                            "NewColumnType": "STRING"
+                        }
+                    }
+                ],
+                "Source": {
+                    "PhysicalTableId": "top-stream-table"
+                }
+            }
+        },
+        "OutputColumns": [
+            {
+                "Name": "revenue_stream",
+                "Type": "STRING"
+            },
+            {
+                "Name": "current_revenue",
+                "Type": "DECIMAL"
+            },
+            {
+                "Name": "previous_revenue",
+                "Type": "DECIMAL"
+            },
+            {
+                "Name": "revenue_change",
+                "Type": "DECIMAL"
+            },
+            {
+                "Name": "growth_rate",
+                "Type": "DECIMAL"
+            }
+        ],
+        "ImportMode": "DIRECT_QUERY",
+        "ConsumedSpiceCapacityInBytes": 0,
+        "DataSetUsageConfiguration": {
+            "DisableUseAsDirectQuerySource": false,
+            "DisableUseAsImportedSource": false
+        }
+    },
+    "RequestId": "ea418dd0-27d3-47ef-8bd7-add13f67901f"
+}

@@ -1,0 +1,35 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BedrockAgentStack = void 0;
+const cdk = require("aws-cdk-lib");
+const s3 = require("aws-cdk-lib/aws-s3");
+const iam = require("aws-cdk-lib/aws-iam");
+class BedrockAgentStack extends cdk.Stack {
+    constructor(scope, id, props) {
+        super(scope, id, props);
+        // Knowledge Base S3 bucket for documentation
+        const kbBucket = new s3.Bucket(this, 'KnowledgeBaseBucket', {
+            bucketName: `cx360-knowledge-base-${this.account}`,
+            encryption: s3.BucketEncryption.S3_MANAGED,
+            blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+            removalPolicy: cdk.RemovalPolicy.RETAIN,
+            autoDeleteObjects: false,
+        });
+        // Bedrock service role for Knowledge Base
+        const kbRole = new iam.Role(this, 'KnowledgeBaseRole', {
+            assumedBy: new iam.ServicePrincipal('bedrock.amazonaws.com'),
+            description: 'Role for Bedrock Knowledge Base to access S3',
+        });
+        kbBucket.grantRead(kbRole);
+        // Knowledge Base and Agent are created via CLI scripts
+        // See deployment/scripts/create-bedrock-kb-cli.sh and create-bedrock-agent-cli.sh
+        // CDK deployment is commented out due to CloudFormation validation issues
+        // Outputs
+        new cdk.CfnOutput(this, 'KnowledgeBaseBucketName', {
+            value: kbBucket.bucketName,
+            description: 'S3 bucket for knowledge base documents',
+        });
+    }
+}
+exports.BedrockAgentStack = BedrockAgentStack;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmVkcm9jay1hZ2VudC1zdGFjay5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImJlZHJvY2stYWdlbnQtc3RhY2sudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsbUNBQW1DO0FBRW5DLHlDQUF5QztBQUN6QywyQ0FBMkM7QUFjM0MsTUFBYSxpQkFBa0IsU0FBUSxHQUFHLENBQUMsS0FBSztJQUk5QyxZQUFZLEtBQWdCLEVBQUUsRUFBVSxFQUFFLEtBQTZCO1FBQ3JFLEtBQUssQ0FBQyxLQUFLLEVBQUUsRUFBRSxFQUFFLEtBQUssQ0FBQyxDQUFDO1FBRXhCLDZDQUE2QztRQUM3QyxNQUFNLFFBQVEsR0FBRyxJQUFJLEVBQUUsQ0FBQyxNQUFNLENBQUMsSUFBSSxFQUFFLHFCQUFxQixFQUFFO1lBQzFELFVBQVUsRUFBRSx3QkFBd0IsSUFBSSxDQUFDLE9BQU8sRUFBRTtZQUNsRCxVQUFVLEVBQUUsRUFBRSxDQUFDLGdCQUFnQixDQUFDLFVBQVU7WUFDMUMsaUJBQWlCLEVBQUUsRUFBRSxDQUFDLGlCQUFpQixDQUFDLFNBQVM7WUFDakQsYUFBYSxFQUFFLEdBQUcsQ0FBQyxhQUFhLENBQUMsTUFBTTtZQUN2QyxpQkFBaUIsRUFBRSxLQUFLO1NBQ3pCLENBQUMsQ0FBQztRQUVILDBDQUEwQztRQUMxQyxNQUFNLE1BQU0sR0FBRyxJQUFJLEdBQUcsQ0FBQyxJQUFJLENBQUMsSUFBSSxFQUFFLG1CQUFtQixFQUFFO1lBQ3JELFNBQVMsRUFBRSxJQUFJLEdBQUcsQ0FBQyxnQkFBZ0IsQ0FBQyx1QkFBdUIsQ0FBQztZQUM1RCxXQUFXLEVBQUUsOENBQThDO1NBQzVELENBQUMsQ0FBQztRQUVILFFBQVEsQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLENBQUM7UUFFM0IsdURBQXVEO1FBQ3ZELGtGQUFrRjtRQUNsRiwwRUFBMEU7UUFFMUUsVUFBVTtRQUNWLElBQUksR0FBRyxDQUFDLFNBQVMsQ0FBQyxJQUFJLEVBQUUseUJBQXlCLEVBQUU7WUFDakQsS0FBSyxFQUFFLFFBQVEsQ0FBQyxVQUFVO1lBQzFCLFdBQVcsRUFBRSx3Q0FBd0M7U0FDdEQsQ0FBQyxDQUFDO0lBQ0wsQ0FBQztDQUNGO0FBbENELDhDQWtDQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIGNkayBmcm9tICdhd3MtY2RrLWxpYic7XG5pbXBvcnQgKiBhcyBiZWRyb2NrIGZyb20gJ2F3cy1jZGstbGliL2F3cy1iZWRyb2NrJztcbmltcG9ydCAqIGFzIHMzIGZyb20gJ2F3cy1jZGstbGliL2F3cy1zMyc7XG5pbXBvcnQgKiBhcyBpYW0gZnJvbSAnYXdzLWNkay1saWIvYXdzLWlhbSc7XG5pbXBvcnQgKiBhcyBsYW1iZGEgZnJvbSAnYXdzLWNkay1saWIvYXdzLWxhbWJkYSc7XG5pbXBvcnQgKiBhcyByZHMgZnJvbSAnYXdzLWNkay1saWIvYXdzLXJkcyc7XG5pbXBvcnQgKiBhcyBzZWNyZXRzbWFuYWdlciBmcm9tICdhd3MtY2RrLWxpYi9hd3Mtc2VjcmV0c21hbmFnZXInO1xuaW1wb3J0IHsgQ29uc3RydWN0IH0gZnJvbSAnY29uc3RydWN0cyc7XG5cbmV4cG9ydCBpbnRlcmZhY2UgQmVkcm9ja0FnZW50U3RhY2tQcm9wcyBleHRlbmRzIGNkay5TdGFja1Byb3BzIHtcbiAgcmVhZG9ubHkgZGF0YUxha2VCdWNrZXQ6IHMzLklCdWNrZXQ7XG4gIHJlYWRvbmx5IGdsdWVEYXRhYmFzZTogc3RyaW5nO1xuICByZWFkb25seSBhdGhlbmFXb3JrZ3JvdXA6IHN0cmluZztcbiAgcmVhZG9ubHkgYXVyb3JhQ2x1c3RlcjogcmRzLkRhdGFiYXNlQ2x1c3RlcjtcbiAgcmVhZG9ubHkgYXVyb3JhU2VjcmV0OiBzZWNyZXRzbWFuYWdlci5JU2VjcmV0O1xufVxuXG5leHBvcnQgY2xhc3MgQmVkcm9ja0FnZW50U3RhY2sgZXh0ZW5kcyBjZGsuU3RhY2sge1xuICBwdWJsaWMgcmVhZG9ubHkga25vd2xlZGdlQmFzZTogYmVkcm9jay5DZm5Lbm93bGVkZ2VCYXNlO1xuICBwdWJsaWMgcmVhZG9ubHkgY3VzdG9tZXJIZWFsdGhBZ2VudDogYmVkcm9jay5DZm5BZ2VudDtcblxuICBjb25zdHJ1Y3RvcihzY29wZTogQ29uc3RydWN0LCBpZDogc3RyaW5nLCBwcm9wczogQmVkcm9ja0FnZW50U3RhY2tQcm9wcykge1xuICAgIHN1cGVyKHNjb3BlLCBpZCwgcHJvcHMpO1xuXG4gICAgLy8gS25vd2xlZGdlIEJhc2UgUzMgYnVja2V0IGZvciBkb2N1bWVudGF0aW9uXG4gICAgY29uc3Qga2JCdWNrZXQgPSBuZXcgczMuQnVja2V0KHRoaXMsICdLbm93bGVkZ2VCYXNlQnVja2V0Jywge1xuICAgICAgYnVja2V0TmFtZTogYGN4MzYwLWtub3dsZWRnZS1iYXNlLSR7dGhpcy5hY2NvdW50fWAsXG4gICAgICBlbmNyeXB0aW9uOiBzMy5CdWNrZXRFbmNyeXB0aW9uLlMzX01BTkFHRUQsXG4gICAgICBibG9ja1B1YmxpY0FjY2VzczogczMuQmxvY2tQdWJsaWNBY2Nlc3MuQkxPQ0tfQUxMLFxuICAgICAgcmVtb3ZhbFBvbGljeTogY2RrLlJlbW92YWxQb2xpY3kuUkVUQUlOLFxuICAgICAgYXV0b0RlbGV0ZU9iamVjdHM6IGZhbHNlLFxuICAgIH0pO1xuXG4gICAgLy8gQmVkcm9jayBzZXJ2aWNlIHJvbGUgZm9yIEtub3dsZWRnZSBCYXNlXG4gICAgY29uc3Qga2JSb2xlID0gbmV3IGlhbS5Sb2xlKHRoaXMsICdLbm93bGVkZ2VCYXNlUm9sZScsIHtcbiAgICAgIGFzc3VtZWRCeTogbmV3IGlhbS5TZXJ2aWNlUHJpbmNpcGFsKCdiZWRyb2NrLmFtYXpvbmF3cy5jb20nKSxcbiAgICAgIGRlc2NyaXB0aW9uOiAnUm9sZSBmb3IgQmVkcm9jayBLbm93bGVkZ2UgQmFzZSB0byBhY2Nlc3MgUzMnLFxuICAgIH0pO1xuXG4gICAga2JCdWNrZXQuZ3JhbnRSZWFkKGtiUm9sZSk7XG5cbiAgICAvLyBLbm93bGVkZ2UgQmFzZSBhbmQgQWdlbnQgYXJlIGNyZWF0ZWQgdmlhIENMSSBzY3JpcHRzXG4gICAgLy8gU2VlIGRlcGxveW1lbnQvc2NyaXB0cy9jcmVhdGUtYmVkcm9jay1rYi1jbGkuc2ggYW5kIGNyZWF0ZS1iZWRyb2NrLWFnZW50LWNsaS5zaFxuICAgIC8vIENESyBkZXBsb3ltZW50IGlzIGNvbW1lbnRlZCBvdXQgZHVlIHRvIENsb3VkRm9ybWF0aW9uIHZhbGlkYXRpb24gaXNzdWVzXG5cbiAgICAvLyBPdXRwdXRzXG4gICAgbmV3IGNkay5DZm5PdXRwdXQodGhpcywgJ0tub3dsZWRnZUJhc2VCdWNrZXROYW1lJywge1xuICAgICAgdmFsdWU6IGtiQnVja2V0LmJ1Y2tldE5hbWUsXG4gICAgICBkZXNjcmlwdGlvbjogJ1MzIGJ1Y2tldCBmb3Iga25vd2xlZGdlIGJhc2UgZG9jdW1lbnRzJyxcbiAgICB9KTtcbiAgfVxufVxuIl19

@@ -1,0 +1,227 @@
+{
+    "Status": 200,
+    "DataSet": {
+        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/kpi-trends",
+        "DataSetId": "kpi-trends",
+        "Name": "KPI Trends",
+        "CreatedTime": 1765485831.85,
+        "LastUpdatedTime": 1768372294.816,
+        "PhysicalTableMap": {
+            "trends": {
+                "RelationalTable": {
+                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "Catalog": "AwsDataCatalog",
+                    "Schema": "cx_analytics",
+                    "Name": "kpi_trends_from_vehicles",
+                    "InputColumns": [
+                        {
+                            "Name": "snapshot_month",
+                            "Type": "DATETIME"
+                        },
+                        {
+                            "Name": "month_date",
+                            "Type": "DATETIME"
+                        },
+                        {
+                            "Name": "month_label",
+                            "Type": "STRING"
+                        },
+                        {
+                            "Name": "total_customers",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "monthly_sales",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "total_vehicles",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "median_health_score",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "total_clv",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "revenue_at_risk",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "avg_nps_score",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "nps_score",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "at_risk_customers",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "pct_at_risk_customers",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "revenue_growth_rate",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "avg_revenue_per_customer",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "open_cases",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "cases_created",
+                            "Type": "INTEGER"
+                        },
+                        {
+                            "Name": "retention_rate",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "customers_retained",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "retention_change",
+                            "Type": "DECIMAL",
+                            "SubType": "FIXED"
+                        },
+                        {
+                            "Name": "subscriptions_sold",
+                            "Type": "INTEGER"
+                        }
+                    ]
+                }
+            }
+        },
+        "LogicalTableMap": {
+            "trends": {
+                "Alias": "kpi_trends_from_vehicles",
+                "Source": {
+                    "PhysicalTableId": "trends"
+                }
+            }
+        },
+        "OutputColumns": [
+            {
+                "Name": "snapshot_month",
+                "Type": "DATETIME"
+            },
+            {
+                "Name": "month_date",
+                "Type": "DATETIME"
+            },
+            {
+                "Name": "month_label",
+                "Type": "STRING"
+            },
+            {
+                "Name": "total_customers",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "monthly_sales",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "total_vehicles",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "median_health_score",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "total_clv",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "revenue_at_risk",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "avg_nps_score",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "nps_score",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "at_risk_customers",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "pct_at_risk_customers",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "revenue_growth_rate",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "avg_revenue_per_customer",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "open_cases",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "cases_created",
+                "Type": "INTEGER"
+            },
+            {
+                "Name": "retention_rate",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "customers_retained",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "retention_change",
+                "Type": "DECIMAL",
+                "SubType": "FIXED"
+            },
+            {
+                "Name": "subscriptions_sold",
+                "Type": "INTEGER"
+            }
+        ],
+        "ImportMode": "SPICE",
+        "ConsumedSpiceCapacityInBytes": 3536,
+        "DataSetUsageConfiguration": {
+            "DisableUseAsDirectQuerySource": false,
+            "DisableUseAsImportedSource": false
+        }
+    },
+    "RequestId": "20cac263-2f20-4b5d-92a8-0fa15434c1de"
+}
