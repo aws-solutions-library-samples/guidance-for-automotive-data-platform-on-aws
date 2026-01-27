@@ -1,0 +1,149 @@
+# Synthetic Data Generation Configuration
+
+# AWS Configuration
+aws:
+  region: us-east-1
+  s3_bucket: ${S3_BUCKET}  # Override with environment variable
+  dynamodb_prefix: automotive-synthetic
+  glue_database: automotive_synthetic_db
+
+# Data Profiles
+profiles:
+  small:
+    customers: 1000
+    vehicles: 2000
+    service_events: 10000
+    support_tickets: 5000
+    history_years: 1
+  
+  medium:
+    customers: 50000
+    vehicles: 100000
+    service_events: 500000
+    support_tickets: 250000
+    history_years: 3
+  
+  large:
+    customers: 500000
+    vehicles: 1000000
+    service_events: 10000000
+    support_tickets: 5000000
+    history_years: 5
+
+# Data Generation Parameters
+generation:
+  # Customer Demographics
+  customer_demographics:
+    enabled: true
+    output_format: parquet
+    partition_by: [year, month]
+    age_distribution:
+      18-25: 0.10
+      26-35: 0.25
+      36-50: 0.35
+      51-65: 0.20
+      65+: 0.10
+    geographic_distribution:
+      urban: 0.45
+      suburban: 0.40
+      rural: 0.15
+  
+  # Sales History
+  sales_history:
+    enabled: true
+    output_format: parquet
+    partition_by: [year, month]
+    vehicle_types:
+      sedan: 0.30
+      suv: 0.35
+      truck: 0.20
+      electric: 0.10
+      hybrid: 0.05
+    financing_types:
+      cash: 0.20
+      loan: 0.50
+      lease: 0.30
+  
+  # Support Tickets
+  support_tickets:
+    enabled: true
+    output_format: parquet
+    storage: [s3, dynamodb]
+    categories:
+      technical: 0.40
+      billing: 0.20
+      service: 0.25
+      general: 0.15
+    severity:
+      low: 0.50
+      medium: 0.30
+      high: 0.15
+      critical: 0.05
+  
+  # Contact Center Data
+  contact_center:
+    enabled: true
+    output_format: json
+    storage: [s3, kinesis]
+    call_duration_avg: 300  # seconds
+    sentiment_distribution:
+      positive: 0.40
+      neutral: 0.40
+      negative: 0.20
+  
+  # Survey Data
+  survey_data:
+    enabled: true
+    output_format: json
+    response_rate: 0.25
+    nps_distribution:
+      promoter: 0.40
+      passive: 0.40
+      detractor: 0.20
+  
+  # Marketing Interactions
+  marketing_interactions:
+    enabled: true
+    output_format: parquet
+    storage: [s3, dynamodb]
+    channels:
+      email: 0.40
+      sms: 0.20
+      push: 0.15
+      web: 0.25
+    engagement_rate: 0.30
+  
+  # Finance/Lease Data
+  finance_lease:
+    enabled: false  # Phase 3
+    output_format: parquet
+    storage: [s3, rds]
+    default_term_months: 60
+    default_apr: 0.049
+  
+  # Insurance Claims
+  insurance_claims:
+    enabled: false  # Phase 3
+    output_format: parquet
+    storage: [s3, dynamodb]
+    claim_rate: 0.05  # 5% of vehicles per year
+
+# Data Quality
+quality:
+  referential_integrity: true
+  temporal_consistency: true
+  null_rate: 0.02  # 2% null values for optional fields
+  duplicate_rate: 0.001  # 0.1% duplicates
+
+# Output Settings
+output:
+  compression: snappy
+  row_group_size: 100000
+  batch_size: 10000
+  parallel_workers: 4
+
+# Logging
+logging:
+  level: INFO
+  format: json
+  output: stdout
