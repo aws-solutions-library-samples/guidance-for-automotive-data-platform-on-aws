@@ -90,21 +90,29 @@ Synthetic data generators for automotive use cases:
 
 ## Getting Started
 
-### For Customer 360 Analytics
-If you want to deploy the Customer 360 platform:
+### Option 1: Customer 360 Analytics (Standalone)
+Deploy the Customer 360 platform independently - no other infrastructure needed:
 
 ```bash
 cd guidance-for-agentic-customer-360
-make help
+make deploy
 ```
 
-### For Base Platform Infrastructure
-If you want to set up the foundational SageMaker Unified Studio environment:
+**What you get**: Complete analytics platform with data lake, QuickSight dashboards, and Bedrock AI agent.
+
+---
+
+### Option 2: Platform Foundation (Optional)
+Set up the foundational SageMaker Unified Studio environment for team collaboration:
 
 ```bash
 cd platform-foundation
 ./deployment/deploy-complete-platform.sh
 ```
+
+**What you get**: Shared workspace for data engineers and ML engineers with DataZone governance.
+
+**Note**: Platform Foundation is NOT required for Customer 360. Deploy it only if you need a shared team workspace.
 
 ## Architecture
 
