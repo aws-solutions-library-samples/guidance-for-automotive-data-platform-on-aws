@@ -1,0 +1,90 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22
+    commands:
+
+      # Install tools.
+      # Some tools are already in the pipeline and do not need to be installed.
+      - echo "Installing prerequisite tools. PWD - `pwd`"
+
+      - echo "Installing the Nodejs version specified in the .nvmrc file."
+      - n auto
+
+      - echo "Enabling corepack to utilize Yarn v4."
+      - npm uninstall -g yarn
+      - corepack enable
+      #This is the default to fall back to if not in a dir w/ a .yarnrc.yml file
+      - yarn set version 4.6.0
+
+      - echo "Install python version specified in .python-version."
+      - pyenv install -s
+
+      - echo "Installing poetry."
+      - pyenv exec pip install poetry
+
+      - echo "Installing the aws-cdk."
+      - npm install -g aws-cdk
+
+      # - echo "Install smithy."
+      # - mkdir -p smithy-install/smithy
+      # - curl -L https://github.com/smithy-lang/smithy/releases/download/1.53.0/smithy-cli-linux-x86_64.zip -o smithy-install/smithy-cli-linux-x86_64.zip
+      # - unzip -qo smithy-install/smithy-cli-linux-x86_64.zip -d smithy-install
+      # - mv smithy-install/smithy-cli-linux-x86_64/* smithy-install/smithy
+      # - sudo smithy-install/smithy/install
+      # - rm -rf smithy-install
+      # - smithy --version
+
+      - echo "Installing shellcheck."
+      - sudo apt update
+      - sudo apt install shellcheck
+
+      - echo "Installing prerequisite tools completed `date`."
+
+      # Verify and install dependencies.
+      - echo "Verifying the tool installations and installing solution dependencies"
+      - make install
+
+      - echo "Install stage completed on `date`."
+  pre_build:
+    commands:
+      # Run unit tests.
+      # - make test
+
+      - echo "Pre build stage completed on `date`."
+  build:
+    commands:
+      - echo "Starting build `date` in `pwd`"
+
+      # Build S3 dist.
+      - echo "Starting 'make build' (async) in `pwd`"
+      - export GLOBAL_ASSET_BUCKET_NAME="$TEMPLATE_OUTPUT_BUCKET"
+      - export REGIONAL_ASSET_BUCKET_BASE_NAME="$DIST_OUTPUT_BUCKET"
+      - export SOLUTION_VERSION="$VERSION"
+      - make build
+      - echo "'make build' completed `date`."
+
+      - echo "Build stage completed on `date`."
+
+artifacts:
+  files:
+    # - .github/**/*
+    - configuration/**/*
+    - deployment/**/*
+    - documentation/**/*
+    - coverage-reports/*
+    - source/**/*
+    - .gitignore
+    - CHANGELOG.md
+    - CODE_OF_CONDUCT.md
+    - CONTRIBUTING.md
+    - LICENSE
+    - NOTICE.txt
+    - README.md
+    - SECURITY.md
+    - sonar-project.properties
+    - solution-manifest.yaml
+    - Makefile
+    - makefiles/**/*

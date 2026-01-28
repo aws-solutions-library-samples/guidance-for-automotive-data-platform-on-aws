@@ -1,0 +1,78 @@
+@startuml mmt-predictive-maintenance-highlevel-flow
+' SPDX-License-Identifier: MIT (See https://github.com/awslabs/aws-icons-for-plantuml/blob/master/LICENSE)
+' AWS Icons v18.0-compatible version using local includes
+
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v18.0/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/Storage/SimpleStorageService.puml
+!include AWSPuml/Compute/Lambda.puml
+!include AWSPuml/Analytics/Glue.puml
+!include AWSPuml/Analytics/Redshift.puml
+!include AWSPuml/Database/DynamoDB.puml
+!include AWSPuml/ApplicationIntegration/SimpleNotificationService.puml
+
+!define GREEN #3F8624
+!define YELLOW #D86613
+!define RED #E3242B
+!define PINK #CF2465
+!define PURPLE #5A4FFF
+!define ORANGE #f37b05
+
+skinparam participant {
+    BackgroundColor AWS_BG_COLOR
+    BorderColor AWS_BORDER_COLOR
+}
+skinparam sequence {
+    ArrowThickness 2
+    LifeLineBorderColor AWS_COLOR
+    LifeLineBackgroundColor AWS_BORDER_COLOR
+    BoxBorderColor AWS_COLOR
+}
+
+title MMT Predictive Maintenance High-Level Flow
+
+actor User as user
+
+box MMT Predictive Maintenance ETL Flow
+participant "$RedshiftIMG()\nMMT Data Source\nRedshift" as redshift <<Redshift>>
+participant "$SimpleStorageServiceIMG()\nRaw Data\nS3" as s3_raw <<SimpleStorageService>>
+participant "$LambdaIMG()\nRoot ETL\nLambda" as lambda_etl <<Lambda>>
+participant "$GlueIMG()\nRoot ETL\nGlue" as glue_etl <<Glue>>
+participant "$SimpleStorageServiceIMG()\nPrediction Data\nS3" as s3_pred <<SimpleStorageService>>
+participant "$GlueIMG()\nFilter Inference\nGlue" as glue_filter <<Glue>>
+participant "$GlueIMG()\nML Inference\nGlue" as glue_ml <<Glue>>
+participant "$SimpleStorageServiceIMG()\nInference Result Storage\nS3 / DynamoDB" as result_store <<SimpleStorageService>>
+participant "$LambdaIMG()\nInference Result Processing\nLambda" as lambda_results <<Lambda>>
+participant "$SimpleNotificationServiceIMG()\nResult Reporting\nSNS / Relay Garage" as sns <<SimpleNotificationService>>
+endbox
+
+redshift -> s3_raw++ GREEN: Hourly UNLOAD to S3
+s3_raw -> lambda_etl++ ORANGE: Trigger ETL
+deactivate s3_raw
+lambda_etl-> glue_etl++ PURPLE: Further transform and merging
+return
+lambda_etl -> s3_pred GREEN: Write transformed prediction data
+deactivate lambda_etl
+
+user --> glue_filter++ PURPLE: Trigger prediction
+glue_filter --> s3_pred++ GREEN: Intake prediction data
+return
+glue_filter -> glue_filter: Run filtering ETL + inference
+glue_filter -> result_store++ GREEN: Write filtered results
+deactivate glue_filter
+
+user --> glue_ml++ PURPLE: Trigger prediction
+glue_ml -> s3_pred++ GREEN: Intake prediction data
+return
+glue_ml -> glue_ml: Run ML ETL + inference
+glue_ml -> result_store GREEN: Write ML results
+deactivate glue_ml
+
+result_store -> lambda_results++ ORANGE: Process inference results
+deactivate result_store
+lambda_results -> sns++ PINK: Report results to SNS / Relay Garage
+deactivate lambda_results
+
+user <-- sns: Notify user with result
+
+@enduml

@@ -1,0 +1,31 @@
+package.MMTPredictiveMaintenance = {
+    interfaces = (1.0);
+
+    build-system = custom-build;
+    build-tools = {
+        1.0 = {
+        };
+    };
+
+    # Use runtime-dependencies for when you want to bring in additional
+    # packages when deploying.
+    # Use dependencies instead if you intend for these dependencies to
+    # be exported to other packages that build against you.
+    dependencies = {
+        1.0 = {
+        };
+    };
+
+    runtime-dependencies = {
+        1.0 = {
+        };
+    };
+
+    # We want all the files in this repo, dont use the default pipeline map
+    # Refer to https://w.amazon.com/bin/view/ConfigDeployMap/#Overriding_defaults
+    # for information on what gets excluded by default
+    deploy = {
+        map = ();
+    };
+
+};
