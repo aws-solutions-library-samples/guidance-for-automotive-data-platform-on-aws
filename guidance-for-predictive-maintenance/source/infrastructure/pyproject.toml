@@ -1,0 +1,131 @@
+[tool.poetry]
+name = "infrastructure"
+version = "1.0.0"
+authors = ["Amazon Web Services"]
+license = "Apache-2.0"
+description = "CDK for MMT Predictive Maintenance"
+readme = "README.md"
+packages = [
+  {include = "*.py"},
+  {include = "lib"},
+]
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aws_lambda_powertools = { extras = ["tracer", "validation"], version = ">=3.3.0" }
+requests = "*"
+
+[tool.poetry.group.dev.dependencies]
+aws-cdk-lib = "^2.204.0"
+boto3 = "^1.39.3"
+botocore = "^1.39.3"
+cdk-monitoring-constructs = "^9.12.0"
+constructs = "^10.4.2"
+matplotlib = "*"
+notebook = "^7.4.1"
+numpy = "*"
+pandas = "*"
+pre-commit = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-mock = "*"
+pytest-xdist = "^3.3.1"
+black = "^23.0.0"
+isort = "^5.0.0"
+flake8 = "^6.0.0"
+types-boto3 = "*"
+types-requests = "^2.32.0"
+types-setuptools = "*"
+pyspark = "*"
+awsglue-dev = "*"
+jupyter = "*"
+aws-glue-sessions = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+sections=["FUTURE", "STDLIB", "THIRDPARTY", "AWS", "FIRSTPARTY", "LOCALFOLDER"]
+known_aws=["aws_cdk","aws_lambda_powertools","aws_solutions_constructs","awscrt","awsiot","cdk_nag","chalice","constructs","boto3","botocore"]
+import_heading_stdlib="Standard Library"
+import_heading_thirdparty="Third Party Libraries"
+import_heading_aws="AWS Libraries"
+import_heading_localfolder="MMT Predictive Maintenance"
+profile = "black"
+
+[tool.bandit]
+exclude_dirs = ["cdk.out", "build", ".mypy_cache", ".venv", "*/test_*.py", "*/test_*.py"]
+
+[tool.pylint.'SIMILARITIES']
+  # Ignore comments when computing similarities.
+ignore-comments=true
+  # Ignore docstrings when computing similarities.
+ignore-docstrings=true
+  # Ignore imports when computing similarities.
+ignore-imports=true
+  # Minimum lines number of a similarity.
+min-similarity-lines=10
+
+[tool.pylint.'DESIGN']
+  # Maximum number of arguments for function / method.
+max-args=14
+  # Maximum number of attributes for a class (see R0902).
+max-attributes=20
+  # Maximum number of boolean expressions in an if statement (see R0916).
+max-bool-expr=5
+  # Maximum number of branch for function / method body.
+max-branches=12
+  # Maximum number of locals for function / method body.
+max-locals=20
+  # Maximum number of parents for a class (see R0901).
+max-parents=7
+  # Maximum number of public methods for a class (see R0904).
+max-public-methods=20
+  # Maximum number of return / yield for function / method body.
+max-returns=2
+  # Maximum number of statements in function / method body.
+max-statements=60
+  # Minimum number of public methods for a class (see R0903).
+min-public-methods=0
+
+[tool.pylint.'MESSAGES CONTROL']
+# C0114, C0115, C0116 are for docstrings which we don't use
+# W0613 alarms on unused arguments
+# R0801 duplicated code false alarms on IAM statements
+# R0917 too many positional arguments
+# E0401 Unable to import
+# W0511 fixme
+# W0718 Catching too general exception
+# W0719 Raising too general exception
+# R0914 Too many local variables
+# R0911 Too many return statements
+disable = "C0114, C0115, C0116, W0613, R0801, R0917, E0401, W0511, W0718, W0719, R0914, R0911"
+
+[tool.pylint.'FORMAT']
+max-line-length=200
+
+[tool.pylint.'TYPECHECK']
+generated-members=["aws_lambda.Runtime"]
+
+[tool.pylint.variables]
+allowed-redefined-builtins=["id"]
+
+[tool.mypy]
+# Show source code snippets and location markers in error messages
+pretty=true
+
+# Don't ignore missing imports globally
+ignore_missing_imports=false
+
+# Specific module overrides for missing imports
+[[tool.mypy.overrides]]
+module=[
+  "awsglue.*",
+  "lib.stacks.*",
+  "pyspark.*"
+]
+ignore_missing_imports=true

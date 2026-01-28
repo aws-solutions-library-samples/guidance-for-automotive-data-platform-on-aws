@@ -1,0 +1,8 @@
+id: SO0XXX
+name: mmt-predictive-maintenance
+version: v1.0.0
+cloudformation_templates:
+  - template: mmt-predictive-maintenance.template
+    main_template: true
+build_environment:
+  build_image: 'aws/codebuild/standard:7.0'
