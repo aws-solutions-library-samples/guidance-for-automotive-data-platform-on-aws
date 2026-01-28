@@ -53,21 +53,23 @@ make deploy
 
 **Status**: ✅ Production Ready
 
-ML-powered predictive maintenance for vehicle tires using anomaly detection:
-- Real-time tire pressure and temperature monitoring
-- Random Cut Forest model for anomaly detection
-- Automated alert system for slow leaks and failures
-- REST API for real-time inference
-- Batch processing pipeline for daily analysis
-- Step Functions orchestration for ML workflows
+ML-powered predictive maintenance for tire health monitoring and failure prediction:
+- **Random Cut Forest** anomaly detection for tire pressure and temperature
+- **7-14 day advance warning** of tire failures and slow leaks
+- **Dual approach**: ML-based and filter-based prediction algorithms
+- **Real-time inference API** with API Gateway and Lambda
+- **Batch processing** with Step Functions orchestration
+- **Automated alerts** integrated with maintenance scheduling systems
+- **ETL pipeline** with AWS Glue for data transformation
 
-**Use this when**: Building predictive maintenance and vehicle health monitoring
+**Use this when**: Building predictive maintenance systems for vehicle health monitoring
 
 [View Predictive Maintenance Documentation →](guidance-for-predictive-maintenance/README.md)
 
 **Quick Start**:
 ```bash
 cd guidance-for-predictive-maintenance
+make install
 make deploy
 ```
 
@@ -168,10 +170,11 @@ cd platform-foundation
 
 ### Predictive Maintenance & Vehicle Health
 → Use **Guidance: Predictive Maintenance**
-- Monitor tire pressure and temperature
-- Detect slow leaks and anomalies
-- Real-time alerts for failures
-- ML-powered anomaly detection
+- Predict tire failures 7-14 days in advance
+- Monitor tire pressure and temperature anomalies
+- Dual ML and filter-based detection algorithms
+- Real-time and batch inference pipelines
+- Automated maintenance alerts and scheduling
 
 ### Vehicle Data & IoT
 → Use **Platform Foundation** + Custom Project
@@ -204,8 +207,10 @@ cd platform-foundation
 - **Total**: ~$114/month + QuickSight users
 
 ### Predictive Maintenance
-- **Standalone**: $118-245/month (SageMaker, Step Functions, Glue, API Gateway)
-- **With Platform**: $113-235/month (shared infrastructure)
+- **ML Pipeline**: ~$150-300/month (SageMaker training, batch transform, Glue ETL)
+- **Real-time API**: ~$50-100/month (API Gateway, Lambda, Step Functions)
+- **Data Storage**: ~$20-50/month (S3, Glue catalog)
+- **Total**: ~$220-450/month (depending on data volume and inference frequency)
 
 ### Platform Foundation
 - **Base**: $50-250/month (VPC, NAT Gateway, SageMaker domain)
