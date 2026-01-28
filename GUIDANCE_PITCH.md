@@ -46,23 +46,47 @@ The optional SageMaker Unified Studio foundation implements a data mesh architec
 
 ## Governance and EU Data Act Compliance
 
-The platform architecture supports compliance with the EU Data Act and GDPR through built-in governance capabilities that protect customer privacy while enabling legitimate data use.
+The platform implements a multi-region governance architecture that separates PII data processing in EU regions from anonymized analytics in global regions, ensuring compliance with the EU Data Act and GDPR while enabling worldwide R&D collaboration.
 
-**Data Residency and Sovereignty**: The platform can be deployed in EU regions (eu-west-1 Frankfurt, eu-central-1 Ireland) to ensure customer data remains within European borders. S3 bucket policies and Lake Formation permissions prevent data replication to non-EU regions, supporting data sovereignty requirements.
+### Central Governance Region
 
-**Right to Access and Portability**: The unified data lake architecture makes it straightforward to fulfill data subject access requests. When a customer requests their data under GDPR Article 15, a single Athena query across the customer_360 tables retrieves their complete profile, interaction history, service records, and vehicle data. The standardized data formats (Parquet) enable easy export in machine-readable formats, supporting data portability requirements under GDPR Article 20.
+AWS Lake Formation serves as the global governance hub, enforcing fine-grained access control policies across all regions. AWS Glue Data Catalog maintains centralized metadata, while Amazon DataZone provides data discovery, lineage tracking, and self-service collaboration. AWS Organizations and IAM manage multi-account structure and access permissions. AWS CloudTrail logs all data access for audit trails, and Amazon Macie continuously monitors for PII compliance.
 
-**Right to Erasure**: The platform supports "right to be forgotten" requests through S3 object versioning and Glue partition management. When a customer requests data deletion under GDPR Article 17, automated workflows identify and remove all records associated with that customer across all datasets, with audit trails proving complete deletion.
+### Local/Producer Region (EU)
 
-**Purpose Limitation and Consent Management**: Lake Formation's fine-grained access controls enforce purpose limitation by restricting data access based on legitimate business purposes. Marketing teams can access aggregated customer segments for campaign targeting, but cannot access individual customer contact details without explicit consent. The platform tracks consent status in the customer profile and enforces consent-based access controls automatically.
+**Data Ingestion**: Connected vehicles transmit telemetry through AWS IoT Core to Amazon Kinesis Data Streams, with Amazon Data Firehose delivering data to Amazon S3 raw storage.
 
-**Data Minimization**: The platform implements data minimization principles by storing only necessary customer attributes and automatically archiving historical data that's no longer needed for active business purposes. S3 Intelligent-Tiering moves older data to archive storage classes, reducing both costs and the scope of data subject to privacy regulations.
+**Data Classification**: AWS Glue Data Quality validates incoming data. AWS Glue ETL Streaming performs real-time classification, separating telemetry into PII and anonymized data stores. The anonymization process includes structured data transformation and video/image anonymization via partner AI solutions.
 
-**Audit and Accountability**: CloudTrail logs all data access operations, providing complete audit trails of who accessed what customer data, when, and for what purpose. These logs support accountability requirements under GDPR Article 5(2) and enable rapid response to data breach investigations. Athena query history provides additional audit trails of analytical queries against customer data.
+**Data Stores**: The Local PII Data Store contains precise GPS coordinates, driver information, and detailed vehicle identifiers. The Anonymized Data Store contains hashed identifiers, city-level locations, and aggregated metrics.
 
-**Third-Party Data Sharing**: The EU Data Act requires that connected vehicle data be made available to third parties (independent repair shops, insurance companies) with customer consent. The platform's API Gateway endpoints and Lake Formation permissions enable controlled data sharing with external parties, with fine-grained access controls ensuring third parties only access data they're authorized to see. All data sharing operations are logged in CloudTrail for audit purposes.
+**Data Access**: Amazon Cognito authenticates users. The User Portal and Amazon API Gateway provide vehicle owners and authorized third parties access to their PII data as required by the EU Data Act and GDPR. Lake Formation policies validate all access requests.
 
-**Automated Compliance Reporting**: The platform can generate compliance reports showing data processing activities, data retention periods, and access patterns, supporting GDPR Article 30 record-keeping requirements and EU Data Act transparency obligations.
+### Consumer Region (Global R&D)
+
+R&D teams access anonymized data through Amazon SageMaker for ML model training and Amazon Q in Quick Suite for analytics dashboards. Lake Formation ensures R&D teams can only access anonymized data—never PII.
+
+### Cross-Region Governance
+
+Lake Formation's centralized governance enforces consistent policies across regions. Vehicle owners access only their own PII data, while R&D teams access all vehicles' anonymized data. CloudTrail logs all access for compliance reporting. DataZone tracks complete data lineage from ingestion through classification to consumption, providing transparency required for EU Data Act compliance.
+
+### Key Compliance Capabilities
+
+**Data Residency and Sovereignty**: PII data remains in EU regions (eu-west-1 Frankfurt, eu-central-1 Ireland) with Lake Formation policies preventing replication to non-EU regions. Anonymized data can be replicated globally for R&D purposes.
+
+**Right to Access and Portability**: Vehicle owners can access their complete data through the User Portal, with API Gateway endpoints enabling data export in machine-readable formats (JSON, CSV) to support GDPR Article 20 portability requirements.
+
+**Right to Erasure**: Automated workflows identify and remove all records associated with a customer across PII and anonymized data stores when processing "right to be forgotten" requests under GDPR Article 17, with audit trails proving complete deletion.
+
+**Purpose Limitation and Consent Management**: Lake Formation's fine-grained access controls enforce purpose limitation by restricting data access based on legitimate business purposes. The platform tracks consent status and enforces consent-based access controls automatically.
+
+**Third-Party Data Sharing**: The EU Data Act requires that connected vehicle data be made available to third parties (independent repair shops, insurance companies) with customer consent. API Gateway endpoints and Lake Formation permissions enable controlled data sharing with external parties, with all operations logged in CloudTrail.
+
+**Audit and Accountability**: CloudTrail logs all data access operations across regions, providing complete audit trails of who accessed what data, when, and for what purpose. DataZone's lineage tracking shows how data flows from ingestion through anonymization to consumption, supporting GDPR Article 5(2) accountability requirements.
+
+**Automated Compliance Reporting**: The platform generates compliance reports showing data processing activities, data retention periods, access patterns, and third-party data sharing, supporting GDPR Article 30 record-keeping requirements and EU Data Act transparency obligations.
+
+*Note: Detailed implementation guidance for the multi-region governance architecture will be provided in the implementation guide.*
 
 ## Target Audience
 
