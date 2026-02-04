@@ -43,10 +43,42 @@ Resources:
         - Key: Name
           Value: datazone-subnet-2
 
+  # Access logs bucket for S3 server access logging
+  AccessLogsBucket:
+    Type: AWS::S3::Bucket
+    Metadata:
+      checkov:
+        skip:
+          - id: CKV_AWS_18
+            comment: Access logs bucket cannot log to itself
+    Properties:
+      BucketName: !Sub platform-access-logs-${AWS::AccountId}
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      AccessControl: LogDeliveryWrite
+
   DataZoneEnvironmentBucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub datazone-environments-${AWS::AccountId}
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LoggingConfiguration:
+        DestinationBucketName: !Ref AccessLogsBucket
+        LogFilePrefix: datazone-environments/
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
         BlockPublicPolicy: true
@@ -61,6 +93,13 @@ Resources:
       BucketName: !Sub 'automotive-tire-data-${AWS::AccountId}'
       VersioningConfiguration:
         Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LoggingConfiguration:
+        DestinationBucketName: !Ref AccessLogsBucket
+        LogFilePrefix: tire-data/
       LifecycleConfiguration:
         Rules:
           - Id: DeleteOldData
@@ -133,7 +172,10 @@ Resources:
                   - glue:GetPartitions
                   - glue:CreateTable
                   - glue:UpdateTable
-                Resource: '*'
+                Resource:
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:catalog
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:database/tire_telemetry
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:table/tire_telemetry/*
 
 Outputs:
   DataBucketName:
