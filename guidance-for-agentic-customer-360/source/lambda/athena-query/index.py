@@ -2,6 +2,7 @@ import json
 import boto3
 import os
 import time
+import re
 from typing import Dict, Any
 
 athena = boto3.client('athena')
@@ -10,6 +11,23 @@ s3 = boto3.client('s3')
 GLUE_DATABASE = os.environ['GLUE_DATABASE']
 ATHENA_WORKGROUP = os.environ['ATHENA_WORKGROUP']
 DATA_LAKE_BUCKET = os.environ['DATA_LAKE_BUCKET']
+
+
+def sanitize_int(value: str, default: int, min_val: int = 0, max_val: int = 10000) -> int:
+    """Sanitize and validate integer input."""
+    try:
+        val = int(value)
+        return max(min_val, min(val, max_val))
+    except (ValueError, TypeError):
+        return default
+
+
+def sanitize_identifier(value: str) -> str:
+    """Sanitize identifier (customer_id) - alphanumeric and hyphens only."""
+    if not value:
+        return ''
+    # Only allow alphanumeric, hyphens, and underscores
+    return re.sub(r'[^a-zA-Z0-9_-]', '', value)
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
@@ -77,9 +95,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
 def query_customer_health(params: Dict[str, str]) -> Dict[str, Any]:
     """Query customer health scores from Athena."""
-    min_score = params.get('min_score', '0')
-    max_score = params.get('max_score', '100')
-    limit = params.get('limit', '100')
+    min_score = sanitize_int(params.get('min_score', '0'), 0, 0, 100)
+    max_score = sanitize_int(params.get('max_score', '100'), 100, 0, 100)
+    limit = sanitize_int(params.get('limit', '100'), 100, 1, 1000)
     
     query = f"""
     SELECT 
@@ -93,7 +111,7 @@ def query_customer_health(params: Dict[str, str]) -> Dict[str, Any]:
     WHERE health_score BETWEEN {min_score} AND {max_score}
     ORDER BY health_score ASC
     LIMIT {limit}
-    """
+    """  # nosec B608 - inputs are sanitized integers
     
     results = execute_athena_query(query)
     
@@ -108,7 +126,7 @@ def query_customer_health(params: Dict[str, str]) -> Dict[str, Any]:
 
 def query_at_risk_customers(params: Dict[str, str]) -> Dict[str, Any]:
     """Get list of at-risk customers."""
-    limit = params.get('limit', '50')
+    limit = sanitize_int(params.get('limit', '50'), 50, 1, 1000)
     
     query = f"""
     SELECT 
@@ -121,7 +139,7 @@ def query_at_risk_customers(params: Dict[str, str]) -> Dict[str, Any]:
     WHERE health_score < 70
     ORDER BY health_score ASC, total_revenue DESC
     LIMIT {limit}
-    """
+    """  # nosec B608 - limit is sanitized integer
     
     results = execute_athena_query(query)
     
@@ -133,7 +151,6 @@ def query_at_risk_customers(params: Dict[str, str]) -> Dict[str, Any]:
 def query_root_causes(params: Dict[str, str]) -> Dict[str, Any]:
     """Get root causes for declining customer sentiment and health."""
     
-    # Query 1: Issue category trends
     issue_query = f"""
     SELECT 
         month_label,
@@ -145,9 +162,8 @@ def query_root_causes(params: Dict[str, str]) -> Dict[str, Any]:
     FROM {GLUE_DATABASE}.issue_categories_view
     ORDER BY month_date DESC
     LIMIT 6
-    """
+    """  # nosec B608 - no user input
     
-    # Query 2: Health and NPS correlation
     health_query = f"""
     SELECT 
         month_label,
@@ -158,9 +174,8 @@ def query_root_causes(params: Dict[str, str]) -> Dict[str, Any]:
     FROM {GLUE_DATABASE}.kpi_trends
     ORDER BY month_date DESC
     LIMIT 6
-    """
+    """  # nosec B608 - no user input
     
-    # Query 3: Customer health by segment
     segment_query = f"""
     SELECT 
         health_segment,
@@ -170,7 +185,7 @@ def query_root_causes(params: Dict[str, str]) -> Dict[str, Any]:
     FROM {GLUE_DATABASE}.customer_health_scores
     GROUP BY health_segment
     ORDER BY avg_health DESC
-    """
+    """  # nosec B608 - no user input
     
     issue_trends = execute_athena_query(issue_query)
     health_trends = execute_athena_query(health_query)
@@ -200,7 +215,10 @@ def query_root_causes(params: Dict[str, str]) -> Dict[str, Any]:
 
 def query_customer_360(params: Dict[str, str]) -> Dict[str, Any]:
     """Get complete customer 360 view."""
-    customer_id = params.get('customer_id', '')
+    customer_id = sanitize_identifier(params.get('customer_id', ''))
+    
+    if not customer_id:
+        return {'error': 'Invalid customer_id'}
     
     query = f"""
     SELECT 
@@ -211,7 +229,7 @@ def query_customer_360(params: Dict[str, str]) -> Dict[str, Any]:
         last_interaction_date
     FROM {GLUE_DATABASE}.customer_health
     WHERE customer_id = '{customer_id}'
-    """
+    """  # nosec B608 - customer_id is sanitized
     
     results = execute_athena_query(query)
     
@@ -226,7 +244,7 @@ def query_dashboard_metrics(params: Dict[str, str]) -> Dict[str, Any]:
         SUM(total_revenue) as total_clv,
         SUM(CASE WHEN health_score < 40 THEN total_revenue ELSE 0 END) as revenue_at_risk
     FROM {GLUE_DATABASE}.customer_health
-    """
+    """  # nosec B608 - no user input
     
     results = execute_athena_query(query)
     
@@ -234,7 +252,7 @@ def query_dashboard_metrics(params: Dict[str, str]) -> Dict[str, Any]:
 
 def query_customer_trends(params: Dict[str, str]) -> Dict[str, Any]:
     """Query customer health trends over time."""
-    days = params.get('days', '30')
+    days = sanitize_int(params.get('days', '30'), 30, 1, 365)
     
     query = f"""
     SELECT 
@@ -247,7 +265,7 @@ def query_customer_trends(params: Dict[str, str]) -> Dict[str, Any]:
     WHERE snapshot_date >= CURRENT_DATE - INTERVAL '{days}' DAY
     GROUP BY DATE(snapshot_date)
     ORDER BY date DESC
-    """
+    """  # nosec B608 - days is sanitized integer
     
     results = execute_athena_query(query)
     

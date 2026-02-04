@@ -1,0 +1,5 @@
+# Checkov configuration
+skip-check:
+  # Access logs bucket cannot log to itself (circular dependency)
+  - CKV_AWS_18:
+      - "deployment/cdk/cdk.out/cx360-dev-data-lake.template.json:AccessLogsBucket*"

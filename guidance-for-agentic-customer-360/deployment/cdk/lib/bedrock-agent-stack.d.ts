@@ -10,6 +10,7 @@ export interface BedrockAgentStackProps extends cdk.StackProps {
     readonly athenaWorkgroup: string;
     readonly auroraCluster: rds.DatabaseCluster;
     readonly auroraSecret: secretsmanager.ISecret;
+    readonly accessLogsBucket?: s3.IBucket;
 }
 export declare class BedrockAgentStack extends cdk.Stack {
     readonly knowledgeBase: bedrock.CfnKnowledgeBase;

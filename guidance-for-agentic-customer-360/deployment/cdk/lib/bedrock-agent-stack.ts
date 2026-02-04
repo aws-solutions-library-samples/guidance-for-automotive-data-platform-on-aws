@@ -13,6 +13,7 @@ export interface BedrockAgentStackProps extends cdk.StackProps {
   readonly athenaWorkgroup: string;
   readonly auroraCluster: rds.DatabaseCluster;
   readonly auroraSecret: secretsmanager.ISecret;
+  readonly accessLogsBucket?: s3.IBucket;
 }
 
 export class BedrockAgentStack extends cdk.Stack {
@@ -29,6 +30,10 @@ export class BedrockAgentStack extends cdk.Stack {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
       autoDeleteObjects: false,
+      versioned: true,  // CKV_AWS_21: Enable versioning
+      serverAccessLogsBucket: props.accessLogsBucket,  // CKV_AWS_18: Enable access logging
+      serverAccessLogsPrefix: 'knowledge-base-logs/',
+      enforceSSL: true,
     });
 
     // Bedrock service role for Knowledge Base

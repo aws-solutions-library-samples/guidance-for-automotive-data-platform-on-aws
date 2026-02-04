@@ -22,6 +22,22 @@ export class EtlStack extends cdk.Stack {
 
     props.dataLakeBucket.grantReadWrite(glueRole);
 
+    // Glue Security Configuration (CKV_AWS_195)
+    const securityConfig = new glue.CfnSecurityConfiguration(this, 'GlueSecurityConfig', {
+      name: 'cx360-glue-security-config',
+      encryptionConfiguration: {
+        s3Encryptions: [{
+          s3EncryptionMode: 'SSE-S3',
+        }],
+        cloudWatchEncryption: {
+          cloudWatchEncryptionMode: 'SSE-KMS',
+        },
+        jobBookmarksEncryption: {
+          jobBookmarksEncryptionMode: 'CSE-KMS',
+        },
+      },
+    });
+
     // Customer 360 Transform Job
     new glue.CfnJob(this, 'Customer360Job', {
       name: 'cx-customer-360-transform',
@@ -40,6 +56,7 @@ export class EtlStack extends cdk.Stack {
       timeout: 60,
       numberOfWorkers: 5,
       workerType: 'G.1X',
+      securityConfiguration: securityConfig.name,  // CKV_AWS_195: Associate security config
     });
 
     new cdk.CfnOutput(this, 'GlueRoleArn', {

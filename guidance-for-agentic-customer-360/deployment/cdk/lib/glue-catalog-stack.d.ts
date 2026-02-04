@@ -9,4 +9,5 @@ export declare class GlueCatalogStack extends cdk.Stack {
     readonly database: glue.CfnDatabase;
     constructor(scope: Construct, id: string, props: GlueCatalogStackProps);
     private createTable;
+    private createCSVTable;
 }

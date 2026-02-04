@@ -197,36 +197,28 @@ phase3: ## Generate data
 		--query 'Stacks[0].Outputs[?OutputKey==`DataLakeBucket`].OutputValue' \
 		--output text \
 		--profile $(AWS_PROFILE) \
-		--region $(AWS_REGION)); \
+		--region $(AWS_REGION) 2>/dev/null || echo "automotive-cx-data-lake-$$(aws sts get-caller-identity --profile $(AWS_PROFILE) --query Account --output text)"); \
+	echo "Using bucket: $$BUCKET"; \
 	cd source/synthetic-data && \
 		python3 generate_s3_data.py \
 		--customers $(CUSTOMER_COUNT) \
 		--bucket $$BUCKET \
 		--profile $(AWS_PROFILE)
 	@echo ""
-	@echo "$(GREEN)Running Glue crawler...$(NC)"
-	@aws glue start-crawler \
-		--name cx-analytics-crawler \
+	@echo "$(GREEN)Ensuring cx_analytics database exists...$(NC)"
+	@aws glue create-database \
+		--database-input '{"Name":"cx_analytics","Description":"Customer 360 Analytics"}' \
 		--region $(AWS_REGION) \
-		--profile $(AWS_PROFILE) || echo "$(YELLOW)Crawler not found, skipping$(NC)"
-	@echo "$(YELLOW)Waiting for crawler to complete...$(NC)"
-	@while [ "$$(aws glue get-crawler --name cx-analytics-crawler --region $(AWS_REGION) --profile $(AWS_PROFILE) --query 'Crawler.State' --output text 2>/dev/null)" = "RUNNING" ]; do \
-		echo "  Crawler still running..."; \
-		sleep 10; \
-	done
-	@echo "$(GREEN)✓ Crawler complete$(NC)"
+		--profile $(AWS_PROFILE) 2>/dev/null || echo "$(YELLOW)Database already exists$(NC)"
 	@echo ""
-	@echo "$(GREEN)Creating Athena views...$(NC)"
-	@for file in source/athena-queries/create_*_view.sql; do \
-		[ -f "$$file" ] && aws athena start-query-execution \
-			--query-string "$$(cat $$file)" \
-			--query-execution-context Database=cx_analytics \
-			--result-configuration OutputLocation=s3://$$BUCKET/athena-results/ \
-			--work-group cx-analytics-workgroup \
-			--region $(AWS_REGION) \
-			--profile $(AWS_PROFILE) \
-			--output text > /dev/null || true; \
-	done
+	@echo "$(GREEN)Creating Athena tables and views...$(NC)"
+	@BUCKET=$$(aws cloudformation describe-stacks \
+		--stack-name $(STACK_PREFIX)-data-lake \
+		--query 'Stacks[0].Outputs[?OutputKey==`DataLakeBucket`].OutputValue' \
+		--output text \
+		--profile $(AWS_PROFILE) \
+		--region $(AWS_REGION) 2>/dev/null || echo "automotive-cx-data-lake-$$(aws sts get-caller-identity --profile $(AWS_PROFILE) --query Account --output text)"); \
+	source/scripts/create_athena_tables.sh $$BUCKET $(AWS_PROFILE) $(AWS_REGION)
 	@echo "$(GREEN)✓ Phase 3 complete$(NC)"
 
 phase4: ## Deploy QuickSight dashboards
