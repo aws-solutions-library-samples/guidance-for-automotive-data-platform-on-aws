@@ -36,29 +36,97 @@ Resources:
                 - lakeformation.amazonaws.com
                 - glue.amazonaws.com
             Action: sts:AssumeRole
-          - Effect: Allow
-            Principal:
-              AWS: '*'
-            Action: sts:AssumeRole
             Condition:
               StringEquals:
-                aws:PrincipalAccount: !Ref AWS::AccountId
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
-        - arn:aws:iam::aws:policy/AmazonRedshiftFullAccess
-        - arn:aws:iam::aws:policy/AmazonS3FullAccess
-        - arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess
-        - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
+                aws:SourceAccount: !Ref AWS::AccountId
       Policies:
-        - PolicyName: DataZoneAccess
+        - PolicyName: DataZoneExecutionPolicy
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-              - Effect: Allow
+              - Sid: SageMakerAccess
+                Effect: Allow
                 Action:
-                  - datazone:*
-                  - lakeformation:*
+                  - sagemaker:Describe*
+                  - sagemaker:List*
+                  - sagemaker:Search
+                  - sagemaker:CreateDomain
+                  - sagemaker:CreateUserProfile
+                  - sagemaker:CreateApp
+                  - sagemaker:DeleteDomain
+                  - sagemaker:DeleteUserProfile
+                  - sagemaker:DeleteApp
+                Resource: !Sub arn:aws:sagemaker:${AWS::Region}:${AWS::AccountId}:*
+              - Sid: S3Access
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                  - s3:GetBucketLocation
+                  - s3:CreateBucket
+                  - s3:PutBucketPolicy
+                  - s3:PutBucketVersioning
+                  - s3:PutEncryptionConfiguration
+                Resource:
+                  - !Sub arn:aws:s3:::datazone-*-${AWS::AccountId}
+                  - !Sub arn:aws:s3:::datazone-*-${AWS::AccountId}/*
+                  - !Sub arn:aws:s3:::automotive-*-${AWS::AccountId}
+                  - !Sub arn:aws:s3:::automotive-*-${AWS::AccountId}/*
+              - Sid: GlueAccess
+                Effect: Allow
+                Action:
+                  - glue:GetDatabase*
+                  - glue:GetTable*
+                  - glue:GetPartition*
+                  - glue:BatchGetPartition
+                  - glue:CreateDatabase
+                  - glue:CreateTable
+                  - glue:UpdateDatabase
+                  - glue:UpdateTable
+                Resource:
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:catalog
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:database/*
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:table/*/*
+              - Sid: AthenaAccess
+                Effect: Allow
+                Action:
+                  - athena:GetQueryExecution
+                  - athena:GetQueryResults
+                  - athena:StartQueryExecution
+                  - athena:GetWorkGroup
+                Resource:
+                  - !Sub arn:aws:athena:${AWS::Region}:${AWS::AccountId}:workgroup/*
+              # checkov:skip=CKV_AWS_111:Lake Formation operations require wildcard resource
+              - Sid: LakeFormationAccess
+                Effect: Allow
+                Action:
+                  - lakeformation:GetDataAccess
+                  - lakeformation:GrantPermissions
+                  - lakeformation:RevokePermissions
+                  - lakeformation:RegisterResource
+                  - lakeformation:DeregisterResource
                 Resource: '*'
+              # checkov:skip=CKV_AWS_111:DataZone operations require wildcard resource
+              - Sid: DataZoneAccess
+                Effect: Allow
+                Action:
+                  - datazone:Get*
+                  - datazone:List*
+                  - datazone:CreateEnvironment
+                  - datazone:DeleteEnvironment
+                  - datazone:CreateProject
+                  - datazone:DeleteProject
+                Resource: '*'
+              - Sid: RedshiftAccess
+                Effect: Allow
+                Action:
+                  - redshift:Describe*
+                  - redshift:GetClusterCredentials
+                Resource:
+                  - !Sub arn:aws:redshift:${AWS::Region}:${AWS::AccountId}:cluster:*
+                  - !Sub arn:aws:redshift:${AWS::Region}:${AWS::AccountId}:dbname:*/*
+                  - !Sub arn:aws:redshift:${AWS::Region}:${AWS::AccountId}:dbuser:*/*
 
   # Domain Service Role
   DomainServiceRole:
@@ -72,17 +140,40 @@ Resources:
             Principal:
               Service: datazone.amazonaws.com
             Action: sts:AssumeRole
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonDataZoneFullAccess
+            Condition:
+              StringEquals:
+                aws:SourceAccount: !Ref AWS::AccountId
       Policies:
         - PolicyName: DataZoneServicePolicy
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-              - Effect: Allow
+              # checkov:skip=CKV_AWS_111:DataZone domain operations require wildcard resource
+              - Sid: DataZoneAccess
+                Effect: Allow
                 Action:
-                  - sso:*
-                  - identitystore:*
+                  - datazone:Get*
+                  - datazone:List*
+                  - datazone:CreateDomain
+                  - datazone:DeleteDomain
+                  - datazone:UpdateDomain
+                Resource: '*'
+              - Sid: SSOAccess
+                Effect: Allow
+                Action:
+                  - sso:DescribeInstance
+                  - sso:ListInstances
+                  - sso:GetApplicationAssignmentConfiguration
+                  - sso:ListApplicationAssignments
+                Resource: !Ref IdentityCenterInstanceArn
+              # checkov:skip=CKV_AWS_111:IdentityStore operations require wildcard resource
+              - Sid: IdentityStoreAccess
+                Effect: Allow
+                Action:
+                  - identitystore:DescribeUser
+                  - identitystore:DescribeGroup
+                  - identitystore:ListUsers
+                  - identitystore:ListGroups
                 Resource: '*'
 
   # DataZone Domain with SSO

@@ -243,7 +243,9 @@ function compareJsonsWithRegex(jsonWithPattern, jsonToMatch) {
   }
 
   for (const key in jsonWithPattern) {
-    var re = new RegExp(`^${jsonWithPattern[key]}$`);
+    // Escape special regex characters in the pattern value to prevent ReDoS
+    const escapedPattern = String(jsonWithPattern[key]).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    var re = new RegExp(`^${escapedPattern}$`); // nosemgrep: javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
     if (!re.test(jsonToMatch[key])) {
       return false;
     }

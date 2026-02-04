@@ -2,17 +2,16 @@
 
 ## ✅ Completed
 
-### Infrastructure Deployed to Account: 022035076260
+### Infrastructure Deployed
 
 **1. CXDataLakeStack**
-- S3 Bucket: `automotive-cx-data-lake-022035076260`
+- S3 Bucket: `automotive-cx-data-lake-<ACCOUNT_ID>`
 - Glue Database: `cx_analytics`
 - Status: ✅ DEPLOYED
 
 **2. CXCRMStack**
-- Aurora Cluster: `cxcrmstack-cxcrmcluster6c40befe-gzycdxj7qfiu.cluster-cnqi2n6fm8jq.us-east-1.rds.amazonaws.com`
+- Aurora Cluster: Serverless v2 PostgreSQL 15.8
 - Database: `cx_crm`
-- Version: PostgreSQL 15.8 Serverless v2
 - Secret: `arn:aws:secretsmanager:us-east-1:022035076260:secret:cx-crm-db-credentials-sHsXy9`
 - Status: ✅ DEPLOYED
 

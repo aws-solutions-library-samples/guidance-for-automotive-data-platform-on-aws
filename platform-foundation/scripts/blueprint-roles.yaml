@@ -21,21 +21,64 @@ Resources:
             Condition:
               StringEquals:
                 aws:SourceAccount: !Ref AWS::AccountId
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
       Policies:
         - PolicyName: DataZoneManageAccess
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-              - Effect: Allow
+              - Sid: SageMakerAccess
+                Effect: Allow
                 Action:
-                  - sagemaker:*
-                  - s3:*
-                  - glue:*
-                  - athena:*
-                  - lakeformation:*
+                  - sagemaker:Describe*
+                  - sagemaker:List*
+                  - sagemaker:Search
+                Resource: !Sub arn:aws:sagemaker:${AWS::Region}:${AWS::AccountId}:*
+              - Sid: S3Access
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                  - s3:GetBucketLocation
+                Resource:
+                  - !Sub arn:aws:s3:::datazone-*-${AWS::AccountId}
+                  - !Sub arn:aws:s3:::datazone-*-${AWS::AccountId}/*
+                  - !Sub arn:aws:s3:::automotive-*-${AWS::AccountId}
+                  - !Sub arn:aws:s3:::automotive-*-${AWS::AccountId}/*
+              - Sid: GlueAccess
+                Effect: Allow
+                Action:
+                  - glue:GetDatabase*
+                  - glue:GetTable*
+                  - glue:GetPartition*
+                  - glue:BatchGetPartition
+                Resource:
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:catalog
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:database/*
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:table/*/*
+              - Sid: AthenaAccess
+                Effect: Allow
+                Action:
+                  - athena:GetQueryExecution
+                  - athena:GetQueryResults
+                  - athena:StartQueryExecution
+                  - athena:GetWorkGroup
+                Resource:
+                  - !Sub arn:aws:athena:${AWS::Region}:${AWS::AccountId}:workgroup/*
+              # checkov:skip=CKV_AWS_111:Lake Formation operations require wildcard resource
+              - Sid: LakeFormationAccess
+                Effect: Allow
+                Action:
+                  - lakeformation:GetDataAccess
+                  - lakeformation:GrantPermissions
+                  - lakeformation:RevokePermissions
                 Resource: '*'
+              - Sid: DataZoneAccess
+                Effect: Allow
+                Action:
+                  - datazone:Get*
+                  - datazone:List*
+                Resource: !Sub arn:aws:datazone:${AWS::Region}:${AWS::AccountId}:domain/${DomainId}
 
   ProvisioningRole:
     Type: AWS::IAM::Role
@@ -51,24 +94,106 @@ Resources:
             Condition:
               StringEquals:
                 aws:SourceAccount: !Ref AWS::AccountId
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
       Policies:
         - PolicyName: DataZoneProvisioning
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-              - Effect: Allow
+              - Sid: SageMakerProvisioning
+                Effect: Allow
                 Action:
-                  - sagemaker:*
-                  - ec2:*
-                  - s3:*
-                  - glue:*
-                  - athena:*
+                  - sagemaker:CreateDomain
+                  - sagemaker:CreateUserProfile
+                  - sagemaker:CreateApp
+                  - sagemaker:DeleteDomain
+                  - sagemaker:DeleteUserProfile
+                  - sagemaker:DeleteApp
+                  - sagemaker:Describe*
+                  - sagemaker:List*
+                Resource: !Sub arn:aws:sagemaker:${AWS::Region}:${AWS::AccountId}:*
+              - Sid: EC2Networking
+                Effect: Allow
+                Action:
+                  - ec2:DescribeVpcs
+                  - ec2:DescribeSubnets
+                  - ec2:DescribeSecurityGroups
+                  - ec2:DescribeNetworkInterfaces
+                Resource: '*'
+              - Sid: EC2NetworkInterfaceManagement
+                Effect: Allow
+                Action:
+                  - ec2:CreateNetworkInterface
+                  - ec2:DeleteNetworkInterface
+                Resource: !Sub arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:*
+                Condition:
+                  StringEquals:
+                    aws:RequestedRegion: !Ref AWS::Region
+              - Sid: S3Provisioning
+                Effect: Allow
+                Action:
+                  - s3:CreateBucket
+                  - s3:PutBucketPolicy
+                  - s3:PutBucketVersioning
+                  - s3:PutEncryptionConfiguration
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                Resource:
+                  - !Sub arn:aws:s3:::datazone-*-${AWS::AccountId}
+                  - !Sub arn:aws:s3:::datazone-*-${AWS::AccountId}/*
+              - Sid: GlueProvisioning
+                Effect: Allow
+                Action:
+                  - glue:CreateDatabase
+                  - glue:CreateTable
+                  - glue:UpdateDatabase
+                  - glue:UpdateTable
+                  - glue:DeleteDatabase
+                  - glue:DeleteTable
+                  - glue:GetDatabase*
+                  - glue:GetTable*
+                Resource:
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:catalog
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:database/*
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:table/*/*
+              - Sid: AthenaProvisioning
+                Effect: Allow
+                Action:
+                  - athena:CreateWorkGroup
+                  - athena:DeleteWorkGroup
+                  - athena:GetWorkGroup
+                  - athena:UpdateWorkGroup
+                Resource: !Sub arn:aws:athena:${AWS::Region}:${AWS::AccountId}:workgroup/*
+              - Sid: IAMPassRole
+                Effect: Allow
+                Action:
                   - iam:PassRole
                   - iam:GetRole
-                  - cloudformation:*
-                Resource: '*'
+                Resource: !Sub arn:aws:iam::${AWS::AccountId}:role/datazone-*
+                Condition:
+                  StringEquals:
+                    iam:PassedToService:
+                      - sagemaker.amazonaws.com
+                      - glue.amazonaws.com
+              - Sid: CloudFormationProvisioning
+                Effect: Allow
+                Action:
+                  - cloudformation:CreateStack
+                  - cloudformation:UpdateStack
+                  - cloudformation:DeleteStack
+                  - cloudformation:DescribeStacks
+                  - cloudformation:DescribeStackEvents
+                Resource: !Sub arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/datazone-*/*
+              - Sid: DataZoneProvisioning
+                Effect: Allow
+                Action:
+                  - datazone:CreateEnvironment
+                  - datazone:DeleteEnvironment
+                  - datazone:CreateProject
+                  - datazone:DeleteProject
+                  - datazone:Get*
+                  - datazone:List*
+                Resource: !Sub arn:aws:datazone:${AWS::Region}:${AWS::AccountId}:domain/${DomainId}
 
 Outputs:
   ManageAccessRoleArn:

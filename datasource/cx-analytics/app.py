@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import aws_cdk as cdk
 from cx_crm_stack import CXCRMStack
 from cx_datalake_stack import CXDataLakeStack
@@ -7,10 +8,10 @@ import aws_cdk.aws_ec2 as ec2
 
 app = cdk.App()
 
-# Configuration
-account = "022035076260"
-region = "us-east-1"
-vpc_id = "vpc-024321762db961284"
+# Configuration from environment variables
+account = os.environ.get("CDK_DEFAULT_ACCOUNT", os.environ.get("AWS_ACCOUNT_ID"))
+region = os.environ.get("CDK_DEFAULT_REGION", os.environ.get("AWS_REGION", "us-east-1"))
+vpc_id = os.environ.get("VPC_ID", "")
 
 env = cdk.Environment(account=account, region=region)
 

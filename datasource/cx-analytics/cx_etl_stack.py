@@ -45,9 +45,9 @@ class CXETLStack(Stack):
             resources=["*"]
         ))
 
-        # Create scripts directory
-        scripts_dir = "/tmp/cx_glue_scripts"
-        os.makedirs(scripts_dir, exist_ok=True)
+        # Create scripts directory using tempfile for secure temp directory
+        import tempfile
+        scripts_dir = tempfile.mkdtemp(prefix="cx_glue_scripts_")  # nosec B108
 
         # 1. Aurora to S3 Export Script
         export_script = """import sys
