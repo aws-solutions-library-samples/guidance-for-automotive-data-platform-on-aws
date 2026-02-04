@@ -2,6 +2,8 @@ import * as cdk from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as rds from 'aws-cdk-lib/aws-rds';
 import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
+import * as kms from 'aws-cdk-lib/aws-kms';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
 
 export interface AuroraPgVectorStackProps extends cdk.StackProps {
@@ -15,6 +17,13 @@ export class AuroraPgVectorStack extends cdk.Stack {
 
   constructor(scope: Construct, id: string, props?: AuroraPgVectorStackProps) {
     super(scope, id, props);
+
+    // KMS key for encrypting secrets (CKV_AWS_149)
+    const kmsKey = new kms.Key(this, 'SecretsKey', {
+      enableKeyRotation: true,
+      description: 'KMS key for Aurora secrets encryption',
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
+    });
 
     // Use existing VPC or default VPC
     let vpc: ec2.IVpc;
@@ -66,6 +75,14 @@ export class AuroraPgVectorStack extends cdk.Stack {
       ? { subnets: createdPrivateSubnets }
       : { subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS };
 
+    // IAM role for enhanced monitoring (CKV_AWS_118)
+    const monitoringRole = new iam.Role(this, 'MonitoringRole', {
+      assumedBy: new iam.ServicePrincipal('monitoring.rds.amazonaws.com'),
+      managedPolicies: [
+        iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AmazonRDSEnhancedMonitoringRole'),
+      ],
+    });
+
     // Create Aurora Serverless v2 cluster with PostgreSQL
     this.cluster = new rds.DatabaseCluster(this, 'AuroraCluster', {
       engine: rds.DatabaseClusterEngine.auroraPostgres({
@@ -82,8 +99,15 @@ export class AuroraPgVectorStack extends cdk.Stack {
       securityGroups: [dbSecurityGroup],
       defaultDatabaseName: 'vectordb',
       storageEncrypted: true,
+      storageEncryptionKey: kmsKey,  // Use KMS CMK for storage encryption
       removalPolicy: cdk.RemovalPolicy.SNAPSHOT,
-      enableDataApi: true,  // Enable RDS Data API for SQL execution without psql
+      enableDataApi: true,
+      iamAuthentication: true,  // CKV_AWS_162: Enable IAM authentication
+      monitoringInterval: cdk.Duration.seconds(60),  // CKV_AWS_118: Enable enhanced monitoring
+      monitoringRole: monitoringRole,
+      credentials: rds.Credentials.fromGeneratedSecret('cx_admin', {
+        encryptionKey: kmsKey,  // CKV_AWS_149: Encrypt secret with KMS CMK
+      }),
     });
 
     this.secret = this.cluster.secret!;

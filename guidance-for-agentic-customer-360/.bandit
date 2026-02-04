@@ -1,0 +1,4 @@
+[bandit]
+# Skip B311 (random) warnings in synthetic data generators - intentional for test data
+skips: B311
+exclude_dirs: node_modules,cdk.out,.venv,probeout,ash-output

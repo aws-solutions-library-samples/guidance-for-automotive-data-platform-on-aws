@@ -42,3 +42,7 @@ quicksight_users.json
 
 # AWS
 .aws-sam/
+
+# Security scan outputs
+probeout/
+ash-output/

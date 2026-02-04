@@ -13,18 +13,27 @@ const env = {
   region: process.env.AWS_REGION || 'us-east-1',
 };
 
+// Solution ID for tracking deployments
+const solutionId = 'SO6164';
+const solutionDescription = `Guidance for an Automotive Data Platform on AWS (${solutionId})`;
+
 // Phase 1: Data Lake
-const dataLake = new DataLakeStack(app, `cx360-${stage}-data-lake`, { env });
+const dataLake = new DataLakeStack(app, `cx360-${stage}-data-lake`, { 
+  env,
+  description: solutionDescription,
+});
 
 // Phase 1: Glue Catalog
 const glueCatalog = new GlueCatalogStack(app, `cx360-${stage}-glue`, {
   env,
+  description: solutionDescription,
   dataLakeBucket: dataLake.bucket,
 });
 
 // Phase 2: ETL
 new EtlStack(app, `cx360-${stage}-etl`, {
   env,
+  description: solutionDescription,
   dataLakeBucket: dataLake.bucket,
   glueDatabase: glueCatalog.database,
 });
@@ -33,6 +42,7 @@ new EtlStack(app, `cx360-${stage}-etl`, {
 const { AthenaStack } = require('../lib/athena-stack');
 const athena = new AthenaStack(app, `cx360-${stage}-athena`, {
   env,
+  description: solutionDescription,
   dataLakeBucket: dataLake.bucket,
   glueDatabase: glueCatalog.database,
 });
@@ -41,6 +51,7 @@ const athena = new AthenaStack(app, `cx360-${stage}-athena`, {
 const { QuickSightStack } = require('../lib/quicksight-stack');
 new QuickSightStack(app, `cx360-${stage}-quicksight`, {
   env,
+  description: solutionDescription,
   athenaWorkgroup: athena.workgroup.name,
   glueDatabase: glueCatalog.database.databaseName,
 });
@@ -48,18 +59,21 @@ new QuickSightStack(app, `cx360-${stage}-quicksight`, {
 // Phase 5: Aurora PostgreSQL with pgvector
 const aurora = new AuroraPgVectorStack(app, `cx360-${stage}-aurora`, { 
   env,
-  useDefaultVpc: true  // Use default VPC to avoid VPC limit
+  description: solutionDescription,
+  useDefaultVpc: true,
 });
 
 // Phase 5: Bedrock Agents
 const { BedrockAgentStack } = require('../lib/bedrock-agent-stack');
 new BedrockAgentStack(app, `cx360-${stage}-bedrock`, {
   env,
+  description: solutionDescription,
   dataLakeBucket: dataLake.bucket,
   glueDatabase: glueCatalog.database.databaseName,
   athenaWorkgroup: athena.workgroup.name,
   auroraCluster: aurora.cluster,
   auroraSecret: aurora.secret,
+  accessLogsBucket: dataLake.accessLogsBucket,  // Share access logs bucket
 });
 
 app.synth();

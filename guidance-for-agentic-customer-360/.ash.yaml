@@ -1,0 +1,27 @@
+# ASH Configuration
+exclude_paths:
+  - "cdk.out"
+  - "node_modules"
+  - "probeout"
+  - "ash-output"
+  - ".venv"
+
+scanner_settings:
+  detect-secrets:
+    exclude_files:
+      - "probeout/**"
+      - "ash-output/**"
+      - "node_modules/**"
+      - "cdk.out/**"
+      - ".venv/**"
+  bandit:
+    exclude_dirs:
+      - node_modules
+      - cdk.out
+      - probeout
+      - ash-output
+      - .venv
+  checkov:
+    skip_paths:
+      - "cdk.out"
+      - "node_modules"

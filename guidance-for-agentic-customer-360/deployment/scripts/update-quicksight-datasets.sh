@@ -1,12 +1,11 @@
 #!/bin/bash
 
 # Update QuickSight datasets to use new Athena views
-# Account: 195026230833
-# Region: us-east-1
+# Uses environment variables for account configuration
 
-ACCOUNT_ID="195026230833"
-REGION="us-east-1"
-DATA_SOURCE_ARN="arn:aws:quicksight:us-east-1:195026230833:datasource/cx-analytics-athena"
+ACCOUNT_ID="${AWS_ACCOUNT_ID:-$(aws sts get-caller-identity --query Account --output text)}"
+REGION="${AWS_REGION:-us-east-1}"
+DATA_SOURCE_ARN="arn:aws:quicksight:${REGION}:${ACCOUNT_ID}:datasource/cx-analytics-athena"
 
 # Dataset mappings: dataset-id -> view-name
 declare -A DATASETS
