@@ -40,3 +40,18 @@ Thumbs.db
 # Logs
 *.log
 ash-output/
+
+# Deployment outputs
+*.env
+stack-outputs.env
+datazone-outputs.env
+
+# Large data files
+platform-foundation/source/input_data/*.csv
+
+# Lambda layer binaries
+datasource/cx-analytics/lambda-layer/
+datasource/cx-analytics/psycopg2-layer.zip
+
+# DSR artifacts (internal)
+dsr-artifacts/
