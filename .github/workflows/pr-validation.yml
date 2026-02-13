@@ -18,7 +18,7 @@ jobs:
           echo "Scanning for hardcoded 12-digit account numbers..."
           FOUND=$(grep -rn '[0-9]\{12\}' \
             --include="*.py" --include="*.sh" --include="*.ts" --include="*.yaml" --include="*.yml" --include="*.sql" \
-            --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=cdk.out --exclude-dir=__pycache__ \
+            --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=venv --exclude-dir=venv --exclude-dir=cdk.out --exclude-dir=__pycache__ \
             --exclude-dir=generated-diagrams --exclude-dir=ash-output \
             --exclude="poetry.lock" --exclude="package-lock.json" --exclude="cdk.context.json" \
             | grep -v '{{ACCOUNT_ID}}\|{{REGION}}\|{{DATA_LAKE_BUCKET}}' \
@@ -45,7 +45,7 @@ jobs:
             -e "password='" \
             -e '\.cluster-[a-z0-9]\+\.[a-z0-9-]\+\.rds\.amazonaws\.com' \
             --include="*.py" --include="*.sh" --include="*.ts" --include="*.md" \
-            --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=cdk.out --exclude-dir=__pycache__ \
+            --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=venv --exclude-dir=cdk.out --exclude-dir=__pycache__ \
             --exclude-dir=generated-diagrams --exclude-dir=ash-output \
             | grep -v 'os\.environ\|secretsmanager\|SecretString\|get_secret\|DB_PASSWORD\}' \
             | grep -v 'example\|placeholder\|<your-' \
@@ -65,7 +65,7 @@ jobs:
             -e '/Users/' \
             -e '/home/' \
             --include="*.py" --include="*.sh" --include="*.ts" --include="*.md" --include="*.yaml" --include="*.sql" --include="*.json" \
-            --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=cdk.out --exclude-dir=__pycache__ \
+            --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=venv --exclude-dir=cdk.out --exclude-dir=__pycache__ \
             --exclude-dir=generated-diagrams --exclude-dir=ash-output \
             --exclude="package-lock.json" --exclude="poetry.lock" \
             || true)
@@ -163,14 +163,14 @@ jobs:
         run: |
           flake8 \
             --max-line-length=150 \
-            --exclude=node_modules,.venv,cdk.out,__pycache__,generated-diagrams,ash-output \
+            --exclude=node_modules,.venv,venv,cdk.out,__pycache__,generated-diagrams,ash-output \
             --select=E9,F63,F7,F82 \
             .
 
       - name: Bandit - security scan
         run: |
           bandit -r \
-            --exclude=node_modules,.venv,cdk.out,__pycache__,generated-diagrams,ash-output \
+            --exclude=node_modules,.venv,venv,cdk.out,__pycache__,generated-diagrams,ash-output \
             --skip=B101 \
             -ll \
             . || true
