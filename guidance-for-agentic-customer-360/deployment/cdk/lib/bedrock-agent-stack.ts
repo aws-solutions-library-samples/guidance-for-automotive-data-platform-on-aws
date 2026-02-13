@@ -25,10 +25,10 @@ export class BedrockAgentStack extends cdk.Stack {
 
     // Knowledge Base S3 bucket for documentation
     const kbBucket = new s3.Bucket(this, 'KnowledgeBaseBucket', {
-      bucketName: `cx360-knowledge-base-${this.account}`,
       encryption: s3.BucketEncryption.S3_MANAGED,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
       autoDeleteObjects: false,
       versioned: true,  // CKV_AWS_21: Enable versioning
       serverAccessLogsBucket: props.accessLogsBucket,  // CKV_AWS_18: Enable access logging

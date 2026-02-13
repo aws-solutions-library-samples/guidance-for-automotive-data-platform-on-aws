@@ -10,10 +10,23 @@ echo "Installing Python packages..."
 pip3 install psycopg2-binary faker boto3 pandas pyarrow --user
 
 echo "Setting up environment..."
-export DB_HOST=cxcrmstack-cxcrmcluster6c40befe-gzycdxj7qfiu.cluster-cnqi2n6fm8jq.us-east-1.rds.amazonaws.com
-export DB_USER=cx_admin
-export DB_NAME=cx_crm
-export DB_PASSWORD='2on,7FtaYCH.SvW10,_bW5d5AJqIzE'
+# Retrieve database credentials from Secrets Manager
+SECRET_ARN=$(aws secretsmanager list-secrets --filter Key=name,Values=CxCrm --query 'SecretList[0].ARN' --output text 2>/dev/null)
+if [ -n "$SECRET_ARN" ] && [ "$SECRET_ARN" != "None" ]; then
+  echo "Loading credentials from Secrets Manager..."
+  SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id "$SECRET_ARN" --query SecretString --output text)
+  export DB_HOST=$(echo "$SECRET_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['host'])")
+  export DB_USER=$(echo "$SECRET_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['username'])")
+  export DB_PASSWORD=$(echo "$SECRET_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['password'])")
+  export DB_NAME=$(echo "$SECRET_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin).get('dbname','cx_crm'))")
+else
+  echo "Secrets Manager secret not found. Set these environment variables manually:"
+  echo "  export DB_HOST=<your-aurora-cluster-endpoint>"
+  echo "  export DB_USER=<your-db-username>"
+  echo "  export DB_PASSWORD=<your-db-password>"
+  echo "  export DB_NAME=cx_crm"
+  exit 1
+fi
 
 echo "Downloading files..."
 cd ~

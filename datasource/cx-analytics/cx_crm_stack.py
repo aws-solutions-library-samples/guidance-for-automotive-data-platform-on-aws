@@ -2,6 +2,7 @@ from aws_cdk import (
     Stack,
     aws_rds as rds,
     aws_ec2 as ec2,
+    aws_lambda as _lambda,
     aws_secretsmanager as secretsmanager,
     RemovalPolicy,
     Duration,
@@ -45,6 +46,22 @@ class CXCRMStack(Stack):
             backup=rds.BackupProps(retention=Duration.days(7)),
             removal_policy=RemovalPolicy.SNAPSHOT
         )
+
+        # Schema init Lambda
+        init_lambda = _lambda.Function(self, "InitSchemaLambda",
+            function_name="cx-crm-init-schema",
+            runtime=_lambda.Runtime.PYTHON_3_12,
+            handler="lambda_init_schema.lambda_handler",
+            code=_lambda.Code.from_asset(".", exclude=["cdk.out", "venv", "__pycache__", "*.pyc"]),
+            vpc=vpc,
+            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
+            security_groups=[db_sg],
+            timeout=Duration.minutes(5),
+            environment={
+                "DB_SECRET_NAME": db_credentials.secret_name,
+            },
+        )
+        db_credentials.grant_read(init_lambda)
 
         # Outputs
         CfnOutput(self, "ClusterEndpoint",

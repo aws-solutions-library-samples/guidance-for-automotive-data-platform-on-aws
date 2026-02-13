@@ -7,35 +7,35 @@
         "DataSetIdentifierDeclarations": [
             {
                 "Identifier": "Issue Categories",
-                "DataSetArn": "arn:aws:quicksight:us-east-1:022035076260:dataset/issue-categories"
+                "DataSetArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/issue-categories"
             },
             {
                 "Identifier": "At-Risk Revenue",
-                "DataSetArn": "arn:aws:quicksight:us-east-1:022035076260:dataset/at-risk-revenue"
+                "DataSetArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/at-risk-revenue"
             },
             {
                 "Identifier": "KPI Trends",
-                "DataSetArn": "arn:aws:quicksight:us-east-1:022035076260:dataset/kpi-trends"
+                "DataSetArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/kpi-trends"
             },
             {
                 "Identifier": "customer-health-scores",
-                "DataSetArn": "arn:aws:quicksight:us-east-1:022035076260:dataset/customer-health-scores"
+                "DataSetArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/customer-health-scores"
             },
             {
                 "Identifier": "Revenue Breakdown",
-                "DataSetArn": "arn:aws:quicksight:us-east-1:022035076260:dataset/revenue-breakdown"
+                "DataSetArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/revenue-breakdown"
             },
             {
                 "Identifier": "Top Revenue Stream",
-                "DataSetArn": "arn:aws:quicksight:us-east-1:022035076260:dataset/top-revenue-stream"
+                "DataSetArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/top-revenue-stream"
             },
             {
                 "Identifier": "Customer 360",
-                "DataSetArn": "arn:aws:quicksight:us-east-1:022035076260:dataset/customer-360"
+                "DataSetArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/customer-360"
             },
             {
                 "Identifier": "Operational KPIs",
-                "DataSetArn": "arn:aws:quicksight:us-east-1:022035076260:dataset/operational-kpis"
+                "DataSetArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/operational-kpis"
             }
         ],
         "Sheets": [

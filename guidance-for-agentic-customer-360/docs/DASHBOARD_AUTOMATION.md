@@ -103,7 +103,7 @@ TEMPLATE_FILE="source/quick-suite/dashboards/oem-business-overview.json"
 
 # 2. Parameterize (replace account IDs)
 cat "${TEMPLATE_FILE}" | \
-  sed "s/022035076260/${ACCOUNT_ID}/g" | \
+  sed "s/{{ACCOUNT_ID}}/${ACCOUNT_ID}/g" | \
   sed "s/us-east-1/${REGION}/g" > temp.json
 
 # 3. Extract definition

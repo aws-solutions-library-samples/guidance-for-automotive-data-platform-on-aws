@@ -1,7 +1,7 @@
 {
     "Status": 200,
     "DataSet": {
-        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/top-revenue-stream",
+        "Arn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/top-revenue-stream",
         "DataSetId": "top-revenue-stream",
         "Name": "Top Revenue Stream",
         "CreatedTime": 1763585827.907,
@@ -9,7 +9,7 @@
         "PhysicalTableMap": {
             "top-stream-table": {
                 "RelationalTable": {
-                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "DataSourceArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:datasource/cx-analytics-athena",
                     "Schema": "cx_analytics",
                     "Name": "top_revenue_stream",
                     "InputColumns": [

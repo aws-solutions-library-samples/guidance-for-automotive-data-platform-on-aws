@@ -1,7 +1,7 @@
 -- Table: customer_health_metrics
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://automotive-cx-data-lake-022035076260/processed/health-metrics/
+-- Location: s3://automotive-cx-data-lake-{{ACCOUNT_ID}}/processed/health-metrics/
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.customer_health_metrics (
     customer_id string,
@@ -19,5 +19,5 @@ PARTITIONED BY (
     month string
 )
 STORED AS PARQUET
-LOCATION 's3://automotive-cx-data-lake-022035076260/processed/health-metrics/'
+LOCATION 's3://automotive-cx-data-lake-{{ACCOUNT_ID}}/processed/health-metrics/'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

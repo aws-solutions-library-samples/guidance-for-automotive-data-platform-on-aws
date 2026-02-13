@@ -23,7 +23,7 @@ Aurora PostgreSQL Serverless v2
 
 ### 1. Deploy Aurora Cluster
 ```bash
-cd /Users/givenand/automotive-data-platform-on-aws
+cd datasource/crm
 cdk deploy AutomotiveCRMStack
 ```
 

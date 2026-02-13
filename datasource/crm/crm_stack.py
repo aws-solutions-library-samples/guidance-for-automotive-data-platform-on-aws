@@ -15,7 +15,6 @@ class AutomotiveCRMStack(Stack):
         # Database credentials
         db_credentials = rds.DatabaseSecret(self, "CRMDBCredentials",
             username="crm_admin",
-            secret_name="automotive-crm-db-credentials"
         )
 
         # Security group for Aurora

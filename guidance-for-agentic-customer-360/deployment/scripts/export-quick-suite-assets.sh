@@ -5,9 +5,9 @@
 
 set -e
 
-ACCOUNT_ID="${AWS_ACCOUNT_ID:-022035076260}"
+ACCOUNT_ID="${AWS_ACCOUNT_ID:-$(aws sts get-caller-identity --query Account --output text)}"
 REGION="${AWS_REGION:-us-east-1}"
-PROFILE="${AWS_PROFILE:-givenand-CMS}"
+PROFILE="${AWS_PROFILE:-default}"
 OUTPUT_DIR="../../source/quick-suite"
 
 # Create output directories
@@ -20,7 +20,7 @@ echo "Exporting Amazon Quick Suite assets from account ${ACCOUNT_ID}..."
 echo "Exporting OEM Business Overview dashboard..."
 aws quicksight describe-dashboard-definition \
   --aws-account-id "${ACCOUNT_ID}" \
-  --dashboard-id "32328b83-2444-4f82-8625-2b7b317bb798" \
+  --dashboard-id "customer-360-dashboard" \
   --profile "${PROFILE}" \
   --region "${REGION}" \
   --output json > "${OUTPUT_DIR}/dashboards/oem-business-overview.json"

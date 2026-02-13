@@ -46,3 +46,11 @@ quicksight_users.json
 # Security scan outputs
 probeout/
 ash-output/
+
+# CDK compiled output
+deployment/cdk/**/*.js
+deployment/cdk/**/*.d.ts
+deployment/cdk/cdk.out/
+
+# ASH scan output
+ash-output/

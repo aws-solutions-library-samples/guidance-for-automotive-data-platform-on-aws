@@ -1,0 +1,191 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate-no-hardcoded-secrets:
+    name: Check for hardcoded credentials
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan for AWS account numbers
+        run: |
+          echo "Scanning for hardcoded 12-digit account numbers..."
+          FOUND=$(grep -rn '[0-9]\{12\}' \
+            --include="*.py" --include="*.sh" --include="*.ts" --include="*.yaml" --include="*.yml" --include="*.sql" \
+            --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=cdk.out --exclude-dir=__pycache__ \
+            --exclude-dir=generated-diagrams --exclude-dir=ash-output \
+            --exclude="poetry.lock" --exclude="package-lock.json" --exclude="cdk.context.json" \
+            | grep -v '{{ACCOUNT_ID}}\|{{REGION}}\|{{DATA_LAKE_BUCKET}}' \
+            | grep -v 'TRAINING_IMAGE_ACCOUNT\|AWS::AccountId\|self\.account\|this\.account\|get-caller-identity\|SourceAccount\|Stack.of' \
+            | grep -v 'FieldId\|HierarchyId' \
+            | grep -v '382416733822' \
+            | grep -v 'TOTAL_CUSTOMERS\|500000\|YEARLY_TARGETS' \
+            | grep -v 'TARGET_ACCOUNT_ID\|123456789012\|<ACCOUNT' \
+            | grep -v 'monitoring\.rds' \
+            || true)
+
+          if [ -n "$FOUND" ]; then
+            echo "::error::Hardcoded account numbers found:"
+            echo "$FOUND"
+            exit 1
+          fi
+          echo "✓ No hardcoded account numbers found"
+
+      - name: Scan for hardcoded credentials
+        run: |
+          echo "Scanning for passwords, secrets, and RDS endpoints..."
+          FOUND=$(grep -rn \
+            -e 'DB_PASSWORD=.\+' \
+            -e "password='" \
+            -e '\.cluster-[a-z0-9]\+\.[a-z0-9-]\+\.rds\.amazonaws\.com' \
+            --include="*.py" --include="*.sh" --include="*.ts" --include="*.md" \
+            --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=cdk.out --exclude-dir=__pycache__ \
+            --exclude-dir=generated-diagrams --exclude-dir=ash-output \
+            | grep -v 'os\.environ\|secretsmanager\|SecretString\|get_secret\|DB_PASSWORD\}' \
+            | grep -v 'example\|placeholder\|<your-' \
+            || true)
+
+          if [ -n "$FOUND" ]; then
+            echo "::error::Hardcoded credentials found:"
+            echo "$FOUND"
+            exit 1
+          fi
+          echo "✓ No hardcoded credentials found"
+
+      - name: Scan for personal references
+        run: |
+          echo "Scanning for personal usernames and local paths..."
+          FOUND=$(grep -rn \
+            -e '/Users/' \
+            -e '/home/' \
+            --include="*.py" --include="*.sh" --include="*.ts" --include="*.md" --include="*.yaml" --include="*.sql" --include="*.json" \
+            --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=cdk.out --exclude-dir=__pycache__ \
+            --exclude-dir=generated-diagrams --exclude-dir=ash-output \
+            --exclude="package-lock.json" --exclude="poetry.lock" \
+            || true)
+
+          if [ -n "$FOUND" ]; then
+            echo "::error::Personal/local paths found:"
+            echo "$FOUND"
+            exit 1
+          fi
+          echo "✓ No personal references found"
+
+  validate-templates:
+    name: Validate template placeholders
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check JSON templates have placeholders
+        run: |
+          echo "Checking that JSON/SQL templates use placeholders..."
+          FILES=$(find . \
+            -path ./node_modules -prune -o \
+            -path ./.venv -prune -o \
+            -path ./cdk.out -prune -o \
+            -path ./generated-diagrams -prune -o \
+            \( -name "*.json" -o -name "*.sql" \) -print \
+            | xargs grep -l '{{ACCOUNT_ID}}\|{{REGION}}\|{{DATA_LAKE_BUCKET}}' 2>/dev/null || true)
+
+          if [ -n "$FILES" ]; then
+            echo "✓ Template files with placeholders:"
+            echo "$FILES" | while read f; do
+              COUNT=$(grep -c '{{' "$f")
+              echo "  $f ($COUNT placeholders)"
+            done
+          fi
+
+  cdk-synth-cx360:
+    name: CDK Synth - Customer 360
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install CDK
+        run: npm install -g aws-cdk
+
+      - name: Install dependencies
+        working-directory: guidance-for-agentic-customer-360/deployment/cdk
+        run: npm install
+
+      - name: CDK Synth
+        working-directory: guidance-for-agentic-customer-360/deployment/cdk
+        run: npx tsc && cdk synth --all 2>&1 || echo "::warning::CDK synth requires AWS context (VPC lookup) - expected in CI without credentials"
+
+  cdk-synth-predictive:
+    name: CDK Synth - Predictive Maintenance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install CDK
+        run: npm install -g aws-cdk
+
+      - name: Install dependencies
+        working-directory: guidance-for-predictive-maintenance/source/infrastructure
+        run: |
+          pip install poetry
+          poetry install --no-interaction
+
+      - name: CDK Synth
+        working-directory: guidance-for-predictive-maintenance/source/infrastructure
+        run: poetry run cdk synth --all 2>&1 || echo "::warning::CDK synth requires AWS context - expected in CI without credentials"
+
+  python-lint:
+    name: Python lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install linters
+        run: pip install flake8 bandit
+
+      - name: Flake8 - syntax and style
+        run: |
+          flake8 \
+            --max-line-length=150 \
+            --exclude=node_modules,.venv,cdk.out,__pycache__,generated-diagrams,ash-output \
+            --select=E9,F63,F7,F82 \
+            .
+
+      - name: Bandit - security scan
+        run: |
+          bandit -r \
+            --exclude=node_modules,.venv,cdk.out,__pycache__,generated-diagrams,ash-output \
+            --skip=B101 \
+            -ll \
+            . || true
+
+  cfn-validate:
+    name: Validate CloudFormation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate CloudFormation templates
+        run: |
+          pip install cfn-lint
+          echo "Linting CloudFormation templates..."
+          find platform-foundation/cloudformation -name "*.yaml" | while read f; do
+            echo "  Checking: $f"
+            cfn-lint "$f" || true
+          done

@@ -1,7 +1,7 @@
 {
     "Status": 200,
     "DataSet": {
-        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/at-risk-revenue",
+        "Arn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/at-risk-revenue",
         "DataSetId": "at-risk-revenue",
         "Name": "At-Risk Revenue",
         "CreatedTime": 1763575033.867,
@@ -9,7 +9,7 @@
         "PhysicalTableMap": {
             "at-risk-revenue-table": {
                 "RelationalTable": {
-                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "DataSourceArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:datasource/cx-analytics-athena",
                     "Schema": "cx_analytics",
                     "Name": "at_risk_revenue",
                     "InputColumns": [

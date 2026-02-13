@@ -13,11 +13,11 @@ class CXDataLakeStack(Stack):
 
         # S3 Data Lake Bucket
         self.data_lake_bucket = s3.Bucket(self, "CXDataLake",
-            bucket_name=f"automotive-cx-data-lake-{self.account}",
             versioned=False,
             encryption=s3.BucketEncryption.S3_MANAGED,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
-            removal_policy=RemovalPolicy.RETAIN
+            removal_policy=RemovalPolicy.DESTROY,
+            auto_delete_objects=True
         )
 
         # Glue Database

@@ -1,7 +1,7 @@
 {
     "Status": 200,
     "DataSet": {
-        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/kpi-trends",
+        "Arn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/kpi-trends",
         "DataSetId": "kpi-trends",
         "Name": "KPI Trends",
         "CreatedTime": 1765485831.85,
@@ -9,7 +9,7 @@
         "PhysicalTableMap": {
             "trends": {
                 "RelationalTable": {
-                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "DataSourceArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:datasource/cx-analytics-athena",
                     "Catalog": "AwsDataCatalog",
                     "Schema": "cx_analytics",
                     "Name": "kpi_trends_from_vehicles",

@@ -1,4 +1,4 @@
-.PHONY: help install bootstrap phase1 phase2 phase3 phase4 deploy-all verify clean
+.PHONY: help install bootstrap phase1 phase2 phase3 phase4 deploy-all verify clean resolve-templates
 
 # Colors
 GREEN := \033[0;32m
@@ -221,7 +221,15 @@ phase3: ## Generate data
 	source/scripts/create_athena_tables.sh $$BUCKET $(AWS_PROFILE) $(AWS_REGION)
 	@echo "$(GREEN)✓ Phase 3 complete$(NC)"
 
-phase4: ## Deploy QuickSight dashboards
+resolve-templates: ## Resolve {{ACCOUNT_ID}} and {{REGION}} in template files
+	@ACCOUNT_ID=$$(aws sts get-caller-identity --query Account --output text --profile $(AWS_PROFILE) 2>/dev/null) && \
+	echo "$(GREEN)Resolving templates for account $$ACCOUNT_ID in region $(AWS_REGION)...$(NC)" && \
+	for f in source/quick-suite/datasets/*.json source/quick-suite/dashboards/*.json source/athena-queries/ddl/*.sql deployment/quicksight/*.json; do \
+		sed -e "s/{{ACCOUNT_ID}}/$$ACCOUNT_ID/g" -e "s/{{REGION}}/$(AWS_REGION)/g" "$$f" > "$$f.tmp" && mv "$$f.tmp" "$$f"; \
+	done && \
+	echo "$(GREEN)✓ Templates resolved$(NC)"
+
+phase4: resolve-templates ## Deploy QuickSight dashboards
 	@echo "$(GREEN)Phase 4: Setting up QuickSight...$(NC)"
 	@echo ""
 	@echo "$(GREEN)Creating QuickSight datasets...$(NC)"

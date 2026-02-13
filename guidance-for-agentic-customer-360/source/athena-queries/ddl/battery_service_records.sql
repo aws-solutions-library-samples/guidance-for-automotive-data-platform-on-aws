@@ -1,7 +1,7 @@
 -- Table: battery_service_records
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://aws-athena-query-results-022035076260-us-east-1/tables/battery_service_records/
+-- Location: s3://aws-athena-query-results-{{ACCOUNT_ID}}-{{REGION}}/tables/battery_service_records/
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.battery_service_records (
     service_id varchar(12),
@@ -17,5 +17,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.battery_service_records (
     resolution_status varchar(11)
 )
 STORED AS PARQUET
-LOCATION 's3://aws-athena-query-results-022035076260-us-east-1/tables/battery_service_records/'
+LOCATION 's3://aws-athena-query-results-{{ACCOUNT_ID}}-{{REGION}}/tables/battery_service_records/'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

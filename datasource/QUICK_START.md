@@ -23,7 +23,7 @@
 
 ```bash
 # 1. Set up environment
-cd /Users/givenand/automotive-data-platform-on-aws/datasource
+cd ./datasource
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt

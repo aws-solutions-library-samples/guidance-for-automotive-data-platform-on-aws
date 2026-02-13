@@ -1,7 +1,7 @@
 {
     "Status": 200,
     "DataSet": {
-        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/customer-health-scores",
+        "Arn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/customer-health-scores",
         "DataSetId": "customer-health-scores",
         "Name": "customer-health-scores",
         "CreatedTime": 1762376202.502,
@@ -9,7 +9,7 @@
         "PhysicalTableMap": {
             "health": {
                 "RelationalTable": {
-                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "DataSourceArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:datasource/cx-analytics-athena",
                     "Catalog": "AwsDataCatalog",
                     "Schema": "cx_analytics",
                     "Name": "customer_health",

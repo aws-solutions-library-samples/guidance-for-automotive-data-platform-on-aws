@@ -1,11 +1,23 @@
 import psycopg2
+import boto3
+import json
 import os
 
-# Connection details
-host = "cxcrmstack-cxcrmcluster6c40befe-gzycdxj7qfiu.cluster-cnqi2n6fm8jq.us-east-1.rds.amazonaws.com"
-database = "cx_crm"
-user = "cx_admin"
-password = "2on,7FtaYCH.SvW10,_bW5d5AJqIzE"
+# Resolve credentials from Secrets Manager or environment variables
+secret_name = os.environ.get('DB_SECRET_NAME', 'cx-crm-db-credentials')
+
+try:
+    client = boto3.client('secretsmanager')
+    secret = json.loads(client.get_secret_value(SecretId=secret_name)['SecretString'])
+    host = secret['host']
+    database = secret.get('dbname', 'cx_crm')
+    user = secret['username']
+    password = secret['password']
+except Exception:
+    host = os.environ['DB_HOST']
+    database = os.environ.get('DB_NAME', 'cx_crm')
+    user = os.environ['DB_USER']
+    password = os.environ['DB_PASSWORD']
 
 print("Connecting to database...")
 conn = psycopg2.connect(

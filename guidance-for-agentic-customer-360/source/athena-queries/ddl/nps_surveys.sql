@@ -1,7 +1,7 @@
 -- Table: nps_surveys
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://aws-athena-query-results-022035076260-us-east-1/tables/66609e8e-38ed-4661-b2b3-354f55612aec
+-- Location: s3://aws-athena-query-results-{{ACCOUNT_ID}}-{{REGION}}/tables/66609e8e-38ed-4661-b2b3-354f55612aec
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.nps_surveys (
     customer_id bigint,
@@ -11,5 +11,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.nps_surveys (
     response_type varchar(9)
 )
 STORED AS PARQUET
-LOCATION 's3://aws-athena-query-results-022035076260-us-east-1/tables/66609e8e-38ed-4661-b2b3-354f55612aec'
+LOCATION 's3://aws-athena-query-results-{{ACCOUNT_ID}}-{{REGION}}/tables/66609e8e-38ed-4661-b2b3-354f55612aec'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

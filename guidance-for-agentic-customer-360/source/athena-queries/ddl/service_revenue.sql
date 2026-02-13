@@ -1,7 +1,7 @@
 -- Table: service_revenue
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://aws-athena-query-results-022035076260-us-east-1/tables/13d1f16c-b9a1-4674-acce-4bce4618daad
+-- Location: s3://aws-athena-query-results-{{ACCOUNT_ID}}-{{REGION}}/tables/13d1f16c-b9a1-4674-acce-4bce4618daad
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.service_revenue (
     vehicle_id bigint,
@@ -12,5 +12,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.service_revenue (
     revenue int
 )
 STORED AS PARQUET
-LOCATION 's3://aws-athena-query-results-022035076260-us-east-1/tables/13d1f16c-b9a1-4674-acce-4bce4618daad'
+LOCATION 's3://aws-athena-query-results-{{ACCOUNT_ID}}-{{REGION}}/tables/13d1f16c-b9a1-4674-acce-4bce4618daad'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

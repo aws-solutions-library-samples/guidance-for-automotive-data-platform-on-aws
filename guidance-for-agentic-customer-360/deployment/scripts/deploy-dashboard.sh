@@ -35,7 +35,7 @@ echo ""
 echo "Preparing dashboard template..."
 TEMP_FILE=$(mktemp)
 cat "${TEMPLATE_FILE}" | \
-  sed "s/022035076260/${ACCOUNT_ID}/g" | \
+  sed "s/{{ACCOUNT_ID}}/${ACCOUNT_ID}/g" | \
   sed "s/us-east-1/${REGION}/g" > "${TEMP_FILE}"
 
 # Extract definition

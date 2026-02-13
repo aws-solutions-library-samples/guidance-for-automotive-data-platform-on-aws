@@ -228,7 +228,7 @@ job.commit()
                 "--SECRET_ARN": db_secret_arn,
                 "--S3_BUCKET": data_lake_bucket.bucket_name,
                 "--enable-glue-datacatalog": "true",
-                "--extra-jars": "s3://aws-glue-assets-022035076260-us-east-1/postgresql-42.7.3.jar"
+                "--extra-jars": f"s3://aws-glue-assets-{Stack.of(self).account}-{Stack.of(self).region}/postgresql-42.7.3.jar"
             },
             glue_version="4.0",
             max_retries=0,

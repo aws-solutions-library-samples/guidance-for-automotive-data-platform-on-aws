@@ -1,7 +1,7 @@
 {
     "Status": 200,
     "DataSet": {
-        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/revenue-breakdown",
+        "Arn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/revenue-breakdown",
         "DataSetId": "revenue-breakdown",
         "Name": "Revenue Breakdown",
         "CreatedTime": 1763572171.841,
@@ -9,7 +9,7 @@
         "PhysicalTableMap": {
             "breakdown": {
                 "RelationalTable": {
-                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "DataSourceArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:datasource/cx-analytics-athena",
                     "Catalog": "AwsDataCatalog",
                     "Schema": "cx_analytics",
                     "Name": "revenue_breakdown_current",

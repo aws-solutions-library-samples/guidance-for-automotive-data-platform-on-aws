@@ -1,7 +1,7 @@
 {
     "Status": 200,
     "DataSet": {
-        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/customer-360",
+        "Arn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/customer-360",
         "DataSetId": "customer-360",
         "Name": "Customer 360",
         "CreatedTime": 1765550220.348,
@@ -9,7 +9,7 @@
         "PhysicalTableMap": {
             "customer": {
                 "RelationalTable": {
-                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "DataSourceArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:datasource/cx-analytics-athena",
                     "Catalog": "AwsDataCatalog",
                     "Schema": "cx_analytics",
                     "Name": "customer_360_view",

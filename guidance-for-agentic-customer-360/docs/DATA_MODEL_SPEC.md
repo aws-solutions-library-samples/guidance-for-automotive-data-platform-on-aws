@@ -176,7 +176,7 @@ CREATE TABLE surveys (
 ## 2. S3 Data Lake Structure
 
 ```
-s3://automotive-cx-data-lake/
+s3://<DATA_LAKE_BUCKET>/
 ├── raw/
 │   ├── crm-export/
 │   │   ├── year=YYYY/month=MM/day=DD/

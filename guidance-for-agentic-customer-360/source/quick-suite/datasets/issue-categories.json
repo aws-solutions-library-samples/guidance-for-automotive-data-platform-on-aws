@@ -1,7 +1,7 @@
 {
     "Status": 200,
     "DataSet": {
-        "Arn": "arn:aws:quicksight:us-east-1:022035076260:dataset/issue-categories",
+        "Arn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/issue-categories",
         "DataSetId": "issue-categories",
         "Name": "Issue Categories",
         "CreatedTime": 1765557710.462,
@@ -9,7 +9,7 @@
         "PhysicalTableMap": {
             "issues": {
                 "RelationalTable": {
-                    "DataSourceArn": "arn:aws:quicksight:us-east-1:022035076260:datasource/cx-analytics-athena",
+                    "DataSourceArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:datasource/cx-analytics-athena",
                     "Catalog": "AwsDataCatalog",
                     "Schema": "cx_analytics",
                     "Name": "issue_categories_monthly",
