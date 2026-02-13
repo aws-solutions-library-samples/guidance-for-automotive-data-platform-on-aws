@@ -1,7 +1,7 @@
 -- Table: kpi_trends_with_arpc
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://cx-analytics-data-givenand/kpi_trends_with_arpc/
+-- Location: s3://{{DATA_LAKE_BUCKET}}/kpi_trends_with_arpc/
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.kpi_trends_with_arpc (
     snapshot_month date,
@@ -15,5 +15,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.kpi_trends_with_arpc (
     avg_revenue_per_customer double
 )
 STORED AS PARQUET
-LOCATION 's3://cx-analytics-data-givenand/kpi_trends_with_arpc/'
+LOCATION 's3://{{DATA_LAKE_BUCKET}}/kpi_trends_with_arpc/'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

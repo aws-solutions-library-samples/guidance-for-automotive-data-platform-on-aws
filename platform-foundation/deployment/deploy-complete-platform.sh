@@ -24,7 +24,7 @@ else
     aws cloudformation deploy \
         --region $REGION \
         --stack-name automotive-unified-studio-domain \
-        --template-file /Users/givenand/Unified-Studio-for-Amazon-Sagemaker/experimental/SMUS-CICD-pipeline-cli/tests/scripts/sagemaker-domain.yaml \
+        --template-file cloudformation/datazone-domain.yaml \
         --parameter-overrides DomainName=automotive-platform-v2 \
         --capabilities CAPABILITY_NAMED_IAM \
         --no-fail-on-empty-changeset

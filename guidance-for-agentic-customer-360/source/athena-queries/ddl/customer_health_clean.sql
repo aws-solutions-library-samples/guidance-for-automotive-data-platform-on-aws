@@ -1,7 +1,7 @@
 -- Table: customer_health_clean
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://cx-analytics-data-givenand/customer_health_clean/
+-- Location: s3://{{DATA_LAKE_BUCKET}}/customer_health_clean/
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.customer_health_clean (
     customer_id bigint,
@@ -18,5 +18,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.customer_health_clean (
     health_segment varchar(15)
 )
 STORED AS PARQUET
-LOCATION 's3://cx-analytics-data-givenand/customer_health_clean/'
+LOCATION 's3://{{DATA_LAKE_BUCKET}}/customer_health_clean/'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

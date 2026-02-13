@@ -37,18 +37,18 @@ aws quicksight start-asset-bundle-export-job \
   --aws-account-id <YOUR_ACCOUNT_ID> \
   --asset-bundle-export-job-id export-cx360-$(date +%s) \
   --resource-arns '[
-    "arn:aws:quicksight:us-east-1:<YOUR_ACCOUNT_ID>:dashboard/32328b83-2444-4f82-8625-2b7b317bb798"
+    "arn:aws:quicksight:us-east-1:<YOUR_ACCOUNT_ID>:dashboard/<DASHBOARD_ID>"
   ]' \
   --include-all-dependencies \
   --export-format QUICKSIGHT_JSON \
-  --profile givenand-CMS \
+  --profile <YOUR_PROFILE> \
   --region us-east-1
 
 # Poll for completion
 aws quicksight describe-asset-bundle-export-job \
   --aws-account-id <YOUR_ACCOUNT_ID> \
   --asset-bundle-export-job-id export-cx360-TIMESTAMP \
-  --profile givenand-CMS \
+  --profile <YOUR_PROFILE> \
   --region us-east-1
 
 # Download bundle (returns presigned S3 URL)
@@ -149,7 +149,7 @@ Create new script: `deployment/scripts/export-asset-bundle.sh`
 
 ACCOUNT_ID=<YOUR_ACCOUNT_ID>
 REGION=us-east-1
-PROFILE=givenand-CMS
+PROFILE=<YOUR_PROFILE>
 JOB_ID="export-cx360-$(date +%s)"
 OUTPUT_DIR="../../source/quick-suite/bundles"
 
@@ -158,7 +158,7 @@ aws quicksight start-asset-bundle-export-job \
   --aws-account-id $ACCOUNT_ID \
   --asset-bundle-export-job-id $JOB_ID \
   --resource-arns '[
-    "arn:aws:quicksight:us-east-1:<YOUR_ACCOUNT_ID>:dashboard/32328b83-2444-4f82-8625-2b7b317bb798"
+    "arn:aws:quicksight:us-east-1:<YOUR_ACCOUNT_ID>:dashboard/<DASHBOARD_ID>"
   ]' \
   --include-all-dependencies \
   --export-format QUICKSIGHT_JSON \

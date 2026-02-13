@@ -1,7 +1,7 @@
 -- Table: customer_360
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://automotive-cx-data-lake-022035076260/processed/customer_360
+-- Location: s3://automotive-cx-data-lake-{{ACCOUNT_ID}}/processed/customer_360
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.customer_360 (
     customer_id bigint,
@@ -31,5 +31,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.customer_360 (
     active_opportunities double
 )
 STORED AS PARQUET
-LOCATION 's3://automotive-cx-data-lake-022035076260/processed/customer_360'
+LOCATION 's3://automotive-cx-data-lake-{{ACCOUNT_ID}}/processed/customer_360'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

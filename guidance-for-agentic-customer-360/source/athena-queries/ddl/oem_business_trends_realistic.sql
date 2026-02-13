@@ -1,7 +1,7 @@
 -- Table: oem_business_trends_realistic
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://aws-athena-query-results-022035076260-us-east-1/tables/123e51f2-9619-4680-a814-35b43435362f
+-- Location: s3://aws-athena-query-results-{{ACCOUNT_ID}}-{{REGION}}/tables/123e51f2-9619-4680-a814-35b43435362f
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.oem_business_trends_realistic (
     month_date date,
@@ -17,5 +17,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.oem_business_trends_realistic (
     avg_sales_per_dealer double
 )
 STORED AS PARQUET
-LOCATION 's3://aws-athena-query-results-022035076260-us-east-1/tables/123e51f2-9619-4680-a814-35b43435362f'
+LOCATION 's3://aws-athena-query-results-{{ACCOUNT_ID}}-{{REGION}}/tables/123e51f2-9619-4680-a814-35b43435362f'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

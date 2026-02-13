@@ -1,7 +1,7 @@
 -- Table: oem_business_trends_new
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://automotive-cx-data-lake-022035076260/athena-results/tables/fa1f3041-92e5-423a-aa22-af4f989eebd8
+-- Location: s3://automotive-cx-data-lake-{{ACCOUNT_ID}}/athena-results/tables/fa1f3041-92e5-423a-aa22-af4f989eebd8
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.oem_business_trends_new (
     month_date date,
@@ -17,5 +17,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.oem_business_trends_new (
     avg_sales_per_dealer double
 )
 STORED AS PARQUET
-LOCATION 's3://automotive-cx-data-lake-022035076260/athena-results/tables/fa1f3041-92e5-423a-aa22-af4f989eebd8'
+LOCATION 's3://automotive-cx-data-lake-{{ACCOUNT_ID}}/athena-results/tables/fa1f3041-92e5-423a-aa22-af4f989eebd8'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

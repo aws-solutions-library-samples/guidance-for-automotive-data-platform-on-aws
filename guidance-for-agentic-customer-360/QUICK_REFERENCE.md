@@ -4,16 +4,15 @@
 
 ### QuickSight Dashboard
 ```
-https://us-east-1.quicksight.aws.amazon.com/sn/dashboards/customer-360-dashboard
+https://<REGION>.quicksight.aws.amazon.com/sn/dashboards/customer-360-dashboard
 ```
 
 ### Key Resources
-- **Account**: 195026230833
-- **Region**: us-east-1
-- **S3 Bucket**: `automotive-cx-data-lake-195026230833`
+- **Region**: us-east-1 (default, configurable)
+- **S3 Bucket**: `automotive-cx-data-lake-<ACCOUNT_ID>`
 - **Glue Database**: `cx_analytics`
 - **Athena Workgroup**: `cx-analytics-workgroup`
-- **Bedrock Agent**: `GBW5FZSJ1V` (customer-360-analyzer)
+- **Bedrock Agent**: Created during deployment (customer-360-analyzer)
 
 ---
 
@@ -94,7 +93,7 @@ LIMIT 6;
 
 ### Regenerate Data
 ```bash
-cd /Users/givenand/automotive-data-platform-on-aws/guidance-for-agentic-customer-360
+cd guidance-for-agentic-customer-360
 make phase3
 ```
 
@@ -128,8 +127,9 @@ python3 deployment/scripts/update_quicksight_datasets.py
 
 ### Check Dashboard Status
 ```bash
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 aws quicksight describe-dashboard \
-  --aws-account-id 195026230833 \
+  --aws-account-id $ACCOUNT_ID \
   --dashboard-id customer-360-dashboard \
   --region us-east-1 \
   --query 'Dashboard.Version.Status'
@@ -164,8 +164,8 @@ aws quicksight describe-dashboard \
 
 ### Lake Formation
 Permissions granted to:
-- `givenand` (user)
-- `cx360-dev-etl-GlueRoleDEDFFD2C-5YVLqDxZwWz3` (Glue)
+- Deploying IAM user/role
+- Glue ETL role (created by CDK)
 - QuickSight service role
 
 ### QuickSight
@@ -180,8 +180,9 @@ Permissions granted to:
 ### Dashboard Not Loading
 1. Check dataset status:
    ```bash
+   ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
    aws quicksight list-data-sets \
-     --aws-account-id 195026230833 \
+     --aws-account-id $ACCOUNT_ID \
      --region us-east-1
    ```
 
@@ -208,14 +209,17 @@ Permissions granted to:
 
 3. Verify S3 data:
    ```bash
-   aws s3 ls s3://automotive-cx-data-lake-195026230833/raw/ --recursive
+   ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+   aws s3 ls s3://automotive-cx-data-lake-${ACCOUNT_ID}/raw/ --recursive
    ```
 
 ### Lake Formation Errors
 Grant permissions:
 ```bash
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+CALLER_ARN=$(aws sts get-caller-identity --query Arn --output text)
 aws lakeformation grant-permissions \
-  --principal DataLakePrincipalIdentifier=arn:aws:iam::195026230833:user/givenand \
+  --principal DataLakePrincipalIdentifier=$CALLER_ARN \
   --resource '{"Table":{"DatabaseName":"cx_analytics","TableWildcard":{}}}' \
   --permissions "SELECT" \
   --region us-east-1
@@ -226,18 +230,17 @@ aws lakeformation grant-permissions \
 ## 📞 Support
 
 ### Documentation
-- Full deployment: `DEPLOYMENT_SUCCESS.md`
-- Schema alignment: `SCHEMA_ALIGNMENT_PLAN.md`
-- QuickSight setup: `QUICKSIGHT_CLI_RECOMMENDATION.md`
+- Full deployment: `DEPLOYMENT_CHECKLIST.md`
+- README: `README.md`
 
 ### AWS Console Links
-- [Athena Query Editor](https://us-east-1.console.aws.amazon.com/athena/home?region=us-east-1#/query-editor)
-- [Glue Catalog](https://us-east-1.console.aws.amazon.com/glue/home?region=us-east-1#/v2/data-catalog/databases/view/cx_analytics)
-- [S3 Bucket](https://s3.console.aws.amazon.com/s3/buckets/automotive-cx-data-lake-195026230833)
-- [QuickSight](https://us-east-1.quicksight.aws.amazon.com/)
-- [Bedrock Agents](https://us-east-1.console.aws.amazon.com/bedrock/home?region=us-east-1#/agents)
+- [Athena Query Editor](https://console.aws.amazon.com/athena/home#/query-editor)
+- [Glue Catalog](https://console.aws.amazon.com/glue/home#/v2/data-catalog/databases)
+- [S3 Console](https://s3.console.aws.amazon.com/s3/buckets)
+- [QuickSight](https://quicksight.aws.amazon.com/)
+- [Bedrock Agents](https://console.aws.amazon.com/bedrock/home#/agents)
 
 ---
 
-**Last Updated**: January 19, 2025  
+**Last Updated**: February 2026
 **Status**: ✅ Operational

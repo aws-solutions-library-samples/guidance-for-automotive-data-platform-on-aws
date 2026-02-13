@@ -3,7 +3,7 @@
 # Export all Athena views and tables from cx_analytics database
 # Usage: ./export-athena-views.sh [profile-name] [region]
 
-PROFILE=${1:-givenand-CMS}
+PROFILE=${1:-default}
 REGION=${2:-us-east-1}
 DATABASE="cx_analytics"
 OUTPUT_DIR="../../source/athena-queries/ddl"

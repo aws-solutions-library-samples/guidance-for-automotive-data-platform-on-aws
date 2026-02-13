@@ -1,7 +1,7 @@
 -- Table: kpi_trends_new
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://cx-analytics-data-givenand/kpi_trends_new/
+-- Location: s3://{{DATA_LAKE_BUCKET}}/kpi_trends_new/
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.kpi_trends_new (
     snapshot_month date,
@@ -13,5 +13,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.kpi_trends_new (
     at_risk_customers int
 )
 STORED AS PARQUET
-LOCATION 's3://cx-analytics-data-givenand/kpi_trends_new/'
+LOCATION 's3://{{DATA_LAKE_BUCKET}}/kpi_trends_new/'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

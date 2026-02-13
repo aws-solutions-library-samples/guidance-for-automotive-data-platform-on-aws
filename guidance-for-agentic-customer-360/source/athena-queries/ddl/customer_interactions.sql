@@ -1,7 +1,7 @@
 -- Table: customer_interactions
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://cx-analytics-data-givenand/customer_interactions
+-- Location: s3://{{DATA_LAKE_BUCKET}}/customer_interactions
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.customer_interactions (
     customer_id bigint,
@@ -19,5 +19,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.customer_interactions (
     created_at timestamp
 )
 STORED AS PARQUET
-LOCATION 's3://cx-analytics-data-givenand/customer_interactions'
+LOCATION 's3://{{DATA_LAKE_BUCKET}}/customer_interactions'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

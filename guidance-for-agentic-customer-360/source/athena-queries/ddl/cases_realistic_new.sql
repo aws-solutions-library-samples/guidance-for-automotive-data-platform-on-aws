@@ -1,7 +1,7 @@
 -- Table: cases_realistic_new
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://automotive-cx-data-lake-022035076260/athena-results/tables/504310a4-4409-48a8-a2ad-7135fb91f51f
+-- Location: s3://automotive-cx-data-lake-{{ACCOUNT_ID}}/athena-results/tables/504310a4-4409-48a8-a2ad-7135fb91f51f
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.cases_realistic_new (
     id bigint,
@@ -13,5 +13,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.cases_realistic_new (
     closed_date timestamp
 )
 STORED AS PARQUET
-LOCATION 's3://automotive-cx-data-lake-022035076260/athena-results/tables/504310a4-4409-48a8-a2ad-7135fb91f51f'
+LOCATION 's3://automotive-cx-data-lake-{{ACCOUNT_ID}}/athena-results/tables/504310a4-4409-48a8-a2ad-7135fb91f51f'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

@@ -9,7 +9,7 @@ This guide provides comprehensive documentation of the Customer 360 data platfor
 ### Data Lake Structure
 
 ```
-s3://automotive-cx-data-lake/
+s3://<DATA_LAKE_BUCKET>/
 ├── raw/                          # Raw ingestion data
 │   ├── customer-profiles/        # Customer master data
 │   ├── interactions/             # Customer interactions

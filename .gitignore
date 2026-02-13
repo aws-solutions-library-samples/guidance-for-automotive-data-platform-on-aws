@@ -55,3 +55,6 @@ datasource/cx-analytics/psycopg2-layer.zip
 
 # DSR artifacts (internal)
 dsr-artifacts/
+
+# ASH scan output
+ash-output/

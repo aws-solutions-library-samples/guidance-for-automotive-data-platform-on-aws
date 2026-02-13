@@ -1,7 +1,7 @@
 -- Table: operational_kpis
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://aws-athena-query-results-022035076260-us-east-1/tables/operational_kpis/
+-- Location: s3://aws-athena-query-results-{{ACCOUNT_ID}}-{{REGION}}/tables/operational_kpis/
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.operational_kpis (
     month_date date,
@@ -15,5 +15,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.operational_kpis (
     churn_risk_revenue int
 )
 STORED AS PARQUET
-LOCATION 's3://aws-athena-query-results-022035076260-us-east-1/tables/operational_kpis/'
+LOCATION 's3://aws-athena-query-results-{{ACCOUNT_ID}}-{{REGION}}/tables/operational_kpis/'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

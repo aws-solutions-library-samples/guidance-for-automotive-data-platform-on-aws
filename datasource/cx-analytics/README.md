@@ -40,7 +40,7 @@ export VPC_ID=vpc-xxxxx
 
 ### 1. Deploy Aurora CRM
 ```bash
-cd /Users/givenand/automotive-data-platform-on-aws
+cd .
 cdk deploy CXCRMStack
 ```
 

@@ -14,7 +14,7 @@ echo "Step 1: Creating Unified Studio domain..."
 aws cloudformation deploy \
     --region $REGION \
     --stack-name automotive-unified-studio-domain \
-    --template-file /Users/givenand/Unified-Studio-for-Amazon-Sagemaker/experimental/SMUS-CICD-pipeline-cli/tests/scripts/sagemaker-domain.yaml \
+    --template-file cloudformation/datazone-domain.yaml \
     --parameter-overrides DomainName=automotive-data-platform \
     --capabilities CAPABILITY_NAMED_IAM \
     --no-fail-on-empty-changeset

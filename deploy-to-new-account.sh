@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-NEW_ACCOUNT_ID="008549259336"
+NEW_ACCOUNT_ID="<TARGET_ACCOUNT_ID>"
 ROLE_NAME="OrganizationAccountAccessRole"
 
 echo "=== Deploying DataZone to New Account ==="

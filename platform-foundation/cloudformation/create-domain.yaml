@@ -5,17 +5,85 @@ Parameters:
   DomainName:
     Type: String
     Default: automotive-data-platform
-  ExecutionRoleArn:
-    Type: String
-    Default: arn:aws:iam::195026230833:role/automotive-data-platform-execution-role
 
 Resources:
+  DomainExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${DomainName}-execution-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - datazone.amazonaws.com
+                - sagemaker.amazonaws.com
+                - lakeformation.amazonaws.com
+                - glue.amazonaws.com
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                aws:SourceAccount: !Ref AWS::AccountId
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonDataZoneDomainExecutionRolePolicy
+        - arn:aws:iam::aws:policy/AmazonDataZoneSageMakerManageAccessRolePolicy
+      Policies:
+        - PolicyName: DomainServiceAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: S3Access
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                  - s3:GetBucketLocation
+                Resource:
+                  - !Sub arn:aws:s3:::datazone-*-${AWS::AccountId}
+                  - !Sub arn:aws:s3:::datazone-*-${AWS::AccountId}/*
+                  - !Sub arn:aws:s3:::automotive-*-${AWS::AccountId}
+                  - !Sub arn:aws:s3:::automotive-*-${AWS::AccountId}/*
+              - Sid: GlueAccess
+                Effect: Allow
+                Action:
+                  - glue:GetDatabase*
+                  - glue:GetTable*
+                  - glue:GetPartition*
+                  - glue:BatchGetPartition
+                  - glue:CreateDatabase
+                  - glue:CreateTable
+                  - glue:UpdateDatabase
+                  - glue:UpdateTable
+                Resource:
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:catalog
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:database/*
+                  - !Sub arn:aws:glue:${AWS::Region}:${AWS::AccountId}:table/*/*
+              - Sid: AthenaAccess
+                Effect: Allow
+                Action:
+                  - athena:GetQueryExecution
+                  - athena:GetQueryResults
+                  - athena:StartQueryExecution
+                  - athena:GetWorkGroup
+                Resource:
+                  - !Sub arn:aws:athena:${AWS::Region}:${AWS::AccountId}:workgroup/*
+              # checkov:skip=CKV_AWS_111:Lake Formation operations require wildcard resource
+              - Sid: LakeFormationAccess
+                Effect: Allow
+                Action:
+                  - lakeformation:GetDataAccess
+                  - lakeformation:GrantPermissions
+                  - lakeformation:RevokePermissions
+                Resource: '*'
+
   DataZoneDomain:
     Type: AWS::DataZone::Domain
     Properties:
       Name: !Ref DomainName
       Description: Automotive data platform for ML and analytics
-      DomainExecutionRole: !Ref ExecutionRoleArn
+      DomainExecutionRole: !GetAtt DomainExecutionRole.Arn
       SingleSignOn:
         Type: IAM_IDC
         UserAssignment: AUTOMATIC
@@ -29,3 +97,5 @@ Outputs:
     Value: !GetAtt DataZoneDomain.Arn
   PortalUrl:
     Value: !GetAtt DataZoneDomain.PortalUrl
+  ExecutionRoleArn:
+    Value: !GetAtt DomainExecutionRole.Arn

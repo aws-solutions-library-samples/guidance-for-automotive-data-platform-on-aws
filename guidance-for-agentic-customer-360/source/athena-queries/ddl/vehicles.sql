@@ -1,7 +1,7 @@
 -- Table: vehicles
 -- Database: cx_analytics
 -- Type: External Table
--- Location: s3://automotive-cx-data-lake-022035076260/raw/crm/customer_vehicles
+-- Location: s3://automotive-cx-data-lake-{{ACCOUNT_ID}}/raw/crm/customer_vehicles
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.vehicles (
     id bigint,
@@ -14,5 +14,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cx_analytics.vehicles (
     dealer_id bigint
 )
 STORED AS PARQUET
-LOCATION 's3://automotive-cx-data-lake-022035076260/raw/crm/customer_vehicles'
+LOCATION 's3://automotive-cx-data-lake-{{ACCOUNT_ID}}/raw/crm/customer_vehicles'
 TBLPROPERTIES ('parquet.compression'='SNAPPY');

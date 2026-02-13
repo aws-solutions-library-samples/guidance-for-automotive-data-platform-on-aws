@@ -1,11 +1,13 @@
 import json
+import os
 import psycopg2
 import boto3
 
+DB_SECRET_NAME = os.environ['DB_SECRET_NAME']
+
 def lambda_handler(event, context):
-    # Get secret
     secrets_client = boto3.client('secretsmanager')
-    secret = secrets_client.get_secret_value(SecretId='cx-crm-db-credentials')
+    secret = secrets_client.get_secret_value(SecretId=DB_SECRET_NAME)
     creds = json.loads(secret['SecretString'])
     
     # Connect
