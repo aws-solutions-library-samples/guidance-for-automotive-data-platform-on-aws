@@ -35,8 +35,8 @@ for stack in "${STACKS[@]}"; do
 done
 
 # Delete DataZone domain
-DOMAIN_ID="dzd-b0wxxskkm6s5wn"
-if aws datazone get-domain --region $REGION --identifier $DOMAIN_ID > /dev/null 2>&1; then
+DOMAIN_ID=$(aws datazone list-domains --region $REGION --query 'items[0].id' --output text 2>/dev/null || echo "")
+if [ -n "$DOMAIN_ID" ] && [ "$DOMAIN_ID" != "None" ] && aws datazone get-domain --region $REGION --identifier $DOMAIN_ID > /dev/null 2>&1; then
     echo "Deleting DataZone domain: $DOMAIN_ID"
     aws datazone delete-domain --region $REGION --identifier $DOMAIN_ID
 fi

@@ -2,7 +2,7 @@
 set -e
 
 REGION="us-east-1"
-DOMAIN_ID="dzd-b0wxxskkm6s5wn"
+DOMAIN_ID=$(aws datazone list-domains --region $REGION --query 'items[0].id' --output text)
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 
 echo "=== DataZone Blueprint Deployment ==="
