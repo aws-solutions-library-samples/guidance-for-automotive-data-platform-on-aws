@@ -308,7 +308,8 @@ CATALOG_PROJECT=$(aws datazone create-project \
 echo "✓ Catalog project: $CATALOG_PROJECT"
 
 # Add SSO user to catalog project
-USER_ID=$(aws identitystore list-users --identity-store-id IDENTITY_STORE_ID --query 'Users[0].UserId' --output text 2>/dev/null || echo "")
+IDENTITY_STORE_ID=$(aws sso-admin list-instances --region $REGION --query 'Instances[0].IdentityStoreId' --output text)
+USER_ID=$(aws identitystore list-users --identity-store-id $IDENTITY_STORE_ID --query 'Users[0].UserId' --output text 2>/dev/null || echo "")
 if [ -n "$USER_ID" ] && [ "$USER_ID" != "None" ]; then
     aws datazone create-project-membership \
       --region $REGION \

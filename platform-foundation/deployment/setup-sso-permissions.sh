@@ -202,5 +202,6 @@ echo -e "${GREEN}========================================${NC}"
 echo -e "${GREEN}Setup Complete!${NC}"
 echo -e "${GREEN}========================================${NC}"
 echo ""
-echo "User can now login at: https://IDENTITY_STORE_ID.awsapps.com/start"
+SSO_START_URL=$(aws sso-admin list-instances --region $REGION --query 'Instances[0].IdentityStoreId' --output text)
+echo "User can now login at: https://${SSO_START_URL}.awsapps.com/start"
 echo ""
