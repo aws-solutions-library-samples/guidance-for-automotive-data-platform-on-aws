@@ -24,15 +24,18 @@ class VpcStack(cdk.Stack):
 vpc_stack = VpcStack(app, "VpcStack", env=env)
 
 # Deploy stacks
-crm_stack = CXCRMStack(app, "CXCRMStack", vpc=vpc_stack.vpc, env=env)
-datalake_stack = CXDataLakeStack(app, "CXDataLakeStack", env=env)
+crm_stack = CXCRMStack(app, "CXCRMStack", vpc=vpc_stack.vpc, env=env,
+    description="Guidance for Automotive Data Platform on AWS (SO9676) - Customer 360 CRM")
+datalake_stack = CXDataLakeStack(app, "CXDataLakeStack", env=env,
+    description="Guidance for Automotive Data Platform on AWS (SO9676) - Customer 360 Data Lake")
 
 # ETL stack depends on both
 etl_stack = CXETLStack(
     app, "CXETLStack",
     data_lake_bucket=datalake_stack.data_lake_bucket,
     db_secret_arn=crm_stack.cluster.secret.secret_arn,
-    env=env
+    env=env,
+    description="Guidance for Automotive Data Platform on AWS (SO9676) - Customer 360 ETL"
 )
 etl_stack.add_dependency(crm_stack)
 etl_stack.add_dependency(datalake_stack)

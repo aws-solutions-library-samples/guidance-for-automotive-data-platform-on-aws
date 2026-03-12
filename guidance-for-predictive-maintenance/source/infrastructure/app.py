@@ -12,7 +12,8 @@ from lib.stacks.tire_predictive_maintenance_stack import TirePredictiveMaintenan
 app = cdk.App()
 
 tire_predictive_maintenance_stack = TirePredictiveMaintenanceStack(
-    app, "tire-predictive-maintenance-stack"
+    app, "tire-predictive-maintenance-stack",
+    description="Guidance for Automotive Data Platform on AWS (SO9676) - Predictive Maintenance"
 )
 ResourceMonitoringStack(tire_predictive_maintenance_stack, "resource-monitoring-stack")
 

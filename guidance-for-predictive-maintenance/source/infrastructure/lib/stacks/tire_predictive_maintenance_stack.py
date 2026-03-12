@@ -33,8 +33,8 @@ class TirePredictiveMaintenanceStack(Stack):
 
         solution_config_inputs = SolutionConfigInputs(
             solution_name="mmt-predictive-maintenance",
-            solution_id="S0000",  # todo update
-            solution_version="v1.0.0",  # todo read from config
+            solution_id="SO9676",  # Guidance for Automotive Data Platform on AWS
+            solution_version="v1.0.0",
         )
 
         unique_id = "mmt"  # todo set this from deploy config (eg dev/test/prod)

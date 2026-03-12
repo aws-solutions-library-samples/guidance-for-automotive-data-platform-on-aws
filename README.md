@@ -233,3 +233,7 @@ For issues and questions:
 ---
 
 **Note**: The Platform Foundation provides the base infrastructure. The Guidance projects are self-contained and can be deployed independently or on top of the foundation.
+
+## Notices
+
+*Customers are responsible for making their own independent assessment of the information in this Guidance. This Guidance: (a) is for informational purposes only, (b) represents AWS current product offerings and practices, which are subject to change without notice, and (c) does not create any commitments or assurances from AWS and its affiliates, suppliers or licensors. AWS products or services are provided "as is" without warranties, representations, or conditions of any kind, whether express or implied. AWS responsibilities and liabilities to its customers are controlled by AWS agreements, and this Guidance is not part of, nor does it modify, any agreement between AWS and its customers.*
