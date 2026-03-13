@@ -6,5 +6,5 @@ mirror-to-github:
   only:
     - main
   script:
-    - git remote add github-mirror https://${GITHUB_PAT}@github.com/aws-solutions-library-samples/guidance-for-automotive-data-platform-on-aws.git || true
+    - git remote add github-mirror https://${GITHUB_TOKEN}@github.com/aws-solutions-library-samples/guidance-for-automotive-data-platform-on-aws.git || true
     - git push github-mirror HEAD:main --force
