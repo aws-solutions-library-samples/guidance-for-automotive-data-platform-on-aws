@@ -3,6 +3,7 @@ stages:
 
 mirror-to-github:
   stage: mirror
+  image: alpine/git:latest
   only:
     - main
   script:
