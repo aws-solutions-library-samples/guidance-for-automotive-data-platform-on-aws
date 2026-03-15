@@ -1,5 +1,6 @@
 from aws_cdk import (
     Stack,
+    Duration,
     aws_rds as rds,
     aws_ec2 as ec2,
     aws_secretsmanager as secretsmanager,

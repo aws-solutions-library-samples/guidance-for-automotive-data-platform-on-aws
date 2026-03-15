@@ -126,29 +126,6 @@ def main():
         created_users.append(result)
     else:
         print(f"  ✗ Failed: {result['error']}")
-        print(f"\nCreating user: {user_config['username']}")
-        print(f"  Email: {user_config['email']}")
-        print(f"  Role: {user_config['role']}")
-        
-        result = create_quicksight_user(
-            quicksight,
-            user_config['username'],
-            user_config['email'],
-            user_config['role']
-        )
-        
-        if result['success']:
-            print(f"  ✓ User created successfully")
-            print(f"  User ARN: {result['user_arn']}")
-            print(f"  Invitation URL: {result['invitation_url']}")
-            
-            # Grant dashboard permissions
-            if grant_dashboard_permissions(quicksight, result['user_arn']):
-                print(f"  ✓ Dashboard permissions granted")
-            
-            created_users.append(result)
-        else:
-            print(f"  ✗ Failed: {result['error']}")
     
     # Output summary
     print()
