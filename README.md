@@ -75,6 +75,27 @@ make deploy
 
 ---
 
+### 📡 Guidance: Telemetry Normalization
+**Path**: [`guidance-for-telemetry-normalization/`](guidance-for-telemetry-normalization/)
+
+**Status**: ✅ Production Ready
+
+Unified fleet telemetry normalization layer that integrates data from multiple vehicle sources into a single canonical format:
+- **Multi-source ingestion** — Simulator/Direct (MQTT), FleetWise Edge (CAN bus), OEM cloud-to-cloud (Ford, Tesla)
+- **Signal catalog contract** — All sources normalize to the same field names and units (mph, °F, PSI, miles)
+- **Real-time distribution** — Per-fleet Kafka topics + WebSocket API for live dashboards
+- **Tenant isolation** — Cognito-based personas (Platform Admin, Fleet Operator, Fleet Viewer) with fleet-scoped data access
+- **Historical analytics** — Iceberg tables partitioned by fleetId, queryable via Athena
+- **OEM transform manifests** — Declarative JSON mappings from OEM-specific signals to the canonical signal catalog
+
+**Companion repo**: [`connected-mobility-guidance-on-aws`](https://github.com/aws-samples/connected-mobility-guidance-on-aws) — contains the Flink processing pipeline, CMS UI, and OEM connectors
+
+**Use this when**: Building fleet management platforms that need to consume telemetry from mixed vehicle sources (OEM APIs, FleetWise, simulators) through a single normalized interface
+
+[View Telemetry Normalization Documentation →](guidance-for-telemetry-normalization/README.md)
+
+---
+
 ### 📊 Shared Data Sources
 **Path**: [`datasource/`](datasource/)
 
@@ -146,9 +167,11 @@ cd platform-foundation
         └───────────────────────────────────────┘
                             │
         ┌───────────────────────────────────────┐
-        │  Future: Connected Mobility           │
-        │  - Vehicle telemetry analytics        │
-        │  - Fleet management                   │
+        │  Guidance: Telemetry Normalization    │
+        │  - Multi-source fleet telemetry       │
+        │  - OEM cloud-to-cloud integration     │
+        │  - Real-time distribution (Kafka/WS)  │
+        │  - Iceberg analytics (Athena)         │
         └───────────────────────────────────────┘
                             │
         ┌───────────────────────────────────────┐
@@ -177,10 +200,11 @@ cd platform-foundation
 - Automated maintenance alerts and scheduling
 
 ### Vehicle Data & IoT
-→ Use **Platform Foundation** + Custom Project
-- Ingest vehicle telemetry
-- Fleet analytics
-- Connected vehicle insights
+→ Use **Guidance: Telemetry Normalization** + **Connected Mobility Guidance**
+- Normalize telemetry from FleetWise, OEM APIs, and simulators
+- Real-time fleet dashboards with per-fleet data isolation
+- Historical trip analytics and fleet utilization via Athena
+- Multi-tenant fleet operator portal with role-based access
 
 ### Sales & Marketing
 → Use **Platform Foundation** + **Shared Data Sources**
@@ -193,6 +217,8 @@ cd platform-foundation
 - [Platform Foundation Guide](platform-foundation/README.md)
 - [Customer 360 Deployment Guide](guidance-for-agentic-customer-360/docs/DEPLOYMENT.md)
 - [Predictive Maintenance Deployment Guide](guidance-for-predictive-maintenance/docs/DEPLOYMENT.md)
+- [Telemetry Normalization Guide](guidance-for-telemetry-normalization/README.md)
+- [Telemetry Normalization Architecture](guidance-for-telemetry-normalization/docs/ARCHITECTURE.md)
 - [Customer 360 + Predictive Maintenance Integration](guidance-for-predictive-maintenance/docs/CUSTOMER_360_INTEGRATION.md)
 - [Data Model Specification](guidance-for-agentic-customer-360/docs/DATA_MODEL_SPEC.md)
 - [Bedrock Agents Guide](guidance-for-agentic-customer-360/docs/BEDROCK_AGENTS.md)
