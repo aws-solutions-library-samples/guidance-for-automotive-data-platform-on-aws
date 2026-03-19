@@ -2,60 +2,105 @@
 
 ## Problem
 
-Fleet operators manage vehicles from multiple sources: OEM cloud APIs (Ford, Tesla), AWS IoT FleetWise (CAN bus), and direct MQTT connections (simulators, aftermarket devices). Each source uses different signal names, units, encodings, and delivery mechanisms. Without normalization, downstream applications (trip analytics, safety alerts, maintenance predictions) must handle every source format individually.
+Fleet operators manage vehicles from multiple telemetry sources: OEM cloud-to-cloud APIs, AWS IoT FleetWise (CAN bus), and direct MQTT connections. Each source uses different signal names, units, encodings, authentication mechanisms, and delivery patterns. Without normalization, every downstream application must handle every source format individually.
 
 ## Solution
 
-A normalization layer that converts all telemetry sources into a single canonical format before any downstream processing occurs. The signal catalog DynamoDB table is the contract — every source maps to the same `json_field` names and units.
+A normalization layer that converts all telemetry sources into a single canonical format before any downstream processing occurs. The signal catalog is the contract — every source maps to the same field names and units.
 
-## Architecture
+---
+
+## 1. Cloud-to-Cloud OEM Integration
+
+### The Challenge
+
+Each OEM exposes vehicle telemetry through their own cloud API with proprietary authentication, data formats, and delivery mechanisms. A fleet with vehicles from multiple manufacturers needs a single integration point.
+
+### Authentication Patterns
+
+OEM cloud APIs use standard OAuth 2.0 flows, but the specifics vary:
+
+| Pattern | Flow | Use Case |
+|---------|------|----------|
+| REST Polling | OAuth 2.0 `client_credentials` → poll REST endpoints on a schedule | OEMs that expose request/response APIs |
+| Push/Streaming | OAuth 2.0 partner token exchange → OEM pushes to your endpoint via WebSocket or webhook | OEMs that push telemetry in real-time |
+
+Credentials (client ID, client secret, token endpoints) are stored in AWS Secrets Manager. Each OEM connector authenticates independently and writes raw telemetry to a shared Kafka topic (`cms-telemetry-oem`) with an `oem_source` field identifying the origin.
+
+### Connector Architecture
 
 ```
-┌──────────────────────────────────────────────────────────────────────┐
-│  INGESTION (source-specific Kafka topics)                            │
-│                                                                      │
-│  IoT Core ──→ cms-telemetry-raw          (gzip+base64 JSON)         │
-│  FleetWise ──→ fw-telemetry-raw          (protobuf, snappy)         │
-│  OEM APIs ──→ cms-telemetry-oem          (raw OEM JSON)             │
-└──────────────┬───────────────────────────────────────────────────────┘
-               │
-               ▼
-┌──────────────────────────────────────────────────────────────────────┐
-│  NORMALIZATION (Flink preprocessors → canonical JSON)                │
-│                                                                      │
-│  SimulatorPreprocessor    : decompress gzip+base64                   │
-│  FWTelemetryProcessor     : decode protobuf → VSS path → json_field  │
-│  OEMTelemetryProcessor    : apply transform manifest → json_field    │
-│                                                                      │
-│  All three output to: cms-telemetry-preprocessed                     │
-└──────────────┬───────────────────────────────────────────────────────┘
-               │
-               ▼
-┌──────────────────────────────────────────────────────────────────────┐
-│  ROUTING & DISTRIBUTION (EventDrivenTelemetryProcessor)              │
-│                                                                      │
-│  ┌─→ Redis (vehicle state, geo index, sparkline streams)             │
-│  ├─→ cms-telemetry-processed (persistence)                           │
-│  ├─→ cms-telemetry-trips / safety / maintenance (domain processors)  │
-│  ├─→ cms-fleet-{fleetId}-telemetry (per-fleet real-time feed)        │
-│  └─→ S3 Iceberg sink (historical analytics, partitioned by fleetId)  │
-└──────────────────────────────────────────────────────────────────────┘
-               │
-               ▼
-┌──────────────────────────────────────────────────────────────────────┐
-│  CONSUMPTION                                                         │
-│                                                                      │
-│  CMS UI (WebSocket) ← per-fleet Kafka topic ← live telemetry        │
-│  REST API            ← Redis latest state    ← vehicle snapshots     │
-│  Athena              ← Iceberg tables        ← historical analytics  │
-└──────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│  OEM Connectors                                         │
+│                                                         │
+│  REST Polling Connector (Lambda + EventBridge)          │
+│    • Scheduled invocation (e.g., every 5 minutes)       │
+│    • Authenticate via OAuth 2.0 client_credentials      │
+│    • Poll OEM REST API for latest telemetry             │
+│    • Write raw JSON to Kafka: cms-telemetry-oem         │
+│                                                         │
+│  Streaming Connector (ECS Fargate)                      │
+│    • Long-running receiver service                      │
+│    • OEM pushes data via WebSocket/protobuf             │
+│    • Decode wire format, write to Kafka                 │
+│    • Requires public endpoint (ALB + TLS)               │
+└──────────────────────────┬──────────────────────────────┘
+                           │
+                           ▼
+                  cms-telemetry-oem (Kafka)
+                  with oem_source field
 ```
 
-## Key Design Decisions
+### Transform Manifests
+
+Each OEM's data is normalized using a **transform manifest** — a JSON configuration that maps OEM-specific field names, paths, and units to the canonical schema. No code changes are required to add a new OEM; only a new manifest.
+
+```json
+{
+  "source_name": "<oem-identifier>",
+  "vehicle_id_extraction": {
+    "strategy": "json_path",
+    "path": "<path-to-vehicle-id>"
+  },
+  "signal_mappings": [
+    {
+      "source_signal": "SPEED",
+      "cms_field": "speed",
+      "source_path": "data.speedValue",
+      "unit_conversion": "mps_to_mph",
+      "data_type": "float"
+    }
+  ]
+}
+```
+
+Manifests are stored in S3 and loaded by the OEM preprocessor at runtime. The OEM Integration Wizard in the CMS UI can auto-generate manifests from sample telemetry data.
+
+---
+
+## 2. Normalization Pipeline
+
+### Source-Specific Preprocessing
+
+Three Flink preprocessors handle the different wire formats, all outputting the same canonical JSON:
+
+```
+INGESTION (source-specific Kafka topics)
+├── cms-telemetry-raw          ← Direct/MQTT (gzip+base64 JSON)
+├── fw-telemetry-raw           ← FleetWise Edge (protobuf, snappy)
+└── cms-telemetry-oem          ← OEM cloud-to-cloud (raw OEM JSON)
+
+PREPROCESSING (source-specific → canonical JSON)
+├── SimulatorPreprocessor      : decompress only (already uses canonical fields)
+├── FWTelemetryProcessor       : decode protobuf → VSS path → canonical field
+└── OEMTelemetryProcessor      : apply transform manifest → canonical field
+
+All three output to: cms-telemetry-preprocessed
+```
 
 ### Signal Catalog as the Contract
 
-The `cms-{stage}-signal-catalog` DynamoDB table defines every canonical signal:
+The signal catalog DynamoDB table defines every canonical signal:
 
 | Field | Example | Purpose |
 |-------|---------|---------|
@@ -63,85 +108,19 @@ The `cms-{stage}-signal-catalog` DynamoDB table defines every canonical signal:
 | `signal_name` | `VehicleSpeed` | Human-readable name |
 | `json_field` | `speed` | Canonical field name in all normalized messages |
 | `unit` | `mph` | Canonical unit |
+| `data_type` | `float` | Expected type |
 
-Every preprocessor maps its source signals to `json_field` values. The OEM Integration Wizard validates transform manifests against this catalog at generation time.
+Every preprocessor maps its source signals to `json_field` values. This is the normalization target.
 
-### Transform Manifests (OEM Path)
+### Canonical Message Format
 
-OEM data arrives as JSON with OEM-specific field names and units. A transform manifest defines the mapping:
-
-```json
-{
-  "source_name": "ford",
-  "signal_mappings": [
-    {
-      "source_signal": "SPEED",
-      "cms_field": "speed",
-      "source_path": "typedData.speedValue.speed",
-      "unit_conversion": "mps_to_mph"
-    }
-  ]
-}
-```
-
-Manifests are stored in S3 and loaded by `OEMTelemetryProcessor` at runtime. New OEMs are added by creating a new manifest — no code changes required.
-
-### Decoder Manifests (FleetWise Path)
-
-FleetWise uses integer signal IDs on the wire. The decoder manifest maps `signalId → VSS path`, then the signal catalog maps `VSS path → json_field`. Two-step mapping because FleetWise uses a binary wire format.
-
-### Per-Fleet Distribution
-
-`EventDrivenTelemetryProcessor` looks up each vehicle's `fleetId` from the enrollment table (Redis-cached, DynamoDB fallback) and writes to `cms-fleet-{fleetId}-telemetry`. Fleet operators connect via WebSocket and receive only their fleet's data.
-
-### Tenant Isolation
-
-Three Cognito groups control access:
-
-| Role | Data Scope | Write Access |
-|------|-----------|-------------|
-| Platform Admin | All fleets | Full |
-| Fleet Operator | Own fleet(s) | Vehicles, drivers |
-| Fleet Viewer | Own fleet(s) | Read-only |
-
-The API Lambda extracts `cognito:groups` and `custom:fleetIds` from the JWT and filters every query. Lake Formation row-level security enforces the same boundaries on Athena queries.
-
-## Components Across Repos
-
-### connected-mobility-guidance-on-aws (Processing Pipeline)
-
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| SimulatorPreprocessor | Flink (Java) | Decompress simulator data |
-| FWTelemetryProcessor | Flink (Java) | Decode FleetWise protobuf |
-| OEMTelemetryProcessor | Flink (Java) | Apply OEM transform manifests |
-| EventDrivenTelemetryProcessor | Flink (Java) | Redis write, domain routing, per-fleet distribution |
-| CMS UI | React + CloudScape | Fleet portal with role-based views |
-| Fleet API | Lambda (Python) | CRUD + authorization enforcement |
-| WebSocket API | API Gateway WebSocket + Lambda | Real-time telemetry push |
-| Signal Catalog | DynamoDB | Canonical signal definitions |
-| Fleet Enrollment | DynamoDB | Vehicle → fleet mapping |
-| Transform Manifests | S3 | OEM signal mapping configs |
-
-### automotive-data-platform-on-aws (Data Product)
-
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| Iceberg Tables | Glue + S3 | Normalized telemetry + trips (partitioned by fleetId) |
-| Athena Queries | Athena | Fleet utilization, trip history, signal coverage, vehicle health |
-| Lake Formation Policies | Lake Formation | Row-level security by fleetId |
-
-## Canonical Message Format
-
-Every message on `cms-telemetry-preprocessed` and per-fleet topics:
+Every message on `cms-telemetry-preprocessed`:
 
 ```json
 {
   "vehicleId": "VEH-001",
-  "fleetId": "FLEET-001",
   "timestamp": 1710764400000,
   "source": "simulator | fleetwise | oem",
-  "oem": "ford | tesla | null",
   "speed": 65.2,
   "odometer": 45230.1,
   "lat": 47.6062,
@@ -149,63 +128,215 @@ Every message on `cms-telemetry-preprocessed` and per-fleet topics:
   "heading": 180.5,
   "ignitionOn": true,
   "engineRPM": 2100,
-  "engineTemp": 195.0,
   "fuelLevel": 72.3,
-  "batteryVoltage": 13.8,
   "tire_fl": 35.2,
-  "tire_fr": 34.8,
-  "tire_rl": 33.1,
-  "tire_rr": 33.5,
-  "tripId": "TRIP-abc123",
-  "driverId": "DRV-456"
+  "tire_fr": 34.8
 }
 ```
 
-Units: mph, miles, °F, PSI. Field names match `json_field` in the signal catalog.
+Field names are `json_field` values from the signal catalog. Units are canonical (mph, °F, PSI, miles). Not all fields are present in every message — availability depends on the source.
 
-## Unit Conversions
+### Unit Conversions
 
 Applied by preprocessors during normalization:
 
-| Conversion | Formula | Source |
-|-----------|---------|--------|
-| `mps_to_mph` | `× 2.23694` | Ford speed |
-| `km_to_miles` | `× 0.621371` | Ford odometer |
-| `C_to_F` | `(× 9/5) + 32` | Ford/Tesla temp |
-| `kpa_to_psi` | `× 0.145038` | Ford tire pressure |
-| `bar_to_psi` | `× 14.5038` | Tesla tire pressure |
-| `mps2_to_g` | `÷ 9.80665` | Tesla acceleration |
+| Conversion | Formula | When Used |
+|-----------|---------|-----------|
+| m/s → mph | `× 2.23694` | OEM speed in metric |
+| km/h → mph | `× 0.621371` | OEM speed in km/h |
+| km → miles | `× 0.621371` | OEM odometer |
+| °C → °F | `(× 9/5) + 32` | OEM temperature |
+| kPa → PSI | `× 0.145038` | OEM tire pressure (kPa) |
+| bar → PSI | `× 14.5038` | OEM tire pressure (bar) |
+| m/s² → g | `÷ 9.80665` | OEM acceleration |
 
-## Deployment
+---
 
-### Prerequisites
-- Connected Mobility Guidance deployed (Flink pipeline, MSK, Redis, CMS UI)
-- S3 datalake bucket from CMS storage stack
+## 3. Data Storage & Analytics
 
-### CMS Pipeline (connected-mobility-guidance-on-aws)
+### Routing
+
+The `EventDrivenTelemetryProcessor` (Flink) reads from `cms-telemetry-preprocessed` and routes each message to multiple destinations:
+
+```
+cms-telemetry-preprocessed
+    │
+    ├── Redis — latest vehicle state (signals, geo index, sparkline streams)
+    ├── cms-telemetry-processed — persistence
+    ├── cms-telemetry-trips — trip processor
+    ├── cms-telemetry-safety — safety event detection
+    ├── cms-telemetry-maintenance — maintenance alert generation
+    ├── cms-fleet-{fleetId}-telemetry — per-fleet real-time feed
+    └── S3 Iceberg sink — historical analytics (partitioned by fleetId + day)
+```
+
+### Fleet Enrollment & Tenant Isolation
+
+Each vehicle is enrolled in exactly one fleet. The enrollment table maps `vehicleId → fleetId`. The Flink processor looks up this mapping (Redis-cached, DynamoDB fallback) to:
+
+- Route messages to per-fleet Kafka topics
+- Inject `fleetId` into the message payload
+- Partition S3 data by fleet for Lake Formation row-level security
+
+### Iceberg Tables
+
+Normalized telemetry is stored in Iceberg format for Athena queries:
+
+```sql
+CREATE TABLE cms_normalized_telemetry (
+    vehicleId STRING, fleetId STRING, timestamp_ms BIGINT,
+    source STRING, speed DOUBLE, odometer DOUBLE,
+    lat DOUBLE, lng DOUBLE, heading DOUBLE,
+    ignitionOn BOOLEAN, engineRPM DOUBLE, fuelLevel DOUBLE,
+    tire_fl DOUBLE, tire_fr DOUBLE, tire_rl DOUBLE, tire_rr DOUBLE,
+    tripId STRING, driverId STRING
+)
+PARTITIONED BY (fleetId, days(from_unixtime(timestamp_ms/1000)))
+```
+
+Partitioned by `fleetId` first, then day — Lake Formation enforces row-level security so fleet operators can only query their own fleet's partitions.
+
+### Pre-Built Athena Queries
+
+| Query | Purpose |
+|-------|---------|
+| `fleet_utilization.sql` | Daily active vehicles, trips, miles, avg speed per fleet |
+| `normalized_trips.sql` | Trip history across all sources |
+| `oem_signal_coverage.sql` | Which signals each source provides |
+| `vehicle_health_snapshot.sql` | Latest telemetry per vehicle |
+
+---
+
+## 4. Real-Time Telemetry Distribution
+
+Fleet operators need live telemetry for their enrolled vehicles. The distribution layer pushes FleetWise Edge telemetry to connected consumers via WebSocket.
+
+### Why FWE Data Only
+
+FleetWise Edge provides high-frequency, low-latency telemetry directly from the vehicle's CAN bus (sub-second updates). OEM cloud-to-cloud data is polled on longer intervals (minutes) and is better served via the REST API or Athena queries. Real-time push is most valuable for the live, high-frequency FWE stream.
+
+### Architecture
+
+```
+EventDrivenTelemetryProcessor (Flink)
+    │
+    │  Filters source=fleetwise messages
+    │  Looks up vehicleId → fleetId from enrollment table
+    │
+    ├── cms-fleet-{fleetId}-telemetry (per-fleet Kafka topic)
+    │
+    └── ECS Fargate Consumer (ws-fanout)
+            │  Regex subscribe: cms-fleet-.*-telemetry
+            │  Query DDB fleetId-index → active WebSocket connections
+            │  Push to each connection via API Gateway Management API
+            │
+            ▼
+        API Gateway WebSocket API
+            │  wss://{endpoint}/live?fleetId={id}&token={jwt}
+            │
+            ▼
+        External Consumer Applications
+            Fleet operator dashboards, mobile apps, partner integrations
+```
+
+### Security
+
+- WebSocket `$connect` validates the JWT and checks `custom:fleetIds` claim
+- Platform admins can subscribe to any fleet
+- Fleet operators/viewers can only subscribe to their assigned fleets
+- Connections auto-expire after 24 hours
+
+### Components
+
+| Component | Purpose |
+|-----------|---------|
+| WebSocket API Gateway | Endpoint for external consumers |
+| WS Handler Lambda | Connection management, JWT validation |
+| WS Connections Table | DDB with `fleetId-index` GSI |
+| Fanout Consumer | ECS Fargate — Kafka→WebSocket bridge |
+
+### REST API Fallback
+
+For consumers that don't support WebSocket, or for OEM-sourced data, latest vehicle state is available via REST:
+
+```
+GET /api/v1/vehicles/{vehicleId}     → latest telemetry (any source)
+GET /api/v1/vehicles/locations       → all vehicle positions
+```
+
+These endpoints return data from Redis and include telemetry from all sources (FWE, OEM, simulator).
+
+---
+
+## 5. Tenant Access Model
+
+Three Cognito groups control access across all consumption layers:
+
+| Role | Data Scope | Capabilities |
+|------|-----------|-------------|
+| Platform Admin | All fleets | Full system access, OEM connector management, user management |
+| Fleet Operator | Own fleet(s) | View vehicles/trips/telemetry, subscribe to real-time feed, manage drivers |
+| Fleet Viewer | Own fleet(s) | Read-only dashboard access |
+
+The API Lambda extracts `cognito:groups` and `custom:fleetIds` from the JWT and filters every query. Lake Formation enforces the same boundaries on Athena. WebSocket connections are scoped by `fleetId` at connect time.
+
+---
+
+## 6. Adding a New OEM
+
+No code changes required — only configuration:
+
+1. Create a transform manifest JSON mapping the OEM's signals to canonical `json_field` values
+2. Upload to S3: `s3://{manifests-bucket}/transforms/{oem}-transform.json`
+3. Build a connector:
+   - **REST polling OEM**: Lambda + EventBridge schedule
+   - **Streaming/push OEM**: ECS Fargate receiver with public ALB
+4. Store OAuth credentials in Secrets Manager
+5. Connector writes raw OEM JSON to `cms-telemetry-oem` Kafka topic with `oem_source` field
+6. `OEMTelemetryProcessor` automatically loads the manifest and normalizes
+
+The OEM Integration Wizard in the CMS UI can auto-generate transform manifests from sample telemetry data uploaded by the platform admin.
+
+---
+
+## 7. Deployment
+
+### Prerequisites (CMS Pipeline)
+
+The following must be deployed from `connected-mobility-guidance-on-aws` before deploying this data product:
+
 ```bash
-cd deployment
-make phase1          # Storage + UI (includes enrollment table, Cognito groups, WebSocket API)
-make seed-fleet-enrollment   # Backfill enrollment table
-make phase4          # Flink apps
-make configure-flink # Configure with enrollment table
+cd connected-mobility-guidance-on-aws/deployment
+
+# Phase 1: Storage (DynamoDB tables), IoT Core, UI (API Gateway, Cognito, WebSocket, CloudFront)
+make phase1 DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+
+# Seed fleet enrollment data
+make seed-fleet-enrollment DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+
+# Phase 3: MSK cluster (Kafka + VPC + Redis)
+make phase3 DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+
+# Phase 3b: IoT Core → MSK telemetry routing
+make phase3b DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+
+# Phase 4: Flink applications (preprocessors + EventDrivenTelemetryProcessor)
+make phase4 DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+
+# Phase 5: Configure Flink with MSK bootstrap servers + enrollment table
+make configure-flink DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
 ```
 
 ### ADP Data Product (this repo)
 ```bash
-# Create Glue database
-aws glue create-database --database-input '{"Name": "cms_telemetry"}'
+cd automotive-data-platform-on-aws/guidance-for-telemetry-normalization
 
-# Run Iceberg DDL via Athena
-# See datasource/telemetry-lake/iceberg_tables.sql
+# Deploy WebSocket fanout service (Kafka → WebSocket bridge)
+./deploy.sh --stage prod --region us-east-2
+
+# Create Glue database for Iceberg tables
+aws glue create-database --database-input '{"Name": "cms_telemetry"}' --region us-east-2
+
+# Run Iceberg DDL via Athena — see datasource/telemetry-lake/iceberg_tables.sql
+# Apply Lake Formation policies — see datasource/telemetry-lake/lake_formation_policies.json
 ```
-
-## Adding a New OEM
-
-1. Create a transform manifest JSON mapping OEM signals to `json_field` values
-2. Upload to S3: `s3://{manifests-bucket}/transforms/{oem}-transform.json`
-3. Build a connector (Lambda for REST polling, ECS Fargate for WebSocket/streaming)
-4. Connector writes raw OEM JSON to `cms-telemetry-oem` Kafka topic with `oem_source` field
-5. `OEMTelemetryProcessor` automatically picks up the manifest and normalizes
-
-No Flink code changes required — the transform manifest is the only configuration.
