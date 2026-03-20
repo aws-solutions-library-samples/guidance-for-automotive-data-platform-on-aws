@@ -27,6 +27,8 @@ Base infrastructure for automotive data platforms using Amazon SageMaker Unified
 
 **Status**: ✅ Production Ready
 
+![Customer 360 Architecture](docs/images/c360.png)
+
 AI-powered Customer 360 analytics platform demonstrating declining business metrics and root cause analysis:
 - **Synthetic data** with realistic declining trends (NPS 52→42, Health 65→56)
 - **Battery issue analysis** (15%→40% over 12 months) for root cause demonstration
@@ -52,6 +54,8 @@ make deploy
 **Path**: [`guidance-for-predictive-maintenance/`](guidance-for-predictive-maintenance/)
 
 **Status**: ✅ Production Ready
+
+![Predictive Maintenance Architecture](docs/images/predictive.png)
 
 ML-powered predictive maintenance for tire health monitoring and failure prediction:
 - **Random Cut Forest** anomaly detection for tire pressure and temperature
@@ -80,6 +84,8 @@ make deploy
 
 **Status**: ✅ Production Ready
 
+![Telemetry Normalization Architecture](docs/images/telemetry-normal.png)
+
 Unified fleet telemetry normalization layer that integrates data from multiple vehicle sources into a single canonical format:
 - **Multi-source ingestion** — Simulator/Direct (MQTT), FleetWise Edge (CAN bus), OEM cloud-to-cloud (Ford, Tesla)
 - **Signal catalog contract** — All sources normalize to the same field names and units (mph, °F, PSI, miles)
@@ -93,6 +99,27 @@ Unified fleet telemetry normalization layer that integrates data from multiple v
 **Use this when**: Building fleet management platforms that need to consume telemetry from mixed vehicle sources (OEM APIs, FleetWise, simulators) through a single normalized interface
 
 [View Telemetry Normalization Documentation →](guidance-for-telemetry-normalization/README.md)
+
+---
+
+### 🛡️ Guidance: Data Governance
+**Path**: [`guidance-for-data-governance/`](guidance-for-data-governance/)
+
+**Status**: 🏗️ Reference Architecture
+
+![Data Governance Architecture](docs/images/governance.png)
+
+Multi-region data governance framework supporting EU Data Act and GDPR compliance for connected vehicle data:
+- **Multi-region architecture** — Separate data domains for EU producers (PII + anonymized) and global consumers (anonymized only)
+- **Automated PII detection** — Amazon Macie with custom patterns for VINs, license plates, and driver identifiers
+- **Anonymization pipeline** — AWS Glue ETL for GPS geofencing, VIN hashing, and driver behavior aggregation
+- **Cross-region sharing** — Lake Formation resource links enforcing producer-region permissions
+- **Vehicle owner portal** — Amazon Cognito + API Gateway for EU Data Act data subject access rights
+- **Audit and lineage** — CloudTrail logging for complete compliance reporting
+
+**Use this when**: Building data platforms that must comply with EU Data Act, GDPR, or regional data sovereignty requirements while enabling global R&D collaboration
+
+[View Data Governance Documentation →](guidance-for-data-governance/README.md)
 
 ---
 
@@ -139,6 +166,8 @@ cd platform-foundation
 
 ## Architecture
 
+![Automotive Data Platform Architecture](docs/images/mesh.png)
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │  Platform Foundation (SageMaker Unified Studio)                 │
@@ -172,6 +201,14 @@ cd platform-foundation
         │  - OEM cloud-to-cloud integration     │
         │  - Real-time distribution (Kafka/WS)  │
         │  - Iceberg analytics (Athena)         │
+        └───────────────────────────────────────┘
+                            │
+        ┌───────────────────────────────────────┐
+        │  Guidance: Data Governance            │
+        │  - Multi-region PII/anonymized split  │
+        │  - EU Data Act / GDPR controls        │
+        │  - Lake Formation resource links      │
+        │  - Macie PII detection                │
         └───────────────────────────────────────┘
                             │
         ┌───────────────────────────────────────┐
@@ -219,6 +256,7 @@ cd platform-foundation
 - [Predictive Maintenance Deployment Guide](guidance-for-predictive-maintenance/docs/DEPLOYMENT.md)
 - [Telemetry Normalization Guide](guidance-for-telemetry-normalization/README.md)
 - [Telemetry Normalization Architecture](guidance-for-telemetry-normalization/docs/ARCHITECTURE.md)
+- [Data Governance Guide](guidance-for-data-governance/README.md)
 - [Customer 360 + Predictive Maintenance Integration](guidance-for-predictive-maintenance/docs/CUSTOMER_360_INTEGRATION.md)
 - [Data Model Specification](guidance-for-agentic-customer-360/docs/DATA_MODEL_SPEC.md)
 - [Bedrock Agents Guide](guidance-for-agentic-customer-360/docs/BEDROCK_AGENTS.md)
