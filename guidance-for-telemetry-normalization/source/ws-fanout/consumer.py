@@ -22,7 +22,7 @@ LOG = logging.getLogger(__name__)
 BOOTSTRAP_SERVERS = os.environ['BOOTSTRAP_SERVERS']
 WS_CONNECTIONS_TABLE = os.environ['WS_CONNECTIONS_TABLE']
 WS_API_ENDPOINT = os.environ['WS_API_ENDPOINT']  # https://{id}.execute-api.{region}.amazonaws.com/live
-REGION = os.environ.get('AWS_REGION', 'us-east-2')
+REGION = os.environ.get('AWS_REGION', os.environ.get('AWS_DEFAULT_REGION', 'us-west-2'))
 GROUP_ID = os.environ.get('GROUP_ID', 'cms-ws-fanout-consumer')
 TOPIC_PATTERN = os.environ.get('TOPIC_PATTERN', r'^cms-fleet-.*-telemetry$')
 

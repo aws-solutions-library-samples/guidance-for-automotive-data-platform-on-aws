@@ -24,7 +24,7 @@ const token = session.getIdToken().getJwtToken();
 
 ```python
 # Using boto3
-client = boto3.client('cognito-idp', region_name='us-east-2')
+client = boto3.client('cognito-idp', region_name='<your-region>')
 resp = client.initiate_auth(
     ClientId='<client-id>',
     AuthFlow='USER_PASSWORD_AUTH',

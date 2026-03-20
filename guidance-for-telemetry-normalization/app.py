@@ -12,8 +12,8 @@ import os
 from aws_cdk import App, Environment
 from stacks.ws_fanout_stack import WsFanoutStack
 
-STAGE = os.environ.get('DEPLOYMENT_STAGE', 'prod')
-REGION = os.environ.get('CDK_DEFAULT_REGION', os.environ.get('AWS_REGION', 'us-east-2'))
+STAGE = os.environ.get('DEPLOYMENT_STAGE', 'dev')
+REGION = os.environ.get('CDK_DEFAULT_REGION', os.environ.get('AWS_REGION', 'us-west-2'))
 ACCOUNT = os.environ.get('CDK_DEFAULT_ACCOUNT')
 
 app = App()

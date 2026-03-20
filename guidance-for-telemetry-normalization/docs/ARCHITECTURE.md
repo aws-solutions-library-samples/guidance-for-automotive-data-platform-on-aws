@@ -309,22 +309,22 @@ The following must be deployed from `connected-mobility-guidance-on-aws` before 
 cd connected-mobility-guidance-on-aws/deployment
 
 # Phase 1: Storage (DynamoDB tables), IoT Core, UI (API Gateway, Cognito, WebSocket, CloudFront)
-make phase1 DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+make phase1 DEPLOYMENT_STAGE=${STAGE} AWS_REGION=${REGION}
 
 # Seed fleet enrollment data
-make seed-fleet-enrollment DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+make seed-fleet-enrollment DEPLOYMENT_STAGE=${STAGE} AWS_REGION=${REGION}
 
 # Phase 3: MSK cluster (Kafka + VPC + Redis)
-make phase3 DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+make phase3 DEPLOYMENT_STAGE=${STAGE} AWS_REGION=${REGION}
 
 # Phase 3b: IoT Core → MSK telemetry routing
-make phase3b DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+make phase3b DEPLOYMENT_STAGE=${STAGE} AWS_REGION=${REGION}
 
 # Phase 4: Flink applications (preprocessors + EventDrivenTelemetryProcessor)
-make phase4 DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+make phase4 DEPLOYMENT_STAGE=${STAGE} AWS_REGION=${REGION}
 
 # Phase 5: Configure Flink with MSK bootstrap servers + enrollment table
-make configure-flink DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
+make configure-flink DEPLOYMENT_STAGE=${STAGE} AWS_REGION=${REGION}
 ```
 
 ### ADP Data Product (this repo)
@@ -332,10 +332,10 @@ make configure-flink DEPLOYMENT_STAGE=prod AWS_REGION=us-east-2
 cd automotive-data-platform-on-aws/guidance-for-telemetry-normalization
 
 # Deploy WebSocket fanout service (Kafka → WebSocket bridge)
-./deploy.sh --stage prod --region us-east-2
+./deploy.sh --stage ${STAGE} --region ${REGION}
 
 # Create Glue database for Iceberg tables
-aws glue create-database --database-input '{"Name": "cms_telemetry"}' --region us-east-2
+aws glue create-database --database-input '{"Name": "cms_telemetry"}' --region ${AWS_REGION}
 
 # Run Iceberg DDL via Athena — see datasource/telemetry-lake/iceberg_tables.sql
 # Apply Lake Formation policies — see datasource/telemetry-lake/lake_formation_policies.json

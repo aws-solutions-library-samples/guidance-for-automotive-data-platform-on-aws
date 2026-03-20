@@ -60,31 +60,49 @@ This data product consumes from the Connected Mobility Guidance pipeline. The fo
 
 ```bash
 # Check MSK cluster exists and has bootstrap servers
-aws kafka list-clusters --query 'ClusterInfoList[?ClusterName==`cms-prod-msk`].ClusterArn' --output text --region us-east-2
+aws kafka list-clusters --query 'ClusterInfoList[?ClusterName==`cms-${DEPLOYMENT_STAGE}-msk`].ClusterArn' --output text --region ${AWS_REGION}
 
 # Check WebSocket API is deployed
-aws cloudformation describe-stacks --stack-name cms-prod-ui \
-  --query "Stacks[0].Outputs[?OutputKey=='WebSocketEndpoint'].OutputValue" --output text --region us-east-2
+aws cloudformation describe-stacks --stack-name cms-${DEPLOYMENT_STAGE}-ui \
+  --query "Stacks[0].Outputs[?OutputKey=='WebSocketEndpoint'].OutputValue" --output text --region ${AWS_REGION}
 
 # Check Flink apps are running
-aws kinesisanalyticsv2 list-applications --query 'ApplicationSummaries[].ApplicationName' --output table --region us-east-2
+aws kinesisanalyticsv2 list-applications --query 'ApplicationSummaries[].ApplicationName' --output table --region ${AWS_REGION}
 
 # Check fleet enrollment table has data
-aws dynamodb scan --table-name cms-prod-storage-fleet-enrollment --select COUNT --region us-east-2
+aws dynamodb scan --table-name cms-${DEPLOYMENT_STAGE}-storage-fleet-enrollment --select COUNT --region ${AWS_REGION}
 ```
 
 ## Setup
 
+### Deploy the WebSocket fanout service
+
+```bash
+cd guidance-for-telemetry-normalization
+
+# First time: bootstrap CDK
+make bootstrap AWS_REGION=<your-region>
+
+# Deploy
+make deploy DEPLOYMENT_STAGE=<stage> AWS_REGION=<your-region>
+
+# Or use the deploy script directly
+./deploy.sh --stage <stage> --region <your-region>
+```
+
+### Create the analytics data product
+
 1. Create the Glue database:
 ```bash
-aws glue create-database --database-input '{"Name": "cms_telemetry"}'
+aws glue create-database --database-input '{"Name": "cms_telemetry"}' --region ${AWS_REGION}
 ```
 
 2. Run the Iceberg DDL (replace `${DATALAKE_BUCKET}`):
 ```bash
 aws athena start-query-execution \
   --query-string "$(cat datasource/telemetry-lake/iceberg_tables.sql)" \
-  --result-configuration OutputLocation=s3://${DATALAKE_BUCKET}/athena-results/
+  --result-configuration OutputLocation=s3://${DATALAKE_BUCKET}/athena-results/ \
+  --region ${AWS_REGION}
 ```
 
 3. Apply Lake Formation policies per `datasource/telemetry-lake/lake_formation_policies.json`

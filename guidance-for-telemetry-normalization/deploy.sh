@@ -2,13 +2,13 @@
 # Deploy the Telemetry Normalization ADP data product
 #
 # Usage:
-#   ./deploy.sh                          # defaults: stage=prod, region=us-east-2
+#   ./deploy.sh                          # defaults: stage=prod, region from AWS_REGION env var
 #   ./deploy.sh --stage dev --region us-west-2
 #
 set -e
 
-STAGE="${DEPLOYMENT_STAGE:-prod}"
-REGION="${AWS_REGION:-us-east-2}"
+STAGE="${DEPLOYMENT_STAGE:-dev}"
+REGION="${AWS_REGION:-us-west-2}"
 
 while [[ $# -gt 0 ]]; do
   case $1 in
