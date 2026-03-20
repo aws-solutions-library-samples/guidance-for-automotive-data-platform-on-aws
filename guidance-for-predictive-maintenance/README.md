@@ -1,15 +1,21 @@
-# MMT Predictive Maintenance
+# Amazon Fleet Tire Predictive Maintenance
 
 ![Architecture](docs/predictive.png)
 
-<!-- markdownlint-disable-next-line -->
-**[MMT Predictive Maintenance](https://code.amazon.com/packages/MMTPredictiveMaintenance/trees/mainline)**
+## Background
+
+This guidance was developed in collaboration with Amazon's Middle Mile Transportation team, who operate one of the world's largest commercial vehicle fleets. The predictive maintenance algorithms and data pipelines in this solution were built using real-world fleet telemetry data from Amazon's delivery network — tire pressure readings, temperature data, and vehicle operating conditions collected across thousands of vehicles over multiple years.
+
+While the specific algorithms and thresholds in this guidance may differ from what Amazon uses internally in production, the architecture patterns, data processing pipelines, and ML approach are directly informed by that operational experience. Customers can use this guidance the same way we built it for our fleet operations team: deploy the infrastructure, connect your telemetry data source, train the models on your fleet's data, and tune the alert thresholds to match your maintenance workflows.
+
+The Redshift data source integration reflects the internal architecture used by Amazon's fleet team. For customers using the [Connected Mobility Guidance](https://github.com/aws-solutions-library-samples/guidance-for-connected-mobility-on-aws), see the [CMS Integration Guide](docs/CMS_INTEGRATION.md) for connecting the CMS telemetry pipeline directly to this predictive maintenance system.
 
 **If you want to jump straight into building and deploying, [click here](#deployment-prerequisites)**
 
 ## Table of Contents
 
-- [MMT Predictive Maintenance](#mmt-predictive-maintenance)
+- [Amazon Fleet Tire Predictive Maintenance](#amazon-fleet-tire-predictive-maintenance)
+  - [Background](#background)
   - [Table of Contents](#table-of-contents)
   - [Solution Overview](#solution-overview)
   - [Architecture Diagrams](#architecture-diagrams)
@@ -55,10 +61,9 @@
 
 ## Solution Overview
 
-The MMT Predictive Maintenance solution provides advanced analytics and machine learning capabilities for tire health
-monitoring and predictive maintenance. This solution:
+The Amazon Fleet Tire Predictive Maintenance solution provides advanced analytics and machine learning capabilities for tire health monitoring and predictive maintenance. This solution was originally developed for Amazon's Middle Mile Transportation fleet and is now available as guidance for customers building similar capabilities. This solution:
 
-1. Ingests expanded tire-related telemetry data from data sources provided by the Amazon Middle-Mile Team (MMT).
+1. Ingests expanded tire-related telemetry data from fleet vehicle data sources. The original implementation uses data provided by Amazon's Middle Mile Transportation team, but customers can connect any telemetry source including the Connected Mobility Guidance pipeline (see [CMS Integration Guide](docs/CMS_INTEGRATION.md)).
 1. Transforms data through a root ETL pipeline, implemented via Amazon Glue, to transform the data into formats usable by
 multiple prediction algorithms, and merge data from multiple tables into a single source.
 1. Applies machine learning models to predict tire failures 7-14 days before they would occur and enable open-loop
@@ -103,7 +108,7 @@ Below are further implementation and design details for the various features of 
 
 ### Redshift Data Source
 
-The solution flow begins with the ingestion of tire-related telemetry from a data source provided by the MMT. This
+The solution flow begins with the ingestion of tire-related telemetry from a fleet telemetry data source. This
 dataource must already be setup and configured for use within the solution, more details are provided in this
 [later](#manual-step---setup-the-redshift-datashare-permissions) section.
 
@@ -128,7 +133,7 @@ The Root ETL in this solution takes care of ingesting, processing, and preparing
 and Filtering approaches. The steps are outlined as follows:
 
 1. On an hourly schedule triggered by an Amazon CloudWatch **query cron job** the **redshift query lambda** will perform
-an SQL query on the appropriate data tables from the MMT Redshift data source. Queried data is uploaded to the S3
+an SQL query on the appropriate data tables from the Redshift data source. Queried data is uploaded to the S3
 **raw data bucket**.
 1. Also on an hourly schedule, but offset from the query by 30 minutes, the **root ETL pipeline** implemented via Amazon
 Glue will begin a processing job for the most recent hourly query results worth of data. After transformation and data
@@ -282,8 +287,8 @@ If you have not done so, first clone the repository, and then `cd` into the crea
 already cloned the repository, ensure you still `cd` into the solution's directory.
 
 ```bash
-git clone ssh://git.amazon.com/pkg/MMTPredictiveMaintenance
-cd MMTPredictiveMaintenance/
+git clone https://github.com/aws-solutions-library-samples/guidance-for-automotive-data-platform-on-aws
+cd guidance-for-automotive-data-platform-on-aws/guidance-for-predictive-maintenance/
 ```
 
 > **WARNING:** If you do not `cd` into the solution's directory before installing tools,
@@ -291,7 +296,7 @@ cd MMTPredictiveMaintenance/
 
 ### Required Tools
 
-To deploy MMT Predictive Maintenance, a variety of tools are required. These deploy instructions will install the
+To deploy the Predictive Maintenance solution, a variety of tools are required. These deploy instructions will install the
 following to your machine:
 
 - [Pyenv](https://github.com/pyenv/pyenv)
@@ -429,7 +434,7 @@ run `make install`.
 ### Logging
 
 By default, this solution implements safe logging which does not expose any sensitive or vulnerable information.
-MMT Predictive Maintenance does not currently support a one-step system for enabling more detailed debug logs.
+The Predictive Maintenance solution does not currently support a one-step system for enabling more detailed debug logs.
 To add additional logs to the solution, you are required to alter the source code.
 Examples of logging implementations can be found in the existing Lambda functions.
 
