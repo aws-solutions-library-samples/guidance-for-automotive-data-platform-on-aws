@@ -1,0 +1,30 @@
+[
+  {
+    "name": "automotive-vin-pattern",
+    "description": "Vehicle Identification Number (VIN) - 17 character alphanumeric",
+    "regex": "[A-HJ-NPR-Z0-9]{17}",
+    "keywords": ["VIN", "vin", "vehicleIdentificationNumber", "vehicle_id"],
+    "severity": "HIGH"
+  },
+  {
+    "name": "automotive-license-plate-eu",
+    "description": "European license plate formats (DE, FR, UK, IT, ES)",
+    "regex": "[A-Z]{1,3}[- ]?[A-Z]{1,2}[- ]?[0-9]{1,4}[- ]?[A-Z]{0,3}",
+    "keywords": ["licensePlate", "license_plate", "plateNumber", "registration"],
+    "severity": "HIGH"
+  },
+  {
+    "name": "automotive-driver-id",
+    "description": "Driver identifier patterns",
+    "regex": "DRV-[A-Z0-9]{6,12}",
+    "keywords": ["driverId", "driver_id", "driverIdentifier"],
+    "severity": "HIGH"
+  },
+  {
+    "name": "automotive-precise-gps",
+    "description": "Precise GPS coordinates (more than 3 decimal places indicates sub-city precision)",
+    "regex": "-?[0-9]{1,3}\\.[0-9]{4,}",
+    "keywords": ["latitude", "longitude", "lat", "lng", "gps"],
+    "severity": "MEDIUM"
+  }
+]
