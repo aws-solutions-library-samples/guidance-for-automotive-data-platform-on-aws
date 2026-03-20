@@ -96,6 +96,7 @@ See the [Implementation Guide](https://docs.aws.amazon.com/guidance/latest/autom
 
 ## Related Guidance
 
+- [CMS Integration Guide](docs/CMS_INTEGRATION.md) — How to connect the Connected Mobility telemetry pipeline to this governance framework
 - [Telemetry Normalization](../guidance-for-telemetry-normalization/) — Normalized telemetry feeds into the governance framework for PII classification
 - [Predictive Maintenance](../guidance-for-predictive-maintenance/) — Consumes anonymized data from the governance framework for ML model training
 - [Agentic Customer 360](../guidance-for-agentic-customer-360/) — Customer analytics using governed, anonymized data
