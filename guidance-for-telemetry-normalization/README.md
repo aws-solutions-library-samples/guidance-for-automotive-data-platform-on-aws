@@ -1,5 +1,7 @@
 # Telemetry Normalization — ADP Data Product
 
+![Architecture](docs/telemetry-normal.png)
+
 A use case for the Automotive Data Platform that demonstrates multi-source vehicle telemetry normalization, storage, and distribution for fleet management.
 
 ## What This Provides

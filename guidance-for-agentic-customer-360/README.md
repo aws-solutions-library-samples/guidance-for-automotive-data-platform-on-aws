@@ -1,5 +1,7 @@
 # Customer 360 Analytics Platform with Agentic AI
 
+![Architecture](docs/c360.png)
+
 An end-to-end customer analytics platform demonstrating declining business metrics and AI-powered root cause analysis using AWS services.
 
 ## Overview

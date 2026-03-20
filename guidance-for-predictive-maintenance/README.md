@@ -1,5 +1,7 @@
 # MMT Predictive Maintenance
 
+![Architecture](docs/predictive.png)
+
 <!-- markdownlint-disable-next-line -->
 **[MMT Predictive Maintenance](https://code.amazon.com/packages/MMTPredictiveMaintenance/trees/mainline)**
 
