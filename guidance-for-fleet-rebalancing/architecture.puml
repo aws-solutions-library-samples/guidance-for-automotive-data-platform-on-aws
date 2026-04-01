@@ -1,0 +1,98 @@
+@startuml fleet-rebalancing-architecture
+
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v17.0/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/AWSSimplified.puml
+!include AWSPuml/Analytics/ManagedStreamingforApacheKafka.puml
+!include AWSPuml/Analytics/ManagedServiceforApacheFlink.puml
+!include AWSPuml/Analytics/Athena.puml
+!include AWSPuml/ApplicationIntegration/EventBridge.puml
+!include AWSPuml/ApplicationIntegration/APIGateway.puml
+!include AWSPuml/Compute/Lambda.puml
+!include AWSPuml/Database/DynamoDB.puml
+!include AWSPuml/Database/ElastiCache.puml
+!include AWSPuml/MachineLearning/SageMaker.puml
+!include AWSPuml/MachineLearning/Bedrock.puml
+!include AWSPuml/NetworkingContentDelivery/CloudFront.puml
+!include AWSPuml/SecurityIdentityCompliance/Cognito.puml
+!include AWSPuml/Storage/SimpleStorageService.puml
+!include AWSPuml/InternetOfThings/IoTCore.puml
+
+skinparam backgroundColor #0E1220
+skinparam defaultFontColor #BEC8DC
+skinparam rectangleBorderColor #2A2F3D
+skinparam rectangleBackgroundColor #161B2E
+
+title <font color=#FFFFFF><b>Guidance for an Automotive Data Platform on AWS</b></font>\n<font color=#BEC8DC>Creating operational value from Fleet Utilization Intelligence</font>\n<font color=#BEC8DC>Build an agentic fleet rebalancing pipeline that optimizes vehicle placement across locations</font>
+
+' ===== STEP 1: Fleet Data Ingestion =====
+rectangle "<font color=#34D399><b>1</b></font> <font color=#FFFFFF><b>Fleet Data Ingestion</b></font>" as ingestion {
+    ManagedStreamingforApacheKafka(msk1, "Amazon MSK\ncms-telemetry-preprocessed", "")
+    DynamoDB(enrollment, "DynamoDB\nFleet Enrollment", "")
+    SimpleStorageService(demand_s3, "Amazon S3\nDemand Signals\n(CSV upload)", "")
+    DynamoDB(constraints, "DynamoDB\nConstraints\n(depots, capacity,\ncharging infra)", "")
+}
+
+' ===== STEP 2: Utilization Processing =====
+rectangle "<font color=#34D399><b>2</b></font> <font color=#FFFFFF><b>Utilization Processing</b></font>" as processing {
+    ManagedServiceforApacheFlink(util_flink, "Apache Flink\nUtilizationProcessor\n\nComputes utilization per\nvehicle, location, region\nDetects imbalances", "")
+    SageMaker(forecast, "Amazon SageMaker\nDemand Forecasting\n(time series)\n7-day / 30-day", "")
+}
+
+' ===== STEP 3: Data Lake =====
+rectangle "<font color=#34D399><b>3</b></font> <font color=#FFFFFF><b>Utilization Data Lake & Visualization</b></font>" as datalake {
+    SimpleStorageService(iceberg, "S3 Iceberg\ncms_fleet_utilization\ncms_demand_forecasts", "")
+    Athena(athena, "Athena\nUtilization views\nSupply-demand gap\nTransfer costs", "")
+    ElastiCache(redis, "ElastiCache (Redis)\nReal-time state\nper vehicle/location", "")
+    DynamoDB(events, "DynamoDB\nRebalance Events\nImbalance Flags\nRecommendations", "")
+}
+
+' ===== STEP 4: Agentic Intelligence =====
+rectangle "<font color=#34D399><b>4</b></font> <font color=#FFFFFF><b>Agentic Intelligence</b></font>" as agents {
+    Lambda(gateway, "Lambda\nAgent Core\nGateway", "")
+    Bedrock(guardrails, "Bedrock\nGuardrails", "")
+    Bedrock(kb, "Bedrock\nKnowledge Base", "")
+    Bedrock(agent, "Bedrock Agent\n(Rebalancing)\nDiagnose gaps\nRecommend moves\nCheck constraints", "")
+    SageMaker(anomaly, "SageMaker\nAnomaly Scoring", "")
+}
+
+' ===== STEP 5: Fleet Operator Interface =====
+rectangle "<font color=#34D399><b>5</b></font> <font color=#FFFFFF><b>Fleet Operator Interface</b></font>" as ui {
+    CloudFront(cf, "CloudFront\nCMS UI", "")
+    APIGateway(apigw, "API Gateway\nREST API", "")
+    Cognito(cognito, "Cognito\nJWT Auth", "")
+}
+note right of ui #161B2E
+  <font color=#FBBF24><b>Rebalancing Dashboard</b></font>
+  <font color=#BEC8DC>Map view with vehicle locations</font>
+  <font color=#BEC8DC>Supply-demand heatmap</font>
+  <font color=#BEC8DC>Utilization KPIs</font>
+  <font color=#BEC8DC>Demand forecast overlay</font>
+  <font color=#FBBF24><b>Action Queue</b></font>
+  <font color=#BEC8DC>Approve / reject / modify</font>
+  <font color=#BEC8DC>Auto-approval rules</font>
+end note
+
+' ===== CONNECTIONS =====
+msk1 -right-> util_flink
+enrollment -right-> util_flink
+demand_s3 -down-> forecast
+
+util_flink -right-> iceberg
+util_flink -right-> redis
+util_flink -right-> events
+forecast -right-> redis
+
+events -down-> gateway : DynamoDB\nStreams
+gateway -right-> agent
+kb -down-> agent
+guardrails -down-> agent
+agent -up-> athena : query
+agent -up-> redis : get state
+agent -left-> events : write\nrecommendation
+
+redis -down-> apigw
+athena -down-> apigw
+apigw -right-> cf
+
+@enduml
