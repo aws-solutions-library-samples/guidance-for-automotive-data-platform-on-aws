@@ -314,3 +314,246 @@ The Virtual Fleet Operator is the capstone — it requires all other guidances t
 3. **Conflict resolution:** What if the Cost Agent recommends keeping a vehicle in service (save money) but the Recall Agent recommends grounding it (safety)? Safety wins — but how explicit do we make the reasoning?
 4. **Conversation persistence:** How long does conversational context persist? Per session? Per day? Stored in DynamoDB?
 5. **Fleet health score weighting:** How to weight utilization vs. cost vs. recall compliance vs. maintenance health? Configurable per operator?
+
+---
+
+## 6. Autonomous Decision-Making
+
+The VFO is not a chatbot. It is an autonomous operator that continuously monitors the fleet and acts without human prompting. The conversational interface (Section 3) is one mode of interaction — the primary mode is autonomous.
+
+### Design Principles
+
+1. **Agents make decisions, not suggestions.** The VFO schedules service, reassigns vehicles, and escalates issues — the same actions a human fleet manager would take.
+2. **The event catalog is the source of truth.** Every detectable condition is defined in the event catalog with its trigger signal, threshold, and severity. The simulator, Flink, and agents all read from the same catalog.
+3. **Continuous learning from outcomes.** Every decision is journaled with its reasoning. Outcomes are tracked. The agent's context includes past decisions and their results, enabling in-context learning without model fine-tuning.
+4. **Tiered processing for scale.** Detection is deterministic (Flink). Decisions are intelligent (agents). A fleet of 500K vehicles with 2K alerts becomes ~20 agent invocations (batched by fleet/region), not 2K.
+
+### OODA Loop
+
+The VFO operates on a continuous Observe → Orient → Decide → Act loop:
+
+```
+OBSERVE:  Flink detects anomaly → writes maintenance alert to DDB
+          DDB Stream triggers Alert Batcher Lambda
+
+ORIENT:   Alert Batcher (runs every 5 min):
+          - Batches alerts by fleet/region
+          - Gathers context per vehicle:
+            • Vehicle record (make, model, mileage, warranty)
+            • Service history (last tire service, cost)
+            • Fleet capacity (idle vehicles in same fleet)
+            • Service center availability
+            • Past decisions on similar alerts (from KB)
+
+DECIDE:   Step Functions invokes Maintenance Agent with batch context
+          Agent decides per vehicle:
+          - SCHEDULE_SERVICE (immediate, next-day, next-available)
+          - REASSIGN_VEHICLE (which replacement, which routes)
+          - DEFER (low severity, monitor for N days)
+          - ESCALATE (needs human approval — cost > threshold)
+
+ACT:      Decision Executor Lambda:
+          → Creates service appointment (service-history, status=SCHEDULED)
+          → Updates vehicle status → "service_scheduled"
+          → Reassigns routes to replacement vehicle
+          → Generates service invoice PDF → S3 (KB bucket)
+          → Notifies driver via IoT command
+          → Writes Decision Journal entry
+```
+
+### Agent Prompt Structure
+
+The maintenance agent receives structured context, not a chat message:
+
+```
+ROLE: You are the Maintenance Decision Agent for a commercial fleet.
+You make autonomous decisions about vehicle maintenance — scheduling
+service, reassigning vehicles, and managing fleet capacity. Your
+decisions are executed automatically.
+
+CURRENT BATCH: 12 maintenance alerts from Dallas fleet
+BATCH PRIORITY: 3 CRITICAL, 7 HIGH, 2 MEDIUM
+
+ALERT 1 OF 12:
+  Vehicle: VEH-0010 (2022 Honda Civic, 98,412 mi)
+  Alert: TIRE_PRESSURE_LOW — front-left 25.2 PSI (threshold: 28)
+  Fleet: FLEET-001 (Dallas Delivery)
+  Status: Active delivery route, 3 stops remaining
+  Warranty: Expired 2025-05-17
+  Last tire service: 56,000 mi (tire rotation)
+  Last tire replacement: Never (original tires at 98K mi)
+
+FLEET CAPACITY:
+  Idle vehicles in FLEET-001: VEH-0023 (available), VEH-0031 (available)
+  Service centers near Dallas:
+    - Discount Tire #4521 (2.3 mi) — 2 openings tomorrow AM
+    - Firestone #1892 (4.1 mi) — 1 opening Thursday
+
+PAST DECISIONS ON SIMILAR ALERTS:
+  - VEH-0032 (2024-11): Deferred tire alert → blowout 2 days later
+    ($450 tow + 8hr downtime). FAILURE.
+  - VEH-0019 (2025-01): Scheduled same-day → $680, 2hr downtime. SUCCESS.
+  - VEH-0041 (2025-03): Scheduled next-day, reassigned to VEH-0044 →
+    both completed on time. SUCCESS.
+
+YOUR DECISION HISTORY:
+  Last 30 days: 47 decisions, 43 SUCCESS, 3 PARTIAL, 1 FAILURE
+  Tire-related accuracy: 96%
+  Average cost estimate accuracy: 92%
+
+RESPOND WITH A STRUCTURED DECISION FOR EACH ALERT.
+```
+
+### Scaling Model
+
+| Fleet Size | Alerts/Day | Agent Invocations/Day | Cost Estimate |
+|------------|------------|----------------------|---------------|
+| 50 | ~10 | 2-3 (batched by fleet) | ~$0.50 |
+| 5,000 | ~100 | 10-15 (batched by region) | ~$5 |
+| 50,000 | ~1,000 | 50-80 (batched by region+severity) | ~$40 |
+| 500,000 | ~10,000 | 200-400 (batched) | ~$200 |
+
+Batching keeps agent costs linear with fleet regions, not fleet size.
+
+---
+
+## 7. Continuous Learning
+
+The VFO learns from its own decisions through in-context learning — no model fine-tuning required.
+
+### Decision Journal Schema
+
+```
+Table: cms-{stage}-decision-journal
+
+decisionId        (PK)    DEC-2026-0401-001
+alertId                   ALERT-xxxx
+vehicleId                 VEH-0010
+fleetId                   FLEET-001
+agentId                   cms-maintenance-agent
+category                  maintenance.tire_pressure
+severity                  HIGH
+
+# Decision
+decision                  SCHEDULE_SERVICE
+reasoning                 "Slow leak 25 PSI FL. Vehicle on active delivery
+                          route. Warranty expired. Similar alert on VEH-0032
+                          was deferred → blowout. Scheduling immediately."
+actions_taken             [service_scheduled, vehicle_reassigned, driver_notified]
+estimated_cost            680
+service_center            "Discount Tire #4521, Dallas TX"
+replacement_vehicle       VEH-0023
+scheduled_date            2026-04-02T08:00:00Z
+
+# Outcome (filled in later by Outcome Tracker)
+outcome                   SUCCESS | PARTIAL | FAILURE | PENDING
+outcome_date              2026-04-02T10:30:00Z
+actual_cost               695
+outcome_notes             "Service completed. VEH-0023 covered all 3 stops."
+cost_accuracy             97.8%
+downtime_hours            2.5
+follow_up_incidents       0
+
+# Metadata
+timestamp                 2026-04-01T14:30:00Z
+batch_id                  BATCH-2026-0401-DAL-001
+decision_latency_ms       3200
+```
+
+### Learning Loop
+
+```
+1. Agent makes decision           → Decision Journal (DDB)
+2. Outcome tracked (daily)        → Decision Journal updated
+3. Decision + outcome             → document generated → S3 (KB bucket)
+4. Bedrock KB auto-syncs          → S3 documents indexed
+5. Next agent invocation          → retrieves relevant past decisions from KB
+6. Agent sees past outcomes       → adjusts current decision
+```
+
+### What the Agent Learns Over Time
+
+| Pattern | Learning |
+|---------|----------|
+| Deferred tire alerts on highway vehicles → blowouts | Never defer tire alerts for highway-route vehicles |
+| Same-day service at Discount Tire → 95% on-time | Prefer Discount Tire for urgent tire work |
+| VEH-0023 reliably covers reassigned routes | VEH-0023 is a good backup for FLEET-001 |
+| Cost estimates for brake work consistently 15% low | Adjust brake service estimates up 15% |
+| Monday AM service slots fill fast | Schedule Monday services by Friday |
+
+### Knowledge Base Document Types for Learning
+
+```
+s3://cms-{stage}-vfo-knowledge-base/
+├── decision-outcomes/           ← Auto-generated from Decision Journal
+│   ├── DEC-2026-0401-001.md    "Tire alert → scheduled service → SUCCESS"
+│   ├── DEC-2026-0328-015.md    "Deferred tire alert → blowout → FAILURE"
+│   └── ...
+├── fleet-context/               ← Fleet composition, KPIs, policies
+├── fleet-operations/            ← Escalation playbook, SLAs
+├── service-invoices/            ← Historical service PDFs
+├── warranty-claims/             ← Warranty claim PDFs
+├── parts-listings/              ← Parts catalogs with pricing
+└── recall-notices/              ← NHTSA recall documents
+```
+
+---
+
+## 8. End-to-End Example: Tire Slow Leak
+
+```
+14:30:00  Simulator: VEH-0010 tire_fl drops to 25.2 PSI
+14:30:02  Flink: Detects TIRE_PRESSURE_LOW, writes maintenance alert
+14:30:02  DDB Stream: New alert triggers Alert Batcher
+14:35:00  Alert Batcher: Collects 12 Dallas fleet alerts, gathers context
+14:35:03  Step Functions: Invokes Maintenance Agent with batch
+14:35:06  Agent decides: Schedule VEH-0010 tomorrow 8AM at Discount Tire,
+          reassign to VEH-0023, estimated $680
+14:35:07  Decision Executor:
+          → Writes service record (SCHEDULED) to service-history
+          → Updates VEH-0010 status to "service_scheduled"
+          → Reassigns routes to VEH-0023
+          → Writes Decision Journal entry
+          → Notifies drivers via IoT command
+14:35:08  UI: Fleet manager sees scheduled service on dashboard
+
+Next day:
+08:00     VEH-0010 arrives at Discount Tire
+10:30     Service completed, $695 actual cost
+10:31     Service record updated (COMPLETED)
+
+Daily:
+23:00     Outcome Tracker runs:
+          → DEC-2026-0401-001: service completed, cost accuracy 97.8%
+          → Score: SUCCESS
+          → Generates outcome document → S3 → KB
+
+Next alert:
+          Agent context now includes: "VEH-0010 tire service was successful,
+          Discount Tire delivered on time, cost estimate was 97.8% accurate"
+```
+
+---
+
+## 9. Implementation Order
+
+1. **Decision Journal table** — DDB table for tracking decisions + outcomes
+2. **Alert Batcher Lambda** — DDB Stream trigger on maintenance-alerts, batches by fleet/region
+3. **Decision Workflow** — Step Functions: gather context → invoke agent → execute actions
+4. **Decision Executor Lambda** — Writes service records, updates vehicle status, generates PDFs
+5. **Outcome Tracker Lambda** — Scheduled daily, scores past decisions, generates KB docs
+6. **KB Sync** — Decision-outcome documents → S3 → Bedrock KB auto-sync
+7. **Guardrails** — Cost thresholds ($5K+ needs human), safety overrides (CRITICAL = immediate), compliance checks
+
+---
+
+## 10. Open Questions (Updated)
+
+1. **Latency:** Multi-agent invocation adds latency. Is 5-10 seconds acceptable for cross-domain questions? Can we parallelize specialist calls?
+2. **Context window:** The supervisor needs to hold context from multiple specialists. Will this exceed Bedrock context limits for complex scenarios?
+3. **Conflict resolution:** What if the Cost Agent recommends keeping a vehicle in service (save money) but the Recall Agent recommends grounding it (safety)? Safety wins — but how explicit do we make the reasoning?
+4. **Conversation persistence:** How long does conversational context persist? Per session? Per day? Stored in DynamoDB?
+5. **Fleet health score weighting:** How to weight utilization vs. cost vs. recall compliance vs. maintenance health? Configurable per operator?
+6. **Autonomous approval threshold:** At what cost/severity level does the agent act autonomously vs. queue for human approval? Configurable per fleet?
+7. **Learning decay:** Should old decision outcomes be weighted less than recent ones? How far back should the agent look?
+8. **Multi-tenant isolation:** In a multi-fleet deployment, how do we ensure one fleet's decision history doesn't leak into another fleet's agent context?
