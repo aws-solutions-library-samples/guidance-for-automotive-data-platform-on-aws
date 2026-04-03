@@ -1,0 +1,4 @@
+# Generated training data (regenerate with: python3 scripts/generate_training_data.py)
+data/training/*.parquet
+data/training/anomaly_summary.csv
+data/training/normalization_stats.json
