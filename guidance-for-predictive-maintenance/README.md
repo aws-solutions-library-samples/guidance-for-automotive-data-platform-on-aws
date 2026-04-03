@@ -279,6 +279,70 @@ These uploads trigger the following process:
 Relevant metrics for the alerts processing workflow, including Lambda invocations, SQS message counts, and DLQ
 statistics, can be monitored through CloudWatch dashboards.
 
+## Quick Start: Training Data & Model Deployment
+
+### 1. Generate Training Dataset
+
+Generate 6 months of realistic tire telemetry for 50 vehicles with injected anomalies:
+
+```bash
+python3 scripts/generate_training_data.py
+```
+
+Output: `data/training/tire_telemetry_full.parquet` (721K records, 17.5 MB)
+
+**Anomaly types injected:**
+| Type | Rate | Description |
+|------|------|-------------|
+| Slow leak | 8% | Gradual pressure loss (0.3–1.2 PSI/day) |
+| Puncture | 4% | Sudden pressure drop, rapid continued loss |
+| Valve failure | 3% | Intermittent pressure loss/recovery |
+| Overinflation | 2% | Pressure 5–10 PSI above normal |
+
+**Features per record:** `pressure`, `temperature`, `tread_depth`, `speed`, `ambient_temp`, `latitude`, `longitude`, `delta_pressure`, `delta_temp`, `label`
+
+**Realistic patterns included:**
+- Seasonal temperature effects on pressure (Gay-Lussac's law)
+- City-specific climate (Dallas, Atlanta, Chicago, Phoenix, Seattle)
+- Rear tire load differential
+- Natural tread wear over time
+- Sensor noise
+
+### 2. Train & Deploy Model
+
+```bash
+# Create SageMaker role and S3 bucket (one-time)
+aws iam create-role --role-name cms-sagemaker-execution-role \
+  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"sagemaker.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
+aws iam attach-role-policy --role-name cms-sagemaker-execution-role --policy-arn arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+aws iam attach-role-policy --role-name cms-sagemaker-execution-role --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+aws s3 mb s3://cms-tire-prediction-ACCOUNT-REGION --region REGION
+
+# Train and deploy
+python3 scripts/train_model.py \
+  --region us-east-2 \
+  --role-arn arn:aws:iam::ACCOUNT:role/cms-sagemaker-execution-role \
+  --bucket cms-tire-prediction-ACCOUNT-REGION \
+  --deploy
+```
+
+This will:
+- Upload normalized training data to S3
+- Train a SageMaker Random Cut Forest model (~3 min)
+- Deploy a real-time inference endpoint (~5 min)
+- Save normalization stats and anomaly threshold to SSM Parameter Store
+
+**SSM Parameters created:**
+- `/tire-prediction/prod/normalization-stats` — feature normalization stats
+- `/tire-prediction/prod/anomaly-threshold` — anomaly score threshold
+- `/tire-prediction/prod/endpoint-name` — SageMaker endpoint name
+
+### 3. CMS Integration
+
+See [CMS Integration Guide](docs/CMS_INTEGRATION.md) for connecting the Connected Mobility telemetry pipeline to the prediction endpoint.
+
+The CMS adapter (`source/lambda/cms_adapter.py`) transforms CMS canonical telemetry (`tire_pressure_fl`, `tire_pressure_fr`, etc.) into the per-tire format expected by the model, and pushes prediction alerts back to the CMS maintenance-alerts table.
+
 ## Deployment Prerequisites
 
 ### Clone the Repository
