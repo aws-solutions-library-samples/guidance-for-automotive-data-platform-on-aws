@@ -84,12 +84,14 @@ def handler(event=None, context=None):
 
             # slope is PSI per reading. Convert to PSI per day.
             time_span_days = (timestamps[-1] - timestamps[0]) / (1000 * 86400)
-            if time_span_days < 1:
+            if time_span_days < 0.1:  # Need at least ~2 hours of data
                 continue
             slope_per_day = slope * (n / time_span_days)
 
             current_pressure = pressures[-1]
             tire_label = tire.replace("tire_pressure_", "").upper()
+
+            print(f"  {vid} {tire_label}: {len(readings)} readings, slope={slope_per_day:.2f} PSI/day, current={current_pressure:.1f}")
 
             # Alert if pressure is dropping > 0.3 PSI/day and current pressure < 30
             if slope_per_day < -0.3 and current_pressure < 30:

@@ -18,6 +18,7 @@ from ..constructs.alerts_system import AlertsSystemConstruct
 from ..constructs.ml_construct import MLPipelineConstruct
 from ..constructs.prediction_model import PredictionModelConstruct
 from ..constructs.etl_construct import ETLConstruct
+from ..constructs.cms_integration import CMSIntegrationConstruct
 
 
 class TirePredictiveMaintenanceStack(Stack):
@@ -99,4 +100,11 @@ class TirePredictiveMaintenanceStack(Stack):
             prediction_bucket=prediction_model_construct.prediction_bucket_construct.bucket,
             s3_log_lifecycle_rules=s3_log_lifecycle_rules,
             anomaly_threshold_ssm_parameter=alerts_system_construct.anomaly_threshold_ssm_parameter,
+        )
+
+        # CMS Integration — daily tire check, blowout risk, SageMaker resources
+        CMSIntegrationConstruct(
+            self,
+            "cms-integration",
+            stage=os.environ.get("DEPLOYMENT_STAGE", "prod"),
         )
