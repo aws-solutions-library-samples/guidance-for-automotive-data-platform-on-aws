@@ -1,0 +1,1081 @@
+[
+  {
+    "campaignId": "CMP-0001",
+    "type": "subscription-upgrade",
+    "title": "1 month free Premium connected services",
+    "discountValue": 0,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Ford",
+      "Toyota",
+      "Ford"
+    ],
+    "eligibleYears": [
+      2023,
+      2021
+    ],
+    "startDate": "2026-04-23",
+    "endDate": "2026-06-22",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0002",
+    "type": "service-discount",
+    "title": "15% off brake service",
+    "discountValue": 15,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Ford",
+      "RAM",
+      "Chevrolet"
+    ],
+    "eligibleYears": [
+      2021,
+      2022,
+      2020
+    ],
+    "startDate": "2026-04-03",
+    "endDate": "2026-05-16",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0003",
+    "type": "loyalty-reward",
+    "title": "$50 service credit at 50k miles",
+    "discountValue": 50,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford",
+      "Toyota",
+      "Chevrolet",
+      "RAM"
+    ],
+    "eligibleYears": [
+      2022,
+      2020,
+      2024,
+      2021
+    ],
+    "startDate": "2026-03-30",
+    "endDate": "2026-07-23",
+    "active": true,
+    "redemptionChannel": "dealer",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0004",
+    "type": "trade-in",
+    "title": "Enhanced trade-in value +$1,500",
+    "discountValue": 1500,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford",
+      "Chevrolet",
+      "Toyota",
+      "Ford"
+    ],
+    "eligibleYears": [
+      2021,
+      2024,
+      2022,
+      2023
+    ],
+    "startDate": "2026-05-03",
+    "endDate": "2026-09-27",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 500
+  },
+  {
+    "campaignId": "CMP-0005",
+    "type": "seasonal",
+    "title": "Winter tire package \u2014 $100 off",
+    "discountValue": 100,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2023,
+      2024,
+      2021,
+      2020
+    ],
+    "startDate": "2026-04-27",
+    "endDate": "2026-09-25",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0006",
+    "type": "seasonal",
+    "title": "Winter tire package \u2014 $100 off",
+    "discountValue": 100,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "RAM"
+    ],
+    "eligibleYears": [
+      2023,
+      2020,
+      2022
+    ],
+    "startDate": "2026-04-26",
+    "endDate": "2026-08-04",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0007",
+    "type": "loyalty-reward",
+    "title": "$50 service credit at 50k miles",
+    "discountValue": 50,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford",
+      "Ford",
+      "Chevrolet",
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2021,
+      2024,
+      2023
+    ],
+    "startDate": "2026-04-10",
+    "endDate": "2026-06-29",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": 500
+  },
+  {
+    "campaignId": "CMP-0008",
+    "type": "subscription-upgrade",
+    "title": "1 month free Premium connected services",
+    "discountValue": 0,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Toyota",
+      "Chevrolet",
+      "Ford"
+    ],
+    "eligibleYears": [
+      2024,
+      2022
+    ],
+    "startDate": "2026-03-13",
+    "endDate": "2026-08-06",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0009",
+    "type": "maintenance-bundle",
+    "title": "Prepaid 3-service package \u2014 save 20%",
+    "discountValue": 20,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "RAM",
+      "Toyota",
+      "Ford"
+    ],
+    "eligibleYears": [
+      2023,
+      2022,
+      2024,
+      2020,
+      2021
+    ],
+    "startDate": "2026-05-10",
+    "endDate": "2026-08-20",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0010",
+    "type": "seasonal",
+    "title": "Winter tire package \u2014 $100 off",
+    "discountValue": 100,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford",
+      "Ford",
+      "Chevrolet"
+    ],
+    "eligibleYears": [
+      2024,
+      2020,
+      2021
+    ],
+    "startDate": "2026-05-04",
+    "endDate": "2026-06-24",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0011",
+    "type": "service-discount",
+    "title": "15% off brake service",
+    "discountValue": 15,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2022,
+      2023,
+      2021,
+      2020,
+      2024
+    ],
+    "startDate": "2026-03-17",
+    "endDate": "2026-08-16",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0012",
+    "type": "subscription-upgrade",
+    "title": "1 month free Premium connected services",
+    "discountValue": 0,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Toyota",
+      "Chevrolet",
+      "Ford",
+      "RAM"
+    ],
+    "eligibleYears": [
+      2021,
+      2024
+    ],
+    "startDate": "2026-04-07",
+    "endDate": "2026-06-07",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0013",
+    "type": "referral",
+    "title": "$75 credit for fleet referral",
+    "discountValue": 75,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "RAM",
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2020,
+      2023
+    ],
+    "startDate": "2026-04-21",
+    "endDate": "2026-07-15",
+    "active": true,
+    "redemptionChannel": "dealer",
+    "maxRedemptions": 500
+  },
+  {
+    "campaignId": "CMP-0014",
+    "type": "seasonal",
+    "title": "Winter tire package \u2014 $100 off",
+    "discountValue": 100,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Toyota",
+      "Ford",
+      "Chevrolet"
+    ],
+    "eligibleYears": [
+      2021,
+      2022,
+      2023,
+      2020
+    ],
+    "startDate": "2026-04-26",
+    "endDate": "2026-09-25",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0015",
+    "type": "service-discount",
+    "title": "15% off brake service",
+    "discountValue": 15,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Chevrolet"
+    ],
+    "eligibleYears": [
+      2020,
+      2022,
+      2024,
+      2023,
+      2021
+    ],
+    "startDate": "2026-05-12",
+    "endDate": "2026-07-24",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0016",
+    "type": "service-discount",
+    "title": "15% off brake service",
+    "discountValue": 15,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "RAM",
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2021,
+      2023,
+      2022
+    ],
+    "startDate": "2026-03-17",
+    "endDate": "2026-06-25",
+    "active": true,
+    "redemptionChannel": "dealer",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0017",
+    "type": "loyalty-reward",
+    "title": "$50 service credit at 50k miles",
+    "discountValue": 50,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Chevrolet"
+    ],
+    "eligibleYears": [
+      2023,
+      2024
+    ],
+    "startDate": "2026-04-15",
+    "endDate": "2026-08-06",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0018",
+    "type": "seasonal",
+    "title": "Winter tire package \u2014 $100 off",
+    "discountValue": 100,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "RAM",
+      "Ford",
+      "Toyota",
+      "Ford"
+    ],
+    "eligibleYears": [
+      2021,
+      2023,
+      2022,
+      2020,
+      2024
+    ],
+    "startDate": "2026-03-25",
+    "endDate": "2026-07-18",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0019",
+    "type": "trade-in",
+    "title": "Enhanced trade-in value +$1,500",
+    "discountValue": 1500,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Toyota",
+      "Ford",
+      "RAM",
+      "Ford"
+    ],
+    "eligibleYears": [
+      2022,
+      2023,
+      2020
+    ],
+    "startDate": "2026-03-28",
+    "endDate": "2026-05-20",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0020",
+    "type": "recall-incentive",
+    "title": "Free loaner during recall repair",
+    "discountValue": 0,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Ford",
+      "RAM"
+    ],
+    "eligibleYears": [
+      2022,
+      2020
+    ],
+    "startDate": "2026-04-28",
+    "endDate": "2026-09-20",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0021",
+    "type": "seasonal",
+    "title": "Winter tire package \u2014 $100 off",
+    "discountValue": 100,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "RAM"
+    ],
+    "eligibleYears": [
+      2024,
+      2022,
+      2020,
+      2023
+    ],
+    "startDate": "2026-03-31",
+    "endDate": "2026-05-19",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0022",
+    "type": "recall-incentive",
+    "title": "Free loaner during recall repair",
+    "discountValue": 0,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Ford",
+      "Chevrolet"
+    ],
+    "eligibleYears": [
+      2022,
+      2024,
+      2021,
+      2020,
+      2023
+    ],
+    "startDate": "2026-05-12",
+    "endDate": "2026-07-28",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0023",
+    "type": "loyalty-reward",
+    "title": "$50 service credit at 50k miles",
+    "discountValue": 50,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford"
+    ],
+    "eligibleYears": [
+      2021,
+      2020,
+      2022,
+      2023
+    ],
+    "startDate": "2026-04-01",
+    "endDate": "2026-08-21",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0024",
+    "type": "referral",
+    "title": "$75 credit for fleet referral",
+    "discountValue": 75,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2023,
+      2022
+    ],
+    "startDate": "2026-04-02",
+    "endDate": "2026-08-08",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0025",
+    "type": "trade-in",
+    "title": "Enhanced trade-in value +$1,500",
+    "discountValue": 1500,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Chevrolet",
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2023,
+      2024,
+      2020,
+      2021,
+      2022
+    ],
+    "startDate": "2026-04-18",
+    "endDate": "2026-07-09",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0026",
+    "type": "trade-in",
+    "title": "Enhanced trade-in value +$1,500",
+    "discountValue": 1500,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "RAM",
+      "Ford"
+    ],
+    "eligibleYears": [
+      2023,
+      2024
+    ],
+    "startDate": "2026-04-08",
+    "endDate": "2026-07-14",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0027",
+    "type": "trade-in",
+    "title": "Enhanced trade-in value +$1,500",
+    "discountValue": 1500,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Chevrolet",
+      "RAM"
+    ],
+    "eligibleYears": [
+      2022,
+      2024,
+      2021,
+      2023
+    ],
+    "startDate": "2026-03-19",
+    "endDate": "2026-09-03",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0028",
+    "type": "referral",
+    "title": "$75 credit for fleet referral",
+    "discountValue": 75,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford"
+    ],
+    "eligibleYears": [
+      2023,
+      2022,
+      2020
+    ],
+    "startDate": "2026-03-23",
+    "endDate": "2026-07-22",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0029",
+    "type": "maintenance-bundle",
+    "title": "Prepaid 3-service package \u2014 save 20%",
+    "discountValue": 20,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Chevrolet",
+      "RAM",
+      "Ford"
+    ],
+    "eligibleYears": [
+      2022,
+      2023,
+      2024
+    ],
+    "startDate": "2026-04-28",
+    "endDate": "2026-07-17",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0030",
+    "type": "maintenance-bundle",
+    "title": "Prepaid 3-service package \u2014 save 20%",
+    "discountValue": 20,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Ford"
+    ],
+    "eligibleYears": [
+      2021,
+      2022,
+      2020,
+      2024
+    ],
+    "startDate": "2026-05-10",
+    "endDate": "2026-06-22",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 500
+  },
+  {
+    "campaignId": "CMP-0031",
+    "type": "recall-incentive",
+    "title": "Free loaner during recall repair",
+    "discountValue": 0,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Ford",
+      "Toyota",
+      "Chevrolet"
+    ],
+    "eligibleYears": [
+      2023,
+      2024
+    ],
+    "startDate": "2026-03-29",
+    "endDate": "2026-05-21",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0032",
+    "type": "maintenance-bundle",
+    "title": "Prepaid 3-service package \u2014 save 20%",
+    "discountValue": 20,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Chevrolet",
+      "RAM"
+    ],
+    "eligibleYears": [
+      2022,
+      2024
+    ],
+    "startDate": "2026-03-25",
+    "endDate": "2026-08-14",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0033",
+    "type": "loyalty-reward",
+    "title": "$50 service credit at 50k miles",
+    "discountValue": 50,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford"
+    ],
+    "eligibleYears": [
+      2021,
+      2023,
+      2020,
+      2022,
+      2024
+    ],
+    "startDate": "2026-03-27",
+    "endDate": "2026-07-19",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0034",
+    "type": "maintenance-bundle",
+    "title": "Prepaid 3-service package \u2014 save 20%",
+    "discountValue": 20,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Ford",
+      "Ford"
+    ],
+    "eligibleYears": [
+      2020,
+      2024
+    ],
+    "startDate": "2026-03-18",
+    "endDate": "2026-09-04",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0035",
+    "type": "recall-incentive",
+    "title": "Free loaner during recall repair",
+    "discountValue": 0,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Ford"
+    ],
+    "eligibleYears": [
+      2023,
+      2022
+    ],
+    "startDate": "2026-04-05",
+    "endDate": "2026-06-17",
+    "active": true,
+    "redemptionChannel": "dealer",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0036",
+    "type": "referral",
+    "title": "$75 credit for fleet referral",
+    "discountValue": 75,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Chevrolet",
+      "Ford",
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2024,
+      2021,
+      2022,
+      2023
+    ],
+    "startDate": "2026-05-02",
+    "endDate": "2026-08-17",
+    "active": true,
+    "redemptionChannel": "dealer",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0037",
+    "type": "seasonal",
+    "title": "Winter tire package \u2014 $100 off",
+    "discountValue": 100,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Chevrolet",
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2020,
+      2022,
+      2021,
+      2023,
+      2024
+    ],
+    "startDate": "2026-04-04",
+    "endDate": "2026-05-06",
+    "active": false,
+    "redemptionChannel": "online",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0038",
+    "type": "seasonal",
+    "title": "Winter tire package \u2014 $100 off",
+    "discountValue": 100,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford",
+      "RAM"
+    ],
+    "eligibleYears": [
+      2022,
+      2021,
+      2024,
+      2020,
+      2023
+    ],
+    "startDate": "2026-03-21",
+    "endDate": "2026-08-09",
+    "active": true,
+    "redemptionChannel": "dealer",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0039",
+    "type": "loyalty-reward",
+    "title": "$50 service credit at 50k miles",
+    "discountValue": 50,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford"
+    ],
+    "eligibleYears": [
+      2024,
+      2023
+    ],
+    "startDate": "2026-03-31",
+    "endDate": "2026-08-28",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0040",
+    "type": "loyalty-reward",
+    "title": "$50 service credit at 50k miles",
+    "discountValue": 50,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford"
+    ],
+    "eligibleYears": [
+      2023,
+      2024,
+      2020,
+      2022,
+      2021
+    ],
+    "startDate": "2026-05-01",
+    "endDate": "2026-06-29",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0041",
+    "type": "service-discount",
+    "title": "15% off brake service",
+    "discountValue": 15,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2023,
+      2024,
+      2022,
+      2020,
+      2021
+    ],
+    "startDate": "2026-03-18",
+    "endDate": "2026-05-31",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0042",
+    "type": "trade-in",
+    "title": "Enhanced trade-in value +$1,500",
+    "discountValue": 1500,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "RAM"
+    ],
+    "eligibleYears": [
+      2023,
+      2020
+    ],
+    "startDate": "2026-03-29",
+    "endDate": "2026-08-06",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0043",
+    "type": "referral",
+    "title": "$75 credit for fleet referral",
+    "discountValue": 75,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford",
+      "Ford"
+    ],
+    "eligibleYears": [
+      2024,
+      2022,
+      2020
+    ],
+    "startDate": "2026-05-04",
+    "endDate": "2026-06-26",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": 500
+  },
+  {
+    "campaignId": "CMP-0044",
+    "type": "subscription-upgrade",
+    "title": "1 month free Premium connected services",
+    "discountValue": 0,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "RAM"
+    ],
+    "eligibleYears": [
+      2024,
+      2022,
+      2021
+    ],
+    "startDate": "2026-05-11",
+    "endDate": "2026-07-05",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 500
+  },
+  {
+    "campaignId": "CMP-0045",
+    "type": "service-discount",
+    "title": "15% off brake service",
+    "discountValue": 15,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "Ford"
+    ],
+    "eligibleYears": [
+      2022,
+      2021,
+      2023
+    ],
+    "startDate": "2026-04-04",
+    "endDate": "2026-08-01",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": 500
+  },
+  {
+    "campaignId": "CMP-0046",
+    "type": "loyalty-reward",
+    "title": "$50 service credit at 50k miles",
+    "discountValue": 50,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Toyota",
+      "Ford",
+      "Chevrolet"
+    ],
+    "eligibleYears": [
+      2022,
+      2021
+    ],
+    "startDate": "2026-05-06",
+    "endDate": "2026-09-12",
+    "active": true,
+    "redemptionChannel": "any",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0047",
+    "type": "trade-in",
+    "title": "Enhanced trade-in value +$1,500",
+    "discountValue": 1500,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Ford",
+      "Chevrolet",
+      "Toyota",
+      "RAM"
+    ],
+    "eligibleYears": [
+      2022,
+      2023,
+      2024,
+      2021,
+      2020
+    ],
+    "startDate": "2026-04-14",
+    "endDate": "2026-07-22",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": 1000
+  },
+  {
+    "campaignId": "CMP-0048",
+    "type": "service-discount",
+    "title": "15% off brake service",
+    "discountValue": 15,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "RAM",
+      "Ford",
+      "Toyota",
+      "Chevrolet"
+    ],
+    "eligibleYears": [
+      2020,
+      2023,
+      2024,
+      2022,
+      2021
+    ],
+    "startDate": "2026-03-26",
+    "endDate": "2026-09-18",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": 100
+  },
+  {
+    "campaignId": "CMP-0049",
+    "type": "service-discount",
+    "title": "15% off brake service",
+    "discountValue": 15,
+    "discountUnit": "percent",
+    "eligibleMakes": [
+      "RAM"
+    ],
+    "eligibleYears": [
+      2023,
+      2021,
+      2020,
+      2024,
+      2022
+    ],
+    "startDate": "2026-03-20",
+    "endDate": "2026-05-30",
+    "active": true,
+    "redemptionChannel": "app",
+    "maxRedemptions": null
+  },
+  {
+    "campaignId": "CMP-0050",
+    "type": "loyalty-reward",
+    "title": "$50 service credit at 50k miles",
+    "discountValue": 50,
+    "discountUnit": "dollars",
+    "eligibleMakes": [
+      "Toyota"
+    ],
+    "eligibleYears": [
+      2024,
+      2022,
+      2020,
+      2023
+    ],
+    "startDate": "2026-05-03",
+    "endDate": "2026-07-13",
+    "active": true,
+    "redemptionChannel": "online",
+    "maxRedemptions": 500
+  }
+]

@@ -1,0 +1,1493 @@
+[
+  {
+    "partNumber": "BRK-FP-001",
+    "category": "brakes",
+    "description": "Front Brake Pad Set (Ceramic)",
+    "pricing": {
+      "tier1_oem": 165.48,
+      "tier2_equivalent": 125.34,
+      "tier3_fleet": 102.42,
+      "currency": "USD"
+    },
+    "supplier": "ACDelco",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "BRK-FP-002",
+    "category": "brakes",
+    "description": "Front Brake Pad Set (Semi-Metallic)",
+    "pricing": {
+      "tier1_oem": 90.15,
+      "tier2_equivalent": 63.33,
+      "tier3_fleet": 51.74,
+      "currency": "USD"
+    },
+    "supplier": "Wagner",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "BRK-RP-001",
+    "category": "brakes",
+    "description": "Rear Brake Pad Set (Ceramic)",
+    "pricing": {
+      "tier1_oem": 162.81,
+      "tier2_equivalent": 125.9,
+      "tier3_fleet": 90.24,
+      "currency": "USD"
+    },
+    "supplier": "ACDelco",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "BRK-RT-001",
+    "category": "brakes",
+    "description": "Front Brake Rotor",
+    "pricing": {
+      "tier1_oem": 142.71,
+      "tier2_equivalent": 109.02,
+      "tier3_fleet": 71.47,
+      "currency": "USD"
+    },
+    "supplier": "ACDelco",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "BRK-RT-002",
+    "category": "brakes",
+    "description": "Rear Brake Rotor",
+    "pricing": {
+      "tier1_oem": 124.02,
+      "tier2_equivalent": 96.1,
+      "tier3_fleet": 64.03,
+      "currency": "USD"
+    },
+    "supplier": "Brembo",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "BRK-FL-001",
+    "category": "brakes",
+    "description": "Brake Fluid DOT 4 (1L)",
+    "pricing": {
+      "tier1_oem": 16.64,
+      "tier2_equivalent": 12.79,
+      "tier3_fleet": 9.1,
+      "currency": "USD"
+    },
+    "supplier": "Valvoline",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "BRK-CL-001",
+    "category": "brakes",
+    "description": "Brake Caliper (Reman)",
+    "pricing": {
+      "tier1_oem": 219.09,
+      "tier2_equivalent": 164.73,
+      "tier3_fleet": 133.9,
+      "currency": "USD"
+    },
+    "supplier": "Cardone",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 12
+  },
+  {
+    "partNumber": "BRK-HW-001",
+    "category": "brakes",
+    "description": "Brake Hardware Kit",
+    "pricing": {
+      "tier1_oem": 31.52,
+      "tier2_equivalent": 23.76,
+      "tier3_fleet": 17.87,
+      "currency": "USD"
+    },
+    "supplier": "Dorman",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": false,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-OIL-001",
+    "category": "engine",
+    "description": "Full Synthetic 5W-30 (5qt)",
+    "pricing": {
+      "tier1_oem": 42.74,
+      "tier2_equivalent": 30.0,
+      "tier3_fleet": 22.6,
+      "currency": "USD"
+    },
+    "supplier": "Mobil 1",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-OIL-002",
+    "category": "engine",
+    "description": "Full Synthetic 0W-20 (5qt)",
+    "pricing": {
+      "tier1_oem": 41.51,
+      "tier2_equivalent": 29.26,
+      "tier3_fleet": 24.13,
+      "currency": "USD"
+    },
+    "supplier": "Mobil 1",
+    "compatibleVehicles": [
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-FLT-001",
+    "category": "engine",
+    "description": "Oil Filter",
+    "pricing": {
+      "tier1_oem": 18.85,
+      "tier2_equivalent": 13.53,
+      "tier3_fleet": 11.76,
+      "currency": "USD"
+    },
+    "supplier": "Fram",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-FLT-002",
+    "category": "engine",
+    "description": "Oil Filter (Extended Life)",
+    "pricing": {
+      "tier1_oem": 24.53,
+      "tier2_equivalent": 17.42,
+      "tier3_fleet": 15.1,
+      "currency": "USD"
+    },
+    "supplier": "Mobil 1",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-AIR-001",
+    "category": "engine",
+    "description": "Engine Air Filter",
+    "pricing": {
+      "tier1_oem": 40.78,
+      "tier2_equivalent": 31.7,
+      "tier3_fleet": 21.21,
+      "currency": "USD"
+    },
+    "supplier": "K&N",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": false,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-SPK-001",
+    "category": "engine",
+    "description": "Spark Plug (Iridium)",
+    "pricing": {
+      "tier1_oem": 17.54,
+      "tier2_equivalent": 12.51,
+      "tier3_fleet": 8.84,
+      "currency": "USD"
+    },
+    "supplier": "NGK",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": false,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-SPK-002",
+    "category": "engine",
+    "description": "Spark Plug (Double Platinum)",
+    "pricing": {
+      "tier1_oem": 23.73,
+      "tier2_equivalent": 17.21,
+      "tier3_fleet": 12.3,
+      "currency": "USD"
+    },
+    "supplier": "Bosch",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-CLT-001",
+    "category": "engine",
+    "description": "Coolant 50/50 (1 gal)",
+    "pricing": {
+      "tier1_oem": 23.14,
+      "tier2_equivalent": 17.91,
+      "tier3_fleet": 12.78,
+      "currency": "USD"
+    },
+    "supplier": "Prestone",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-BLT-001",
+    "category": "engine",
+    "description": "Serpentine Belt",
+    "pricing": {
+      "tier1_oem": 55.86,
+      "tier2_equivalent": 43.2,
+      "tier3_fleet": 29.07,
+      "currency": "USD"
+    },
+    "supplier": "Gates",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-WP-001",
+    "category": "engine",
+    "description": "Water Pump",
+    "pricing": {
+      "tier1_oem": 273.91,
+      "tier2_equivalent": 218.08,
+      "tier3_fleet": 161.05,
+      "currency": "USD"
+    },
+    "supplier": "GMB",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": false,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-ALT-001",
+    "category": "engine",
+    "description": "Alternator (Reman)",
+    "pricing": {
+      "tier1_oem": 411.59,
+      "tier2_equivalent": 304.08,
+      "tier3_fleet": 245.04,
+      "currency": "USD"
+    },
+    "supplier": "Denso",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 3,
+    "warrantyMonths": 12
+  },
+  {
+    "partNumber": "ENG-STR-001",
+    "category": "engine",
+    "description": "Starter Motor (Reman)",
+    "pricing": {
+      "tier1_oem": 357.6,
+      "tier2_equivalent": 262.11,
+      "tier3_fleet": 201.49,
+      "currency": "USD"
+    },
+    "supplier": "Denso",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 12
+  },
+  {
+    "partNumber": "ENG-THS-001",
+    "category": "engine",
+    "description": "Thermostat",
+    "pricing": {
+      "tier1_oem": 53.51,
+      "tier2_equivalent": 42.21,
+      "tier3_fleet": 27.51,
+      "currency": "USD"
+    },
+    "supplier": "Stant",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ENG-FP-001",
+    "category": "engine",
+    "description": "Fuel Pump Assembly",
+    "pricing": {
+      "tier1_oem": 614.65,
+      "tier2_equivalent": 447.67,
+      "tier3_fleet": 350.85,
+      "currency": "USD"
+    },
+    "supplier": "Delphi",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ELC-BAT-001",
+    "category": "electrical",
+    "description": "Battery (Group 48, 700 CCA)",
+    "pricing": {
+      "tier1_oem": 191.76,
+      "tier2_equivalent": 140.95,
+      "tier3_fleet": 97.59,
+      "currency": "USD"
+    },
+    "supplier": "Interstate",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 2,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ELC-BAT-002",
+    "category": "electrical",
+    "description": "Battery (Group 35, 640 CCA)",
+    "pricing": {
+      "tier1_oem": 186.4,
+      "tier2_equivalent": 145.52,
+      "tier3_fleet": 109.88,
+      "currency": "USD"
+    },
+    "supplier": "Optima",
+    "compatibleVehicles": [
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 1,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ELC-O2-001",
+    "category": "electrical",
+    "description": "O2 Sensor (Upstream)",
+    "pricing": {
+      "tier1_oem": 161.92,
+      "tier2_equivalent": 114.47,
+      "tier3_fleet": 102.49,
+      "currency": "USD"
+    },
+    "supplier": "Denso",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ELC-O2-002",
+    "category": "electrical",
+    "description": "O2 Sensor (Downstream)",
+    "pricing": {
+      "tier1_oem": 134.26,
+      "tier2_equivalent": 103.14,
+      "tier3_fleet": 74.73,
+      "currency": "USD"
+    },
+    "supplier": "Bosch",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": false,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ELC-MAF-001",
+    "category": "electrical",
+    "description": "Mass Air Flow Sensor",
+    "pricing": {
+      "tier1_oem": 264.4,
+      "tier2_equivalent": 187.69,
+      "tier3_fleet": 171.5,
+      "currency": "USD"
+    },
+    "supplier": "Denso",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "ELC-ABS-001",
+    "category": "electrical",
+    "description": "ABS Wheel Speed Sensor",
+    "pricing": {
+      "tier1_oem": 117.63,
+      "tier2_equivalent": 89.38,
+      "tier3_fleet": 68.08,
+      "currency": "USD"
+    },
+    "supplier": "Dorman",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "SUS-STR-001",
+    "category": "suspension",
+    "description": "Front Strut Assembly (Complete)",
+    "pricing": {
+      "tier1_oem": 343.97,
+      "tier2_equivalent": 262.87,
+      "tier3_fleet": 213.74,
+      "currency": "USD"
+    },
+    "supplier": "Monroe",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "SUS-SHK-001",
+    "category": "suspension",
+    "description": "Rear Shock Absorber",
+    "pricing": {
+      "tier1_oem": 141.34,
+      "tier2_equivalent": 100.43,
+      "tier3_fleet": 74.32,
+      "currency": "USD"
+    },
+    "supplier": "Bilstein",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "SUS-BRG-001",
+    "category": "suspension",
+    "description": "Wheel Bearing & Hub Assembly (Front)",
+    "pricing": {
+      "tier1_oem": 242.42,
+      "tier2_equivalent": 173.37,
+      "tier3_fleet": 154.62,
+      "currency": "USD"
+    },
+    "supplier": "Timken",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "SUS-TRD-001",
+    "category": "suspension",
+    "description": "Tie Rod End (Outer)",
+    "pricing": {
+      "tier1_oem": 64.83,
+      "tier2_equivalent": 45.57,
+      "tier3_fleet": 38.72,
+      "currency": "USD"
+    },
+    "supplier": "Moog",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "SUS-BJ-001",
+    "category": "suspension",
+    "description": "Ball Joint (Lower)",
+    "pricing": {
+      "tier1_oem": 107.04,
+      "tier2_equivalent": 83.26,
+      "tier3_fleet": 55.69,
+      "currency": "USD"
+    },
+    "supplier": "Moog",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 3,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "TRN-FLD-001",
+    "category": "transmission",
+    "description": "ATF Dexron VI (1qt)",
+    "pricing": {
+      "tier1_oem": 13.97,
+      "tier2_equivalent": 10.92,
+      "tier3_fleet": 8.66,
+      "currency": "USD"
+    },
+    "supplier": "Valvoline",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "TRN-FLD-002",
+    "category": "transmission",
+    "description": "ATF Mercon LV (1qt)",
+    "pricing": {
+      "tier1_oem": 14.91,
+      "tier2_equivalent": 10.81,
+      "tier3_fleet": 9.1,
+      "currency": "USD"
+    },
+    "supplier": "Motorcraft",
+    "compatibleVehicles": [
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "TRN-FLT-001",
+    "category": "transmission",
+    "description": "Transmission Filter Kit",
+    "pricing": {
+      "tier1_oem": 80.46,
+      "tier2_equivalent": 62.78,
+      "tier3_fleet": 42.63,
+      "currency": "USD"
+    },
+    "supplier": "Wix",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "TIR-AS-001",
+    "category": "tires",
+    "description": "All-Season 225/65R17",
+    "pricing": {
+      "tier1_oem": 187.07,
+      "tier2_equivalent": 149.14,
+      "tier3_fleet": 100.36,
+      "currency": "USD"
+    },
+    "supplier": "Michelin",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "TIR-AS-002",
+    "category": "tires",
+    "description": "All-Season 235/65R16C (LT)",
+    "pricing": {
+      "tier1_oem": 215.55,
+      "tier2_equivalent": 152.75,
+      "tier3_fleet": 115.93,
+      "currency": "USD"
+    },
+    "supplier": "Michelin",
+    "compatibleVehicles": [
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "TIR-AT-001",
+    "category": "tires",
+    "description": "All-Terrain 225/65R17",
+    "pricing": {
+      "tier1_oem": 217.54,
+      "tier2_equivalent": 167.48,
+      "tier3_fleet": 133.28,
+      "currency": "USD"
+    },
+    "supplier": "BFGoodrich",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "HVC-CAB-001",
+    "category": "hvac",
+    "description": "Cabin Air Filter",
+    "pricing": {
+      "tier1_oem": 28.08,
+      "tier2_equivalent": 19.66,
+      "tier3_fleet": 15.93,
+      "currency": "USD"
+    },
+    "supplier": "Fram",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "HVC-CMP-001",
+    "category": "hvac",
+    "description": "A/C Compressor (Reman)",
+    "pricing": {
+      "tier1_oem": 566.57,
+      "tier2_equivalent": 434.82,
+      "tier3_fleet": 289.33,
+      "currency": "USD"
+    },
+    "supplier": "Denso",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": false,
+    "leadTimeDays": 0,
+    "warrantyMonths": 12
+  },
+  {
+    "partNumber": "EMI-CAT-001",
+    "category": "emissions",
+    "description": "Catalytic Converter (Direct Fit)",
+    "pricing": {
+      "tier1_oem": 1692.37,
+      "tier2_equivalent": 1249.8,
+      "tier3_fleet": 988.75,
+      "currency": "USD"
+    },
+    "supplier": "MagnaFlow",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      },
+      {
+        "make": "Toyota",
+        "model": "RAV4"
+      }
+    ],
+    "inStock": true,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  },
+  {
+    "partNumber": "EMI-EGR-001",
+    "category": "emissions",
+    "description": "EGR Valve",
+    "pricing": {
+      "tier1_oem": 241.83,
+      "tier2_equivalent": 170.38,
+      "tier3_fleet": 127.73,
+      "currency": "USD"
+    },
+    "supplier": "Dorman",
+    "compatibleVehicles": [
+      {
+        "make": "Chevrolet",
+        "model": "Equinox"
+      },
+      {
+        "make": "Ford",
+        "model": "Transit"
+      },
+      {
+        "make": "Ford",
+        "model": "Escape"
+      },
+      {
+        "make": "RAM",
+        "model": "ProMaster"
+      }
+    ],
+    "inStock": false,
+    "leadTimeDays": 0,
+    "warrantyMonths": 24
+  }
+]
