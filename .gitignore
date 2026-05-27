@@ -1,0 +1,60 @@
+# Deployment outputs
+deployment/stack-outputs.env
+deployment/*.json
+/tmp/
+
+# AWS
+.aws/
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# CDK
+cdk.out/
+.cdk.staging/
+cdk.context.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+ash-output/
+
+# Deployment outputs
+*.env
+stack-outputs.env
+datazone-outputs.env
+
+# Large data files
+platform-foundation/source/input_data/*.csv
+
+# Lambda layer binaries
+datasource/cx-analytics/lambda-layer/
+datasource/cx-analytics/psycopg2-layer.zip
+
+# DSR artifacts (internal)
+dsr-artifacts/
+
+# ASH scan output
+ash-output/

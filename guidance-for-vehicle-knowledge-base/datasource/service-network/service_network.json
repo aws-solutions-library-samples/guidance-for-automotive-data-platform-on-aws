@@ -1,0 +1,872 @@
+[
+  {
+    "centerId": "SC-0001",
+    "name": "Rush Truck Center \u2014 Dallas",
+    "type": "fleet-service",
+    "address": "7206 Main St",
+    "city": "Dallas",
+    "state": "TX",
+    "zipCode": "36389",
+    "latitude": 32.80642990978641,
+    "longitude": -96.85552144571798,
+    "phone": "(401) 233-5669",
+    "brandsServiced": [
+      "Chevrolet",
+      "Ford",
+      "RAM"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "fleet-maintenance-program"
+    ],
+    "hours": {
+      "weekday": "6:00 AM - 10:00 PM",
+      "saturday": "7:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.2,
+    "reviewCount": 785,
+    "averageWaitDays": 1,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": true,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified",
+      "Fleet Maintenance Certified",
+      "DOT Inspection Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0002",
+    "name": "Penske Truck Leasing \u2014 Chicago",
+    "type": "fleet-service",
+    "address": "5652 Commerce Dr",
+    "city": "Chicago",
+    "state": "IL",
+    "zipCode": "20712",
+    "latitude": 41.8465821950373,
+    "longitude": -87.64883481043846,
+    "phone": "(789) 466-9924",
+    "brandsServiced": [
+      "Ford",
+      "RAM",
+      "Chevrolet"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "fleet-maintenance-program"
+    ],
+    "hours": {
+      "weekday": "6:00 AM - 10:00 PM",
+      "saturday": "7:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 3.8,
+    "reviewCount": 434,
+    "averageWaitDays": 2,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": true,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified",
+      "Fleet Maintenance Certified",
+      "DOT Inspection Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0003",
+    "name": "Ryder Maintenance \u2014 Atlanta",
+    "type": "fleet-service",
+    "address": "3597 Auto Park Way",
+    "city": "Atlanta",
+    "state": "GA",
+    "zipCode": "72625",
+    "latitude": 33.8093082726001,
+    "longitude": -84.43279086386907,
+    "phone": "(495) 324-2308",
+    "brandsServiced": [
+      "Ford",
+      "RAM",
+      "Toyota"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "fleet-maintenance-program"
+    ],
+    "hours": {
+      "weekday": "6:00 AM - 10:00 PM",
+      "saturday": "7:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.2,
+    "reviewCount": 757,
+    "averageWaitDays": 0,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": true,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified",
+      "Fleet Maintenance Certified",
+      "DOT Inspection Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0004",
+    "name": "Freightliner of Austin",
+    "type": "fleet-service",
+    "address": "1522 Auto Park Way",
+    "city": "Austin",
+    "state": "TX",
+    "zipCode": "31331",
+    "latitude": 30.368083395126977,
+    "longitude": -97.69615522397672,
+    "phone": "(869) 605-8155",
+    "brandsServiced": [
+      "Chevrolet",
+      "Ford",
+      "RAM"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "fleet-maintenance-program"
+    ],
+    "hours": {
+      "weekday": "6:00 AM - 10:00 PM",
+      "saturday": "7:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 3.9,
+    "reviewCount": 349,
+    "averageWaitDays": 1,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": true,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified",
+      "Fleet Maintenance Certified",
+      "DOT Inspection Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0005",
+    "name": "TravelCenters of America \u2014 Phoenix",
+    "type": "fleet-service",
+    "address": "7304 Main St",
+    "city": "Phoenix",
+    "state": "AZ",
+    "zipCode": "75911",
+    "latitude": 33.44161730017523,
+    "longitude": -112.09462032043815,
+    "phone": "(292) 990-2153",
+    "brandsServiced": [
+      "Ford",
+      "RAM",
+      "Chevrolet"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "fleet-maintenance-program"
+    ],
+    "hours": {
+      "weekday": "6:00 AM - 10:00 PM",
+      "saturday": "7:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.7,
+    "reviewCount": 286,
+    "averageWaitDays": 3,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": true,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified",
+      "Fleet Maintenance Certified",
+      "DOT Inspection Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0006",
+    "name": "Hendrick Chevrolet \u2014 Charlotte",
+    "type": "dealer",
+    "address": "9471 Auto Park Way",
+    "city": "Charlotte",
+    "state": "NC",
+    "zipCode": "67417",
+    "latitude": 35.19266822673167,
+    "longitude": -80.83675510029602,
+    "phone": "(783) 683-6427",
+    "brandsServiced": [
+      "Chevrolet"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "warranty-repair",
+      "recall-service",
+      "body-work"
+    ],
+    "hours": {
+      "weekday": "7:00 AM - 7:00 PM",
+      "saturday": "8:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.8,
+    "reviewCount": 272,
+    "averageWaitDays": 1,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": true,
+    "certifications": [
+      "ASE Certified",
+      "OEM Factory Trained",
+      "Warranty Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0007",
+    "name": "AutoNation Ford \u2014 Denver",
+    "type": "dealer",
+    "address": "9919 Commerce Dr",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "33058",
+    "latitude": 39.71227854974791,
+    "longitude": -104.94679644104467,
+    "phone": "(229) 694-2142",
+    "brandsServiced": [
+      "Ford"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "warranty-repair",
+      "recall-service",
+      "body-work"
+    ],
+    "hours": {
+      "weekday": "7:00 AM - 7:00 PM",
+      "saturday": "8:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.6,
+    "reviewCount": 189,
+    "averageWaitDays": 5,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": true,
+    "certifications": [
+      "ASE Certified",
+      "OEM Factory Trained",
+      "Warranty Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0008",
+    "name": "Larry H. Miller Toyota \u2014 Salt Lake City",
+    "type": "dealer",
+    "address": "4559 Main St",
+    "city": "Salt Lake City",
+    "state": "UT",
+    "zipCode": "74609",
+    "latitude": 40.71997636016993,
+    "longitude": -111.87704270036781,
+    "phone": "(390) 425-4402",
+    "brandsServiced": [
+      "Toyota"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "warranty-repair",
+      "recall-service",
+      "body-work"
+    ],
+    "hours": {
+      "weekday": "7:00 AM - 7:00 PM",
+      "saturday": "8:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.8,
+    "reviewCount": 177,
+    "averageWaitDays": 1,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": true,
+    "certifications": [
+      "ASE Certified",
+      "OEM Factory Trained",
+      "Warranty Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0009",
+    "name": "Galpin Ford \u2014 Los Angeles",
+    "type": "dealer",
+    "address": "3377 Industrial Blvd",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zipCode": "95603",
+    "latitude": 34.22864879402434,
+    "longitude": -118.47519742621672,
+    "phone": "(348) 419-7636",
+    "brandsServiced": [
+      "Ford"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "warranty-repair",
+      "recall-service",
+      "body-work"
+    ],
+    "hours": {
+      "weekday": "7:00 AM - 7:00 PM",
+      "saturday": "8:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 3.9,
+    "reviewCount": 322,
+    "averageWaitDays": 5,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": true,
+    "certifications": [
+      "ASE Certified",
+      "OEM Factory Trained",
+      "Warranty Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0010",
+    "name": "Jim Ellis Chevrolet \u2014 Atlanta",
+    "type": "dealer",
+    "address": "2317 Service Rd",
+    "city": "Atlanta",
+    "state": "GA",
+    "zipCode": "83978",
+    "latitude": 33.88229770388277,
+    "longitude": -84.31948835033651,
+    "phone": "(556) 372-8746",
+    "brandsServiced": [
+      "Chevrolet"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "warranty-repair",
+      "recall-service",
+      "body-work"
+    ],
+    "hours": {
+      "weekday": "7:00 AM - 7:00 PM",
+      "saturday": "8:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.3,
+    "reviewCount": 425,
+    "averageWaitDays": 4,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": true,
+    "certifications": [
+      "ASE Certified",
+      "OEM Factory Trained",
+      "Warranty Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0011",
+    "name": "Longo Toyota \u2014 Los Angeles",
+    "type": "dealer",
+    "address": "4073 Service Rd",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zipCode": "78329",
+    "latitude": 34.08475524232217,
+    "longitude": -117.93546101060102,
+    "phone": "(215) 734-7344",
+    "brandsServiced": [
+      "Toyota"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "warranty-repair",
+      "recall-service",
+      "body-work"
+    ],
+    "hours": {
+      "weekday": "7:00 AM - 7:00 PM",
+      "saturday": "8:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.0,
+    "reviewCount": 520,
+    "averageWaitDays": 1,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": true,
+    "certifications": [
+      "ASE Certified",
+      "OEM Factory Trained",
+      "Warranty Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0012",
+    "name": "Park Place Dealerships \u2014 Dallas",
+    "type": "dealer",
+    "address": "6433 Commerce Dr",
+    "city": "Dallas",
+    "state": "TX",
+    "zipCode": "40777",
+    "latitude": 32.91910817742573,
+    "longitude": -96.77589464676163,
+    "phone": "(286) 709-3762",
+    "brandsServiced": [
+      "Chevrolet",
+      "Toyota"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "warranty-repair",
+      "recall-service",
+      "body-work"
+    ],
+    "hours": {
+      "weekday": "7:00 AM - 7:00 PM",
+      "saturday": "8:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 3.9,
+    "reviewCount": 335,
+    "averageWaitDays": 2,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": true,
+    "certifications": [
+      "ASE Certified",
+      "OEM Factory Trained",
+      "Warranty Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0013",
+    "name": "Sewell Automotive \u2014 Dallas",
+    "type": "dealer",
+    "address": "7134 Main St",
+    "city": "Dallas",
+    "state": "TX",
+    "zipCode": "16539",
+    "latitude": 32.84544878209036,
+    "longitude": -96.76715143234927,
+    "phone": "(374) 805-7435",
+    "brandsServiced": [
+      "Chevrolet",
+      "Ford"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "transmission",
+      "engine",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics",
+      "warranty-repair",
+      "recall-service",
+      "body-work"
+    ],
+    "hours": {
+      "weekday": "7:00 AM - 7:00 PM",
+      "saturday": "8:00 AM - 5:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.3,
+    "reviewCount": 311,
+    "averageWaitDays": 1,
+    "fleetDiscount": true,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": true,
+    "certifications": [
+      "ASE Certified",
+      "OEM Factory Trained",
+      "Warranty Authorized"
+    ]
+  },
+  {
+    "centerId": "SC-0014",
+    "name": "Firestone Complete Auto Care \u2014 Miami",
+    "type": "independent",
+    "address": "3329 Auto Park Way",
+    "city": "Miami",
+    "state": "FL",
+    "zipCode": "49931",
+    "latitude": 25.77712002008013,
+    "longitude": -80.22199959509432,
+    "phone": "(688) 659-5573",
+    "brandsServiced": [
+      "Chevrolet",
+      "Ford",
+      "RAM",
+      "Toyota"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics"
+    ],
+    "hours": {
+      "weekday": "7:30 AM - 6:00 PM",
+      "saturday": "8:00 AM - 4:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.4,
+    "reviewCount": 238,
+    "averageWaitDays": 5,
+    "fleetDiscount": false,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified"
+    ]
+  },
+  {
+    "centerId": "SC-0015",
+    "name": "Midas \u2014 Houston",
+    "type": "independent",
+    "address": "6542 Auto Park Way",
+    "city": "Houston",
+    "state": "TX",
+    "zipCode": "48661",
+    "latitude": 29.756373556578904,
+    "longitude": -95.36565542219029,
+    "phone": "(247) 813-8553",
+    "brandsServiced": [
+      "Chevrolet",
+      "Ford",
+      "RAM",
+      "Toyota"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics"
+    ],
+    "hours": {
+      "weekday": "7:30 AM - 6:00 PM",
+      "saturday": "8:00 AM - 4:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 3.8,
+    "reviewCount": 289,
+    "averageWaitDays": 1,
+    "fleetDiscount": false,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified"
+    ]
+  },
+  {
+    "centerId": "SC-0016",
+    "name": "Jiffy Lube \u2014 Seattle",
+    "type": "quick-service",
+    "address": "9741 Main St",
+    "city": "Seattle",
+    "state": "WA",
+    "zipCode": "41838",
+    "latitude": 47.61983942361807,
+    "longitude": -122.33024081058517,
+    "phone": "(719) 359-4970",
+    "brandsServiced": [
+      "Chevrolet",
+      "Ford",
+      "RAM",
+      "Toyota"
+    ],
+    "capabilities": [
+      "oil-change",
+      "tires",
+      "filters",
+      "wipers",
+      "battery"
+    ],
+    "hours": {
+      "weekday": "7:00 AM - 7:00 PM",
+      "saturday": "8:00 AM - 6:00 PM",
+      "sunday": "9:00 AM - 5:00 PM"
+    },
+    "rating": 4.1,
+    "reviewCount": 157,
+    "averageWaitDays": 0,
+    "fleetDiscount": false,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified"
+    ]
+  },
+  {
+    "centerId": "SC-0017",
+    "name": "Valvoline Instant Oil Change \u2014 Boston",
+    "type": "quick-service",
+    "address": "8940 Main St",
+    "city": "Boston",
+    "state": "MA",
+    "zipCode": "70258",
+    "latitude": 42.35227409425154,
+    "longitude": -71.06626441688584,
+    "phone": "(650) 642-2042",
+    "brandsServiced": [
+      "Chevrolet",
+      "Ford",
+      "RAM",
+      "Toyota"
+    ],
+    "capabilities": [
+      "oil-change",
+      "tires",
+      "filters",
+      "wipers",
+      "battery"
+    ],
+    "hours": {
+      "weekday": "7:00 AM - 7:00 PM",
+      "saturday": "8:00 AM - 6:00 PM",
+      "sunday": "9:00 AM - 5:00 PM"
+    },
+    "rating": 4.3,
+    "reviewCount": 755,
+    "averageWaitDays": 0,
+    "fleetDiscount": false,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified"
+    ]
+  },
+  {
+    "centerId": "SC-0018",
+    "name": "Pep Boys \u2014 Philadelphia",
+    "type": "independent",
+    "address": "7121 Main St",
+    "city": "Philadelphia",
+    "state": "PA",
+    "zipCode": "82020",
+    "latitude": 39.945039960529485,
+    "longitude": -75.15271691529657,
+    "phone": "(399) 787-6264",
+    "brandsServiced": [
+      "Chevrolet",
+      "Ford",
+      "RAM",
+      "Toyota"
+    ],
+    "capabilities": [
+      "oil-change",
+      "brakes",
+      "tires",
+      "electrical",
+      "hvac",
+      "suspension",
+      "diagnostics"
+    ],
+    "hours": {
+      "weekday": "7:30 AM - 6:00 PM",
+      "saturday": "8:00 AM - 4:00 PM",
+      "sunday": "Closed"
+    },
+    "rating": 4.1,
+    "reviewCount": 794,
+    "averageWaitDays": 5,
+    "fleetDiscount": false,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified"
+    ]
+  },
+  {
+    "centerId": "SC-0019",
+    "name": "Caliber Collision \u2014 Denver",
+    "type": "body-shop",
+    "address": "7576 Main St",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "94843",
+    "latitude": 39.751582530276536,
+    "longitude": -104.99153464467307,
+    "phone": "(878) 899-5139",
+    "brandsServiced": [
+      "Chevrolet",
+      "Ford",
+      "RAM",
+      "Toyota"
+    ],
+    "capabilities": [
+      "body-work",
+      "paint",
+      "glass",
+      "dent-repair",
+      "frame-straightening"
+    ],
+    "hours": {
+      "weekday": "8:00 AM - 5:30 PM",
+      "saturday": "By appointment",
+      "sunday": "Closed"
+    },
+    "rating": 3.9,
+    "reviewCount": 699,
+    "averageWaitDays": 1,
+    "fleetDiscount": false,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified",
+      "I-CAR Gold",
+      "OEM Certified Collision"
+    ]
+  },
+  {
+    "centerId": "SC-0020",
+    "name": "Service King \u2014 Phoenix",
+    "type": "body-shop",
+    "address": "9633 Service Rd",
+    "city": "Phoenix",
+    "state": "AZ",
+    "zipCode": "26371",
+    "latitude": 33.49148158256466,
+    "longitude": -112.07995689844087,
+    "phone": "(552) 736-3713",
+    "brandsServiced": [
+      "Chevrolet",
+      "Ford",
+      "RAM",
+      "Toyota"
+    ],
+    "capabilities": [
+      "body-work",
+      "paint",
+      "glass",
+      "dent-repair",
+      "frame-straightening"
+    ],
+    "hours": {
+      "weekday": "8:00 AM - 5:30 PM",
+      "saturday": "By appointment",
+      "sunday": "Closed"
+    },
+    "rating": 4.5,
+    "reviewCount": 194,
+    "averageWaitDays": 4,
+    "fleetDiscount": false,
+    "mobileServiceAvailable": false,
+    "loanerVehicles": false,
+    "certifications": [
+      "ASE Certified",
+      "I-CAR Gold",
+      "OEM Certified Collision"
+    ]
+  }
+]
