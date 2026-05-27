@@ -1,0 +1,347 @@
+# Automotive Data Platform on AWS
+
+## Overview
+
+This repository provides AWS guidance and reference implementations for building comprehensive automotive data platforms. It includes foundational infrastructure and specialized guidance for specific use cases.
+
+## Repository Structure
+
+### 🏗️ Platform Foundation
+**Path**: [`platform-foundation/`](platform-foundation/)
+
+Base infrastructure for automotive data platforms using Amazon SageMaker Unified Studio:
+- Unified data workspace for data engineers and ML engineers
+- VPC networking with private subnets and service endpoints
+- IAM Identity Center integration for team collaboration
+- DataZone domain for data governance and cataloging
+- Blueprint enablement for common automotive patterns
+
+**Use this when**: Setting up a new automotive data platform from scratch
+
+[View Platform Foundation Documentation →](platform-foundation/README.md)
+
+---
+
+### 🎯 Guidance: Agentic Customer 360
+**Path**: [`guidance-for-agentic-customer-360/`](guidance-for-agentic-customer-360/)
+
+**Status**: ✅ Production Ready
+
+![Customer 360 Architecture](docs/images/c360.png)
+
+AI-powered Customer 360 analytics platform demonstrating declining business metrics and root cause analysis:
+- **Synthetic data** with realistic declining trends (NPS 52→42, Health 65→56)
+- **Battery issue analysis** (15%→40% over 12 months) for root cause demonstration
+- **QuickSight dashboards** with 8 pre-built datasets and automated deployment
+- **Bedrock Agent** with Aurora pgvector knowledge base for natural language queries
+- **500K customers** with 1.4M interactions and 900K service records
+- **Interactive Makefile** deployment with AWS profile/region selection
+
+**Use this when**: Building customer analytics platforms with AI-powered insights
+
+[View Customer 360 Documentation →](guidance-for-agentic-customer-360/README.md)
+
+**Quick Start**:
+```bash
+cd guidance-for-agentic-customer-360
+make deploy
+# Select profile, region, and deployment option from interactive menu
+```
+
+---
+
+### 🔧 Guidance: Predictive Maintenance
+**Path**: [`guidance-for-predictive-maintenance/`](guidance-for-predictive-maintenance/)
+
+**Status**: ✅ Production Ready
+
+![Predictive Maintenance Architecture](docs/images/predictive.png)
+
+ML-powered predictive maintenance for tire health monitoring and failure prediction:
+- **Random Cut Forest** anomaly detection for tire pressure and temperature
+- **7-14 day advance warning** of tire failures and slow leaks
+- **Dual approach**: ML-based and filter-based prediction algorithms
+- **Real-time inference API** with API Gateway and Lambda
+- **Batch processing** with Step Functions orchestration
+- **Automated alerts** integrated with maintenance scheduling systems
+- **ETL pipeline** with AWS Glue for data transformation
+
+**Use this when**: Building predictive maintenance systems for vehicle health monitoring
+
+[View Predictive Maintenance Documentation →](guidance-for-predictive-maintenance/README.md)
+
+**Quick Start**:
+```bash
+cd guidance-for-predictive-maintenance
+make install
+make deploy
+```
+
+---
+
+### 📡 Guidance: Telemetry Normalization
+**Path**: [`guidance-for-telemetry-normalization/`](guidance-for-telemetry-normalization/)
+
+**Status**: ✅ Production Ready
+
+![Telemetry Normalization Architecture](docs/images/telemetry-normal.png)
+
+Unified fleet telemetry normalization layer that integrates data from multiple vehicle sources into a single canonical format:
+- **Multi-source ingestion** — Simulator/Direct (MQTT), FleetWise Edge (CAN bus), OEM cloud-to-cloud (Ford, Tesla)
+- **Signal catalog contract** — All sources normalize to the same field names and units (mph, °F, PSI, miles)
+- **Real-time distribution** — Per-fleet Kafka topics + WebSocket API for live dashboards
+- **Tenant isolation** — Cognito-based personas (Platform Admin, Fleet Operator, Fleet Viewer) with fleet-scoped data access
+- **Historical analytics** — Iceberg tables partitioned by fleetId, queryable via Athena
+- **OEM transform manifests** — Declarative JSON mappings from OEM-specific signals to the canonical signal catalog
+
+**Companion repo**: [`connected-mobility-guidance-on-aws`](https://github.com/aws-samples/connected-mobility-guidance-on-aws) — contains the Flink processing pipeline, CMS UI, and OEM connectors
+
+**Use this when**: Building fleet management platforms that need to consume telemetry from mixed vehicle sources (OEM APIs, FleetWise, simulators) through a single normalized interface
+
+[View Telemetry Normalization Documentation →](guidance-for-telemetry-normalization/README.md)
+
+---
+
+### 🛡️ Guidance: Data Governance
+**Path**: [`guidance-for-data-governance/`](guidance-for-data-governance/)
+
+**Status**: 🏗️ Reference Architecture
+
+![Data Governance Architecture](docs/images/governance.png)
+
+Multi-region data governance framework supporting EU Data Act and GDPR compliance for connected vehicle data:
+- **Multi-region architecture** — Separate data domains for EU producers (PII + anonymized) and global consumers (anonymized only)
+- **Automated PII detection** — Amazon Macie with custom patterns for VINs, license plates, and driver identifiers
+- **Anonymization pipeline** — AWS Glue ETL for GPS geofencing, VIN hashing, and driver behavior aggregation
+- **Cross-region sharing** — Lake Formation resource links enforcing producer-region permissions
+- **Vehicle owner portal** — Amazon Cognito + API Gateway for EU Data Act data subject access rights
+- **Audit and lineage** — CloudTrail logging for complete compliance reporting
+
+**Use this when**: Building data platforms that must comply with EU Data Act, GDPR, or regional data sovereignty requirements while enabling global R&D collaboration
+
+[View Data Governance Documentation →](guidance-for-data-governance/README.md)
+
+---
+
+### 🔍 Guidance: Vehicle Knowledge Base
+**Path**: [`guidance-for-vehicle-knowledge-base/`](guidance-for-vehicle-knowledge-base/)
+
+**Status**: ✅ Production Ready
+
+AI-ready knowledge base for automotive technical reference and diagnostic support:
+- **Bedrock Knowledge Base** with RAG (retrieval-augmented generation)
+- **4 data sources** — DTC guides, Technical Service Bulletins, recall notices, owner manuals, warranty and service policies
+- **Vector embeddings** — Titan text embeddings with OpenSearch Serverless
+- **AI agent integration** — Enable natural language queries for diagnostic assistance
+- **Customer support** — Self-service knowledge base for vehicle owners and technicians
+- **Scalable ingestion** — Ingest, version, and update automotive documentation at scale
+
+**Use this when**: Building customer support AI agents, diagnostic assistance systems, or enabling technicians to query technical procedures via natural language
+
+[View Vehicle Knowledge Base Documentation →](guidance-for-vehicle-knowledge-base/README.md)
+
+**Quick Start**:
+```bash
+cd guidance-for-vehicle-knowledge-base
+make deploy STAGE=dev
+make upload-data STAGE=dev
+make sync-data STAGE=dev
+```
+
+---
+
+### 📊 Shared Data Sources
+**Path**: [`datasource/`](datasource/)
+
+Synthetic data generators for automotive use cases:
+- CRM data (customers, contacts, accounts)
+- Vehicle telemetry and service records
+- Sales and transaction history
+- Configurable data profiles (small/medium/large)
+
+**Use this when**: Testing and development without production data
+
+[View Data Source Documentation →](datasource/README.md)
+
+---
+
+## Getting Started
+
+### Option 1: Customer 360 Analytics (Standalone)
+Deploy the Customer 360 platform independently - no other infrastructure needed:
+
+```bash
+cd guidance-for-agentic-customer-360
+make deploy
+```
+
+**What you get**: Complete analytics platform with data lake, QuickSight dashboards, and Bedrock AI agent.
+
+---
+
+### Option 2: Platform Foundation (Optional)
+Set up the foundational SageMaker Unified Studio environment for team collaboration:
+
+```bash
+cd platform-foundation
+./deployment/deploy-complete-platform.sh
+```
+
+**What you get**: Shared workspace for data engineers and ML engineers with DataZone governance.
+
+**Note**: Platform Foundation is NOT required for Customer 360. Deploy it only if you need a shared team workspace.
+
+## Architecture
+
+![Automotive Data Platform Architecture](docs/images/mesh.png)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  Platform Foundation (SageMaker Unified Studio)                 │
+│  - Unified data workspace                                       │
+│  - VPC networking & security                                    │
+│  - IAM Identity Center                                          │
+│  - DataZone governance                                          │
+└─────────────────────────────────────────────────────────────────┘
+                            │
+                            │ Hosts Projects
+                            ▼
+        ┌───────────────────────────────────────┐
+        │  Guidance: Agentic Customer 360       │
+        │  - Customer health scoring            │
+        │  - Churn prediction                   │
+        │  - Bedrock AI agents                  │
+        │  - Quick Suite dashboards             │
+        └───────────────────────────────────────┘
+                            │
+        ┌───────────────────────────────────────┐
+        │  Guidance: Predictive Maintenance     │
+        │  - Tire anomaly detection             │
+        │  - ML-powered alerts                  │
+        │  - Real-time inference API            │
+        │  - Batch processing pipeline          │
+        └───────────────────────────────────────┘
+                            │
+        ┌───────────────────────────────────────┐
+        │  Guidance: Telemetry Normalization    │
+        │  - Multi-source fleet telemetry       │
+        │  - OEM cloud-to-cloud integration     │
+        │  - Real-time distribution (Kafka/WS)  │
+        │  - Iceberg analytics (Athena)         │
+        └───────────────────────────────────────┘
+                            │
+        ┌───────────────────────────────────────┐
+        │  Guidance: Data Governance            │
+        │  - Multi-region PII/anonymized split  │
+        │  - EU Data Act / GDPR controls        │
+        │  - Lake Formation resource links      │
+        │  - Macie PII detection                │
+        └───────────────────────────────────────┘
+                            │
+        ┌───────────────────────────────────────┐
+        │  Guidance: Vehicle Knowledge Base     │
+        │  - Bedrock Knowledge Base (RAG)       │
+        │  - Technical reference & diagnostics │
+        │  - AI agent integration               │
+        │  - Customer support queries           │
+        └───────────────────────────────────────┘
+                            │
+        ┌───────────────────────────────────────┐
+        │  Future: Supply Chain Optimization    │
+        │  - Inventory forecasting              │
+        │  - Demand planning                    │
+        └───────────────────────────────────────┘
+```
+
+## Use Cases
+
+### Customer Analytics & Retention
+→ Use **Guidance: Agentic Customer 360**
+- Analyze declining customer metrics and trends
+- Root cause analysis with AI-powered insights
+- Interactive dashboards with QuickSight
+- Natural language queries with Bedrock Agent
+- Demonstrate data-driven decision making
+
+### Predictive Maintenance & Vehicle Health
+→ Use **Guidance: Predictive Maintenance**
+- Predict tire failures 7-14 days in advance
+- Monitor tire pressure and temperature anomalies
+- Dual ML and filter-based detection algorithms
+- Real-time and batch inference pipelines
+- Automated maintenance alerts and scheduling
+
+### Vehicle Data & IoT
+→ Use **Guidance: Telemetry Normalization** + **Connected Mobility Guidance**
+- Normalize telemetry from FleetWise, OEM APIs, and simulators
+- Real-time fleet dashboards with per-fleet data isolation
+- Historical trip analytics and fleet utilization via Athena
+- Multi-tenant fleet operator portal with role-based access
+
+### Diagnostic Support & Technical Reference
+→ Use **Guidance: Vehicle Knowledge Base**
+- AI-powered natural language queries for diagnostic procedures
+- Customer support chatbots with retrieval-augmented generation
+- Technical documentation lookup (DTCs, TSBs, recalls, warranty)
+- Technician assistance with troubleshooting and maintenance procedures
+- Scalable knowledge base ingestion and updates
+
+### Sales & Marketing
+→ Use **Platform Foundation** + **Shared Data Sources**
+- Sales forecasting
+- Marketing campaign optimization
+- Customer segmentation
+
+## Documentation
+
+- [Platform Foundation Guide](platform-foundation/README.md)
+- [Customer 360 Deployment Guide](guidance-for-agentic-customer-360/docs/DEPLOYMENT.md)
+- [Predictive Maintenance Deployment Guide](guidance-for-predictive-maintenance/docs/DEPLOYMENT.md)
+- [Telemetry Normalization Guide](guidance-for-telemetry-normalization/README.md)
+- [Telemetry Normalization Architecture](guidance-for-telemetry-normalization/docs/ARCHITECTURE.md)
+- [Data Governance Guide](guidance-for-data-governance/README.md)
+- [Vehicle Knowledge Base Guide](guidance-for-vehicle-knowledge-base/README.md)
+- [Customer 360 + Predictive Maintenance Integration](guidance-for-predictive-maintenance/docs/CUSTOMER_360_INTEGRATION.md)
+- [Data Model Specification](guidance-for-agentic-customer-360/docs/DATA_MODEL_SPEC.md)
+- [Bedrock Agents Guide](guidance-for-agentic-customer-360/docs/BEDROCK_AGENTS.md)
+- [Quick Suite Security](guidance-for-agentic-customer-360/docs/QUICK_SUITE_SECURITY.md)
+
+## Cost Estimates
+
+### Customer 360 Platform
+- **Data Layer**: ~$20/month (S3, Glue, Athena)
+- **Analytics**: $24+/user/month (QuickSight Enterprise)
+- **AI Layer**: ~$70/month (Aurora Serverless, Bedrock)
+- **Total**: ~$114/month + QuickSight users
+
+### Predictive Maintenance
+- **ML Pipeline**: ~$150-300/month (SageMaker training, batch transform, Glue ETL)
+- **Real-time API**: ~$50-100/month (API Gateway, Lambda, Step Functions)
+- **Data Storage**: ~$20-50/month (S3, Glue catalog)
+- **Total**: ~$220-450/month (depending on data volume and inference frequency)
+
+### Platform Foundation
+- **Base**: $50-250/month (VPC, NAT Gateway, SageMaker domain)
+- **Per User**: +$18/month (SageMaker Unified Studio)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+This project is licensed under the MIT-0 License. See [LICENSE](LICENSE) file.
+
+## Support
+
+For issues and questions:
+- Customer 360: See [guidance-for-agentic-customer-360/README.md](guidance-for-agentic-customer-360/README.md)
+- Platform Foundation: See [platform-foundation/README.md](platform-foundation/README.md)
+
+---
+
+**Note**: The Platform Foundation provides the base infrastructure. The Guidance projects are self-contained and can be deployed independently or on top of the foundation.
+
+## Notices
+
+*Customers are responsible for making their own independent assessment of the information in this Guidance. This Guidance: (a) is for informational purposes only, (b) represents AWS current product offerings and practices, which are subject to change without notice, and (c) does not create any commitments or assurances from AWS and its affiliates, suppliers or licensors. AWS products or services are provided "as is" without warranties, representations, or conditions of any kind, whether express or implied. AWS responsibilities and liabilities to its customers are controlled by AWS agreements, and this Guidance is not part of, nor does it modify, any agreement between AWS and its customers.*

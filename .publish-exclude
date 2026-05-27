@@ -1,0 +1,32 @@
+# Patterns to strip from the staging tree before publishing to the public
+# GitHub mirror at aws-solutions-library-samples/guidance-for-automotive-data-platform-on-aws.
+#
+# Format: gitignore-syntax. Comments start with `#`. Trailing slash = directory.
+
+# Internal Brazil package definition (contains w.amazon.com wiki URL)
+guidance-for-predictive-maintenance/Config
+
+# ML training parquet files (~35 MB total, limited public utility)
+guidance-for-predictive-maintenance/data/training/*.parquet
+
+# Internal spec/working docs — never intended for public mirror
+.kiro/
+
+# CI workflow contains internal account ID in a grep-exclusion allowlist
+.github/workflows/pr-validation.yml
+
+# Bedrock response JSON files — base64-encoded PNG image data; MMT/mmt matches
+# are false positives from base64 character sequences, not the MMT codename
+guidance-for-agentic-customer-360/holographic-vehicle-response.json
+guidance-for-agentic-customer-360/product-engineering-response.json
+guidance-for-agentic-customer-360/product-engineering-v2-response.json
+guidance-for-agentic-customer-360/vehicle-cockpit-response.json
+guidance-for-agentic-customer-360/vehicle-manufacturing-response.json
+
+# Excalidraw diagram — 12-digit matches are floating-point X/Y coordinates
+# (e.g., x: 3669.283632282554), not AWS account IDs
+guidance-for-predictive-maintenance/documentation/diagrams/pm-predictive-maintenance-full.excalidraw
+
+# Internal publishing runbook (this file documents the publish pipeline
+# and must not ship to public).
+docs/PUBLISHING.md

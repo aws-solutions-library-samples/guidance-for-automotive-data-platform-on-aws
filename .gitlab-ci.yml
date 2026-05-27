@@ -1,0 +1,72 @@
+stages:
+  - sync
+
+# Publish a sanitized, semver-tagged release to the public GitHub mirror at
+# aws-solutions-library-samples/guidance-for-automotive-data-platform-on-aws.
+#
+# Workflow:
+#   1. Tag a release on GitLab `main` with vX.Y.Z (e.g., `git tag -a v0.1.0 -m ...`)
+#   2. Push the tag to GitLab (`git push origin v0.1.0`)
+#   3. CI pipeline runs against the tag commit — this job appears as MANUAL
+#   4. A maintainer triggers the manual job from the GitLab pipeline UI
+#   5. publish-to-github.sh:
+#        - clones a staging tree
+#        - applies .publish-exclude (strips internal-only files)
+#        - runs the secret scanner against the staged tree
+#        - squashes to a single commit + force-pushes to public GitHub
+#
+# The job is gated to fail unless GITHUB_TOKEN is set (via GitLab CI/CD
+# variables), AND the tag matches the semver pattern.
+publish_to_github:
+  stage: sync
+  image: python:3.13-slim
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq git
+    - git config --global user.email "ci@example.com"
+    - git config --global user.name "GitLab CI"
+    - pip install --quiet pyyaml==6.0.2
+    # Configure the github remote with HTTPS+token auth. This is what the
+    # publish script will see as the user's `github` remote (and use as the
+    # push URL — via $EFFECTIVE_PUSH_URL resolution in
+    # scripts/publish-to-github.sh — bypassing the SSH path that needs
+    # github.com in known_hosts).
+    - git remote remove github 2>/dev/null || true
+    - git remote add github "https://${GITHUB_TOKEN}@github.com/aws-solutions-library-samples/guidance-for-automotive-data-platform-on-aws.git"
+    # Also export GITHUB_PUSH_URL_OVERRIDE explicitly. Belt-and-suspenders:
+    # if the script's remote-URL resolution misses the remote, this env var
+    # is the unambiguous override.
+    - export GITHUB_PUSH_URL_OVERRIDE="https://${GITHUB_TOKEN}@github.com/aws-solutions-library-samples/guidance-for-automotive-data-platform-on-aws.git"
+  script:
+    # Tag must be on HEAD; CI pipeline ref is the tag.
+    - echo "Publishing tag $CI_COMMIT_TAG to GitHub..."
+    - export GITHUB_PUSH_URL_OVERRIDE="https://${GITHUB_TOKEN}@github.com/aws-solutions-library-samples/guidance-for-automotive-data-platform-on-aws.git"
+    - bash scripts/publish-to-github.sh --tag "$CI_COMMIT_TAG" --yes
+    - echo "Audit log:"
+    - cat ".publish-history/${CI_COMMIT_TAG}.log" || echo "(no audit log written)"
+  artifacts:
+    paths:
+      - .publish-history/
+    expire_in: 1 year
+    when: always
+  variables:
+    GIT_STRATEGY: clone
+    GIT_DEPTH: 0
+  rules:
+    - if: '$GITHUB_TOKEN == null'
+      when: never
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+      when: manual
+  allow_failure: true  # manual jobs that aren't run shouldn't block the pipeline
+
+
+# ---------------------------------------------------------------------------
+# Legacy job removed:
+#
+# sync_to_github (REMOVED 2026-05-27 in favor of publish_to_github)
+#   The old job force-pushed GitLab `main` verbatim to GitHub on every
+#   commit with NO sanitization. Replaced by publish_to_github above which
+#   adds .publish-exclude strip + secret scan before push. The new job
+#   triggers ONLY on annotated semver tags (vX.Y.Z), and as MANUAL — so a
+#   maintainer must trigger each release rather than every commit auto-
+#   syncing to public.
+# ---------------------------------------------------------------------------

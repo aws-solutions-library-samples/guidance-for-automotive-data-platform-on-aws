@@ -1,0 +1,25 @@
+{
+  "lakeFormationPolicies": [
+    {
+      "description": "Platform admins — full access to all fleet partitions",
+      "principal": "arn:aws:iam::role/CMS-PlatformAdminRole",
+      "resource": {
+        "table": "cms_normalized_telemetry",
+        "permissions": ["SELECT", "DESCRIBE"]
+      }
+    },
+    {
+      "description": "Fleet operators — row-level filter by fleetId. Managed dynamically by CMS backend when fleets are created.",
+      "principal": "arn:aws:iam::role/CMS-FleetOperatorRole",
+      "resource": {
+        "table": "cms_normalized_telemetry",
+        "permissions": ["SELECT", "DESCRIBE"],
+        "dataFilter": {
+          "columnWildcard": {},
+          "rowFilter": "fleetId = '${USER_FLEET_ID}'"
+        }
+      },
+      "note": "One policy per fleet operator, created by CMS API when user is assigned to a fleet"
+    }
+  ]
+}
