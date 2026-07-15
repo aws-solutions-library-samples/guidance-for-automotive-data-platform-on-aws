@@ -21,7 +21,7 @@ faker==30.3.0
 
 # Schema loader + tests
 pyyaml==6.0.2
-pytest==8.3.3
+pytest==9.0.3
 # pytest-timeout: hard wall-clock timeout per test. Catches infinite
 # retries / unmocked HTTP / deadlocked synth before they appear as
 # silent CI hangs. Released 2025-04 (well past 7-day quarantine).
