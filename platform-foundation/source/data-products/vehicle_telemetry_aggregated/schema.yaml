@@ -1,0 +1,156 @@
+name: vehicle_telemetry_aggregated
+kind: product
+domain: automotive
+display_name: "Vehicle Telemetry (Aggregated)"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: vehicle_telemetry_aggregated
+    storage_format: iceberg
+    primary_key: [vin, event_time]
+    partition_keys: [event_date]
+    bucketing:
+      vin: 16
+    columns:
+      - name: vin
+        type: string
+        nullable: false
+        pii: false
+        description: "Vehicle Identification Number (FK -> vins)"
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      - name: event_date
+        type: date
+        nullable: false
+        description: "UTC calendar day of event_time. Partition key."
+      - name: event_time
+        type: timestamp
+        nullable: false
+        description: "Source-truth event time (UTC microseconds)"
+      - name: ingest_time
+        type: timestamp
+        nullable: false
+        description: "When the loader wrote this row (UTC microseconds)"
+      - name: speed_kmh
+        type: double
+        nullable: true
+        description: "VSS Vehicle.Speed average over rollup window (km/h)"
+        range: [0.0, 300.0]
+        edge_case_eligible: true
+      - name: avg_speed_kmh
+        type: double
+        nullable: true
+        description: "VSS Vehicle.AverageSpeed (km/h)"
+        range: [0.0, 300.0]
+      - name: total_miles_driven
+        type: double
+        nullable: true
+        description: "VSS Vehicle.TraveledDistance, US dev (miles)"
+        range: [0.0, 1000000.0]
+        edge_case_eligible: true
+      - name: start_soc_pct
+        type: double
+        nullable: true
+        description: "VSS .StateOfCharge.Current at window start (percent)"
+        range: [0.0, 100.0]
+        edge_case_eligible: true
+      - name: end_soc_pct
+        type: double
+        nullable: true
+        description: "VSS .StateOfCharge.Current at window end (percent)"
+        range: [0.0, 100.0]
+        edge_case_eligible: true
+      - name: state_of_health_pct
+        type: double
+        nullable: true
+        description: "VSS .StateOfHealth (percent)"
+        range: [0.0, 100.0]
+      - name: battery_pack_temp_avg_c
+        type: double
+        nullable: true
+        description: "VSS .Temperature.Average (Celsius)"
+        range: [-40.0, 80.0]
+        edge_case_eligible: true
+      - name: ambient_temp_avg_c
+        type: double
+        nullable: true
+        description: "VSS Vehicle.AmbientAirTemperature (Celsius)"
+        range: [-50.0, 60.0]
+      - name: cabin_temp_c
+        type: double
+        nullable: true
+        description: "VSS Vehicle.Cabin.HVAC.AmbientAirTemperature (Celsius)"
+        range: [-10.0, 60.0]
+      - name: motor_rpm
+        type: double
+        nullable: true
+        description: "VSS .ElectricMotor.Speed (rpm)"
+        range: [0.0, 25000.0]
+      - name: motor_torque_nm
+        type: double
+        nullable: true
+        description: "VSS .ElectricMotor.Torque (Nm; negative under regen)"
+        range: [-1000.0, 1500.0]
+      - name: motor_power_kw
+        type: double
+        nullable: true
+        description: "VSS .ElectricMotor.Power (kW; negative under regen)"
+        range: [-400.0, 600.0]
+      - name: motor_temp_c
+        type: double
+        nullable: true
+        description: "VSS .ElectricMotor.Temperature (Celsius)"
+        range: [-40.0, 200.0]
+      - name: range_estimate_start_mi
+        type: double
+        nullable: true
+        description: "VSS .Range at window start, US dev (miles)"
+        range: [0.0, 800.0]
+      - name: range_estimate_end_mi
+        type: double
+        nullable: true
+        description: "VSS .Range at window end, US dev (miles)"
+        range: [0.0, 800.0]
+      - name: is_charging
+        type: boolean
+        nullable: false
+        description: "VSS .IsCharging"
+      - name: avg_power_kw
+        type: double
+        nullable: true
+        description: "VSS .ChargeRate average (kW)"
+        range: [0.0, 400.0]
+      - name: latitude
+        type: double
+        nullable: true
+        pii: true
+        description: "VSS .CurrentLocation.Latitude (degrees)"
+        range: [-90.0, 90.0]
+      - name: longitude
+        type: double
+        nullable: true
+        pii: true
+        description: "VSS .CurrentLocation.Longitude (degrees)"
+        range: [-180.0, 180.0]
+      - name: heading_deg
+        type: double
+        nullable: true
+        description: "VSS .Heading (degrees)"
+        range: [0.0, 360.0]
+      - name: drive_type
+        type: string
+        nullable: true
+        description: "VSS .Transmission.DriveType"
+        enum_values: [awd, fwd, rwd]
+      - name: powertrain_type
+        type: string
+        nullable: true
+        description: "VSS Vehicle.Powertrain.Type"
+        enum_values: [electric, hybrid, erev]
+      - name: vss_version
+        type: string
+        nullable: false
+        description: "VSS catalog version this row conforms to"
+    foreign_keys:
+      - column: vin
+        references_table: vins
+        references_column: vin

@@ -1,0 +1,74 @@
+name: time_calendar
+kind: dimension
+domain: dimension
+display_name: "Time Calendar"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: time_calendar
+    storage_format: parquet
+    primary_key: [calendar_date]
+    columns:
+      - name: calendar_date
+        type: date
+        nullable: false
+        description: "UTC calendar day (10-year window)"
+      - name: ordinal_index
+        type: bigint
+        nullable: false
+        description: "Days since the dimension's anchor date"
+        range: [0.0, 4000.0]
+      - name: year
+        type: int
+        nullable: false
+        description: "Calendar year"
+      - name: quarter
+        type: int
+        nullable: false
+        description: "Quarter (1-4)"
+        range: [1.0, 4.0]
+      - name: month
+        type: int
+        nullable: false
+        description: "Month (1-12)"
+        range: [1.0, 12.0]
+      - name: month_name
+        type: string
+        nullable: false
+        description: "Month name (English)"
+      - name: week_of_year
+        type: int
+        nullable: false
+        description: "ISO week of year (1-53)"
+        range: [1.0, 53.0]
+      - name: day_of_year
+        type: int
+        nullable: false
+        description: "1-366"
+        range: [1.0, 366.0]
+      - name: day_of_month
+        type: int
+        nullable: false
+        description: "1-31"
+        range: [1.0, 31.0]
+      - name: day_of_week
+        type: int
+        nullable: false
+        description: "1=Monday .. 7=Sunday (ISO)"
+        range: [1.0, 7.0]
+      - name: day_name
+        type: string
+        nullable: false
+        description: "Day name (English)"
+      - name: is_weekend
+        type: boolean
+        nullable: false
+        description: "True for Saturday and Sunday"
+      - name: is_us_holiday
+        type: boolean
+        nullable: false
+        description: "True if this date is a US federal holiday"
+      - name: dimension_version
+        type: string
+        nullable: false
+        description: "Dimension catalog version"

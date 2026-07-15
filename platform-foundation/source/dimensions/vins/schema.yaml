@@ -1,0 +1,51 @@
+name: vins
+kind: dimension
+domain: dimension
+display_name: "VINs"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: vins
+    storage_format: parquet
+    primary_key: [vin]
+    columns:
+      - name: vin
+        type: string
+        nullable: false
+        description: "ISO 3779 VIN (17 chars, no I/O/Q). Acme Motors WMI '1FA'."
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      - name: ordinal_index
+        type: bigint
+        nullable: false
+        description: "Generator ordinal (used for deterministic UUIDv5 derivation)"
+        range: [0.0, 5000000.0]
+      - name: model_year
+        type: int
+        nullable: false
+        description: "Model year"
+        range: [2018.0, 2030.0]
+      - name: make
+        type: string
+        nullable: false
+        description: "Manufacturer (Acme Motors)"
+      - name: model
+        type: string
+        nullable: false
+        description: "Model name"
+      - name: powertrain_type
+        type: string
+        nullable: false
+        description: "VSS Vehicle.Powertrain.Type"
+        enum_values: [electric, hybrid, erev]
+      - name: manufacture_date
+        type: date
+        nullable: false
+        description: "Build / manufacture date"
+      - name: in_service_date
+        type: date
+        nullable: false
+        description: "Date the vehicle entered service / sold to customer"
+      - name: dimension_version
+        type: string
+        nullable: false
+        description: "Dimension catalog version (semver) at generation time"
