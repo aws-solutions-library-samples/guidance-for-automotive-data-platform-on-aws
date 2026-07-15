@@ -1,0 +1,49 @@
+name: customers
+kind: dimension
+domain: dimension
+display_name: "Customers"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: customers
+    storage_format: parquet
+    primary_key: [customer_id]
+    columns:
+      - name: customer_id
+        type: string
+        nullable: false
+        pii: true
+        description: "Customer identifier"
+        pattern: "^CUST-[0-9A-F]{8}$"
+      - name: ordinal_index
+        type: bigint
+        nullable: false
+        description: "Generator ordinal (deterministic seed)"
+        range: [0.0, 5000000.0]
+      - name: full_name
+        type: string
+        nullable: true
+        pii: true
+        description: "Synthetic Faker-generated full name"
+      - name: email
+        type: string
+        nullable: true
+        pii: true
+        description: "Synthetic email"
+      - name: country
+        type: string
+        nullable: false
+        description: "ISO 3166-1 alpha-2 country code"
+      - name: customer_segment
+        type: string
+        nullable: false
+        description: "Marketing segment"
+        enum_values: [enthusiast, family, fleet, commercial, prospect]
+      - name: created_at
+        type: timestamp
+        nullable: false
+        description: "Customer record creation time"
+      - name: dimension_version
+        type: string
+        nullable: false
+        description: "Dimension catalog version"

@@ -1,0 +1,122 @@
+{
+  "description": "Lake Formation policies for automotive data governance. Apply in the central governance account.",
+
+  "permission_policies": {
+    "vehicle_owner": {
+      "description": "Vehicle owners can read only their own PII data (row-level security by VIN)",
+      "principal": "arn:aws:iam::${ACCOUNT_ID}:role/VehicleOwnerRole",
+      "resource": {
+        "database": "automotive_pii",
+        "table": "*"
+      },
+      "permissions": ["SELECT"],
+      "row_filter": "vin = '${CALLER_VIN}'",
+      "note": "Row filter enforced via Lake Formation data cell filtering"
+    },
+
+    "rnd_team": {
+      "description": "R&D teams can read all anonymized data, explicit deny on PII tables",
+      "grants": [
+        {
+          "principal": "arn:aws:iam::${CONSUMER_ACCOUNT_ID}:role/RnDAnalystRole",
+          "resource": {
+            "database": "automotive_anonymized",
+            "table": "*"
+          },
+          "permissions": ["SELECT", "DESCRIBE"]
+        }
+      ],
+      "denials": [
+        {
+          "principal": "arn:aws:iam::${CONSUMER_ACCOUNT_ID}:role/RnDAnalystRole",
+          "resource": {
+            "database": "automotive_pii",
+            "table": "*"
+          },
+          "permissions": ["ALL"],
+          "note": "Explicit deny ensures PII tables are never accessible from consumer accounts"
+        }
+      ]
+    },
+
+    "compliance_team": {
+      "description": "Compliance team can read all data with mandatory audit trail",
+      "principal": "arn:aws:iam::${GOVERNANCE_ACCOUNT_ID}:role/ComplianceAuditorRole",
+      "resource": {
+        "database": "*",
+        "table": "*"
+      },
+      "permissions": ["SELECT", "DESCRIBE"],
+      "note": "All access logged via CloudTrail organization trail"
+    },
+
+    "data_engineer": {
+      "description": "Data engineers have full access for pipeline management",
+      "principal": "arn:aws:iam::${PRODUCER_ACCOUNT_ID}:role/DataEngineerRole",
+      "resource": {
+        "database": "*",
+        "table": "*"
+      },
+      "permissions": ["ALL"],
+      "note": "MFA required via IAM policy condition"
+    }
+  },
+
+  "resource_links": {
+    "description": "Cross-region resource links for anonymized data sharing",
+    "links": [
+      {
+        "name": "anonymized_telemetry_link",
+        "source_account": "${PRODUCER_ACCOUNT_ID}",
+        "source_region": "${EU_REGION}",
+        "source_database": "automotive_anonymized",
+        "source_table": "vehicle_telemetry_anonymized",
+        "target_account": "${CONSUMER_ACCOUNT_ID}",
+        "target_region": "${CONSUMER_REGION}",
+        "target_database": "automotive_analytics",
+        "note": "Permissions enforced from producer region — consumer cannot escalate"
+      },
+      {
+        "name": "anonymized_trips_link",
+        "source_account": "${PRODUCER_ACCOUNT_ID}",
+        "source_region": "${EU_REGION}",
+        "source_database": "automotive_anonymized",
+        "source_table": "trip_analytics_anonymized",
+        "target_account": "${CONSUMER_ACCOUNT_ID}",
+        "target_region": "${CONSUMER_REGION}",
+        "target_database": "automotive_analytics"
+      }
+    ]
+  },
+
+  "tag_based_access_control": {
+    "description": "TBAC tags for scalable policy management",
+    "lf_tags": [
+      {
+        "key": "data_classification",
+        "values": ["pii", "anonymized", "public"]
+      },
+      {
+        "key": "data_domain",
+        "values": ["telemetry", "trips", "safety", "maintenance", "customer"]
+      },
+      {
+        "key": "region_restriction",
+        "values": ["eu_only", "global"]
+      }
+    ],
+    "tag_policies": [
+      {
+        "description": "PII data restricted to EU region only",
+        "expression": "data_classification = 'pii' AND region_restriction = 'eu_only'",
+        "allowed_principals": ["DataEngineerRole", "ComplianceAuditorRole", "VehicleOwnerRole"],
+        "denied_principals": ["RnDAnalystRole"]
+      },
+      {
+        "description": "Anonymized data available globally",
+        "expression": "data_classification = 'anonymized' AND region_restriction = 'global'",
+        "allowed_principals": ["RnDAnalystRole", "DataEngineerRole", "ComplianceAuditorRole"]
+      }
+    ]
+  }
+}

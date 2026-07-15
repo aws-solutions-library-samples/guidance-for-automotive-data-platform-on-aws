@@ -1,0 +1,157 @@
+name: ota_campaigns
+kind: product
+domain: ev_operations
+display_name: "OTA Campaigns"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: ota_campaigns
+    storage_format: iceberg
+    primary_key: [campaign_id]
+    partition_keys: [campaign_id]
+    columns:
+      - name: campaign_id
+        type: string
+        nullable: false
+        description: "Unique campaign identifier (partition key)"
+      - name: campaign_name
+        type: string
+        nullable: false
+        description: "Human-readable name (e.g., 'Battery Management v3.4')"
+      - name: release_version
+        type: string
+        nullable: false
+        description: "Software version delivered (semver)"
+      - name: target_make
+        type: string
+        nullable: false
+        description: "Target manufacturer"
+      - name: target_model
+        type: string
+        nullable: true
+        description: "Target model (null = all models for make)"
+      - name: target_model_year_min
+        type: int
+        nullable: true
+        description: "Minimum target model year (inclusive)"
+      - name: target_model_year_max
+        type: int
+        nullable: true
+        description: "Maximum target model year (inclusive)"
+      - name: target_software_version_min
+        type: string
+        nullable: true
+        description: "Minimum prior software version eligible (semver)"
+      - name: package_size_mb
+        type: int
+        nullable: false
+        description: "OTA package size (megabytes)"
+        range: [1.0, 8000.0]
+      - name: category
+        type: string
+        nullable: false
+        description: "Campaign category"
+        enum_values: [safety_recall, feature_add, bug_fix, security_patch, performance]
+      - name: severity
+        type: string
+        nullable: false
+        description: "Severity"
+        enum_values: [critical, high, medium, low]
+      - name: dispatch_start_date
+        type: date
+        nullable: false
+        description: "First date dispatch becomes active"
+      - name: dispatch_end_date
+        type: date
+        nullable: true
+        description: "Last date dispatch is active (null = open-ended)"
+      - name: phased_rollout_pct
+        type: array<int>
+        nullable: true
+        description: "Phased rollout cohort percentages (e.g., [5, 25, 50, 100])"
+      - name: status
+        type: string
+        nullable: false
+        description: "Campaign status"
+        enum_values: [planned, active, paused, completed, cancelled]
+
+  - name: ota_campaign_events
+    storage_format: iceberg
+    primary_key: [campaign_id, vin]
+    partition_keys: [dispatch_date]
+    columns:
+      - name: campaign_id
+        type: string
+        nullable: false
+        description: "FK -> ota_campaigns.campaign_id"
+      - name: vin
+        type: string
+        nullable: false
+        description: "FK -> vins"
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      - name: dispatch_date
+        type: date
+        nullable: false
+        description: "UTC calendar day of dispatch_time. Partition key."
+      - name: dispatch_time
+        type: timestamp
+        nullable: false
+        description: "When the campaign was dispatched to this VIN"
+      - name: download_started_time
+        type: timestamp
+        nullable: true
+        description: "When the OTA package began downloading"
+      - name: download_completed_time
+        type: timestamp
+        nullable: true
+        description: "When the OTA package finished downloading"
+      - name: install_started_time
+        type: timestamp
+        nullable: true
+        description: "When installation began"
+      - name: install_completed_time
+        type: timestamp
+        nullable: true
+        description: "When installation finished"
+      - name: final_status
+        type: string
+        nullable: false
+        description: "Final outcome for this VIN"
+        enum_values:
+          - not_yet_dispatched
+          - dispatched
+          - downloading
+          - download_failed
+          - installing
+          - install_failed
+          - installed
+          - rolled_back
+          - declined_by_user
+      - name: failure_reason
+        type: string
+        nullable: true
+        description: "Free-text failure reason (when final_status indicates failure)"
+        edge_case_eligible: true
+      - name: previous_software_version
+        type: string
+        nullable: true
+        description: "Software version before the OTA (semver)"
+      - name: new_software_version
+        type: string
+        nullable: true
+        description: "Software version after the OTA (semver)"
+      - name: event_time
+        type: timestamp
+        nullable: false
+        description: "Latest status-change time"
+      - name: ingest_time
+        type: timestamp
+        nullable: false
+        description: "When the loader wrote this row"
+    foreign_keys:
+      - column: campaign_id
+        references_table: ota_campaigns
+        references_column: campaign_id
+      - column: vin
+        references_table: vins
+        references_column: vin
