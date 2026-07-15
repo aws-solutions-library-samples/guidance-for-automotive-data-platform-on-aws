@@ -1,0 +1,6 @@
+Automotive Data Platform on AWS
+Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+This software includes third-party components subject to their own licenses.
+See individual subdirectory README files and pyproject.toml/package.json files
+for specific dependency attributions.

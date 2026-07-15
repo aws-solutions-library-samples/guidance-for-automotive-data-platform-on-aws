@@ -1,0 +1,116 @@
+name: customer_interactions
+kind: product
+domain: customer
+display_name: "Customer Interactions"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: customer_interactions
+    storage_format: iceberg
+    primary_key: [interaction_id]
+    partition_keys: [interaction_date]
+    bucketing:
+      customer_id: 16
+    columns:
+      - name: interaction_id
+        type: string
+        nullable: false
+        description: "Unique interaction identifier (UUIDv5)"
+      - name: customer_id
+        type: string
+        nullable: false
+        pii: true
+        description: "FK -> customers"
+        pattern: "^CUST-[0-9A-F]{8}$"
+      - name: interaction_date
+        type: date
+        nullable: false
+        description: "UTC calendar day. Partition key."
+      - name: interaction_time
+        type: timestamp
+        nullable: false
+        description: "Source-truth interaction time (UTC)"
+      - name: channel
+        type: string
+        nullable: false
+        description: "Channel through which the interaction occurred"
+        enum_values:
+          - dealer
+          - service_center
+          - website
+          - mobile_app
+          - call_center
+          - mobile_app_charging_issue
+          - ota_update_notification
+          - chatbot
+          - email
+      - name: interaction_type
+        type: string
+        nullable: false
+        description: "Subtype of interaction"
+      - name: outcome
+        type: string
+        nullable: true
+        description: "Resolution outcome"
+        enum_values: [resolved, escalated, abandoned, in_progress, scheduled]
+      - name: duration_seconds
+        type: bigint
+        nullable: true
+        description: "Interaction duration"
+        range: [0.0, 86400.0]
+        edge_case_eligible: true
+      - name: vin
+        type: string
+        nullable: true
+        description: "Optional VIN context (FK -> vins)"
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      - name: dealer_id
+        type: string
+        nullable: true
+        description: "Optional dealer context (FK -> dealers)"
+        pattern: "^DLR-[0-9]{5}$"
+      - name: agent_id
+        type: string
+        nullable: true
+        description: "Servicing agent identifier (synthetic)"
+      - name: sentiment_score
+        type: double
+        nullable: true
+        description: "Sentiment classifier output (-1.0 to 1.0)"
+        range: [-1.0, 1.0]
+        edge_case_eligible: true
+      - name: subject
+        type: string
+        nullable: true
+        pii: true
+        pii_drift_target: true
+        description: "Subject summary (free-text; routinely contains PII in real CRM payloads)"
+      - name: notes
+        type: string
+        nullable: true
+        pii: true
+        pii_drift_target: true
+        description: "Free-text notes (capped to 4 KB; routinely contains PII)"
+      - name: csat_score
+        type: int
+        nullable: true
+        description: "Customer satisfaction (1-5)"
+        range: [1.0, 5.0]
+      - name: event_time
+        type: timestamp
+        nullable: false
+        description: "= interaction_time"
+      - name: ingest_time
+        type: timestamp
+        nullable: false
+        description: "When the loader wrote this row"
+    foreign_keys:
+      - column: customer_id
+        references_table: customers
+        references_column: customer_id
+      - column: vin
+        references_table: vins
+        references_column: vin
+      - column: dealer_id
+        references_table: dealers
+        references_column: dealer_id

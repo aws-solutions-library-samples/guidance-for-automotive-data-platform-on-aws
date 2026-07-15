@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "inference-job-status"
+version = "1.0.0"
+description = "Lambda function for processing tire alerts"
+authors = ["Amazon Web Services"]
+license = "Apache-2.0"
+packages = [{include = "*.py"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.group.dev.dependencies]
+requests = "*"
+aws_lambda_powertools = { extras = ["tracer", "validation"], version = ">=3.3.0" }
+pytest = "*"
+pytest-cov = "*"
+pytest-mock = "*"
+pytest-xdist = "^3.3.1"
+black = "^23.0.0"
+isort = "^5.0.0"
+flake8 = "^6.0.0"
+types-boto3 = "*"
+types-requests = "^2.32.0"
+types-setuptools = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
+target-version = ["py313"]
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[tool.coverage.run]
+source = ["."]
+omit = ["*/tests/*", "*/test_*.py"]

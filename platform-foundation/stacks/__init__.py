@@ -1,0 +1,1 @@
+"""ADP foundation CDK stacks."""

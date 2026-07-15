@@ -1,0 +1,55 @@
+{
+    "Status": 200,
+    "DataSet": {
+        "Arn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:dataset/revenue-breakdown",
+        "DataSetId": "revenue-breakdown",
+        "Name": "Revenue Breakdown",
+        "CreatedTime": 1763572171.841,
+        "LastUpdatedTime": 1768372295.974,
+        "PhysicalTableMap": {
+            "breakdown": {
+                "RelationalTable": {
+                    "DataSourceArn": "arn:aws:quicksight:{{REGION}}:{{ACCOUNT_ID}}:datasource/cx-analytics-athena",
+                    "Catalog": "AwsDataCatalog",
+                    "Schema": "cx_analytics",
+                    "Name": "revenue_breakdown_current",
+                    "InputColumns": [
+                        {
+                            "Name": "revenue_stream",
+                            "Type": "STRING"
+                        },
+                        {
+                            "Name": "revenue",
+                            "Type": "INTEGER"
+                        }
+                    ]
+                }
+            }
+        },
+        "LogicalTableMap": {
+            "breakdown": {
+                "Alias": "revenue_breakdown_current",
+                "Source": {
+                    "PhysicalTableId": "breakdown"
+                }
+            }
+        },
+        "OutputColumns": [
+            {
+                "Name": "revenue_stream",
+                "Type": "STRING"
+            },
+            {
+                "Name": "revenue",
+                "Type": "INTEGER"
+            }
+        ],
+        "ImportMode": "SPICE",
+        "ConsumedSpiceCapacityInBytes": 293,
+        "DataSetUsageConfiguration": {
+            "DisableUseAsDirectQuerySource": false,
+            "DisableUseAsImportedSource": false
+        }
+    },
+    "RequestId": "5a1e35b1-75a3-43bb-b0ec-026fc192a72e"
+}

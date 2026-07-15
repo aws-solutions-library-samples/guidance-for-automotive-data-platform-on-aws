@@ -1,0 +1,147 @@
+name: charging_sessions
+kind: product
+domain: ev_operations
+display_name: "Charging Sessions"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: charging_sessions
+    storage_format: iceberg
+    primary_key: [session_id]
+    partition_keys: [session_date]
+    bucketing:
+      vin: 16
+    columns:
+      - name: session_id
+        type: string
+        nullable: false
+        description: "UUIDv5 from (vin, start_time)"
+      - name: vin
+        type: string
+        nullable: false
+        description: "FK -> vins"
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      - name: customer_id
+        type: string
+        nullable: true
+        pii: true
+        description: "FK -> customers; null if guest charge"
+        pattern: "^CUST-[0-9A-F]{8}$"
+        edge_case_eligible: true
+      - name: session_date
+        type: date
+        nullable: false
+        description: "UTC calendar day of start_time. Partition key."
+      - name: start_time
+        type: timestamp
+        nullable: false
+        description: "Session start (UTC microseconds)"
+      - name: end_time
+        type: timestamp
+        nullable: false
+        description: "Session end (UTC microseconds)"
+      - name: duration_seconds
+        type: bigint
+        nullable: false
+        description: "end_time - start_time (seconds)"
+        range: [0.0, 86400.0]
+        edge_case_eligible: true
+      - name: station_id
+        type: string
+        nullable: false
+        description: "FK -> charging_stations"
+        pattern: "^STN-(TS|EA|EVGO|CP|HOME|DEST)-[0-9]{8}$"
+      - name: station_type
+        type: string
+        nullable: false
+        description: "Charging hardware tier"
+        enum_values: [home_l1, home_l2, public_dc_fast, destination_l2]
+      - name: network_provider
+        type: string
+        nullable: true
+        description: "Charging network operator"
+      - name: connector_type
+        type: string
+        nullable: false
+        description: "Connector type"
+        enum_values: [J1772, CCS1, NACS, CHAdeMO]
+      - name: start_soc_pct
+        type: double
+        nullable: false
+        description: "State of charge at session start (percent)"
+        range: [0.0, 100.0]
+        edge_case_eligible: true
+      - name: end_soc_pct
+        type: double
+        nullable: false
+        description: "State of charge at session end (percent)"
+        range: [0.0, 100.0]
+        edge_case_eligible: true
+      - name: kwh_delivered
+        type: double
+        nullable: false
+        description: "Energy delivered this session (kWh)"
+        range: [0.0, 250.0]
+        edge_case_eligible: true
+      - name: peak_power_kw
+        type: double
+        nullable: true
+        description: "Peak charging power (kW)"
+        range: [0.0, 400.0]
+        edge_case_eligible: true
+      - name: avg_power_kw
+        type: double
+        nullable: true
+        description: "Average charging power (kW)"
+        range: [0.0, 400.0]
+      - name: cost_usd
+        type: decimal
+        precision: 10
+        scale: 4
+        nullable: true
+        description: "Total session cost (USD); null for free home charging"
+      - name: cost_per_kwh_usd
+        type: decimal
+        precision: 10
+        scale: 6
+        nullable: true
+        description: "Per-kWh rate paid (USD)"
+      - name: latitude
+        type: double
+        nullable: true
+        pii: true
+        description: "Public station latitude; null for home (privacy)"
+        range: [-90.0, 90.0]
+      - name: longitude
+        type: double
+        nullable: true
+        pii: true
+        description: "Public station longitude; null for home (privacy)"
+        range: [-180.0, 180.0]
+      - name: interrupted
+        type: boolean
+        nullable: false
+        description: "True if session ended abnormally"
+      - name: interrupt_reason
+        type: string
+        nullable: true
+        description: "Why the session ended abnormally"
+        enum_values: [user_unplug, station_fault, vehicle_fault, network_drop]
+      - name: event_time
+        type: timestamp
+        nullable: false
+        description: "Source-truth event time (= start_time)"
+      - name: ingest_time
+        type: timestamp
+        nullable: false
+        description: "When the loader wrote this row"
+    foreign_keys:
+      - column: vin
+        references_table: vins
+        references_column: vin
+      - column: customer_id
+        references_table: customers
+        references_column: customer_id
+      - column: station_id
+        references_table: charging_stations
+        references_column: station_id
