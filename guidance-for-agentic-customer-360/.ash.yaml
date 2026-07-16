@@ -1,0 +1,24 @@
+# ASH Configuration - exclude generated and vendor directories
+scanner_settings:
+  bandit:
+    args:
+      - "--exclude"
+      - "node_modules,cdk.out,probeout,ash-output,.venv"
+  detect-secrets:
+    args:
+      - "--exclude-files"
+      - "(node_modules|cdk\\.out|probeout|ash-output|\\.venv)/.*"
+  checkov:
+    args:
+      - "--skip-path"
+      - "node_modules"
+      - "--skip-path"
+      - "cdk.out"
+      - "--skip-path"
+      - "probeout"
+  semgrep:
+    args:
+      - "--exclude"
+      - "node_modules"
+      - "--exclude"
+      - "cdk.out"

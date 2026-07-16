@@ -1,0 +1,86 @@
+name: charging_stations
+kind: dimension
+domain: dimension
+display_name: "Charging Stations"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: charging_stations
+    storage_format: parquet
+    primary_key: [station_id]
+    columns:
+      - name: station_id
+        type: string
+        nullable: false
+        description: "Charging station identifier"
+        pattern: "^STN-(TS|EA|EVGO|CP|HOME|DEST)-[0-9]{8}$"
+      - name: ordinal_index
+        type: bigint
+        nullable: false
+        description: "Generator ordinal"
+        range: [0.0, 50000.0]
+      - name: network_provider
+        type: string
+        nullable: false
+        description: "Charging network operator"
+        enum_values:
+          - Tesla Supercharger
+          - Electrify America
+          - EVgo
+          - ChargePoint
+          - home
+          - destination
+      - name: network_code
+        type: string
+        nullable: false
+        description: "Short code embedded in station_id (TS / EA / EVGO / CP / HOME / DEST)"
+        enum_values: [TS, EA, EVGO, CP, HOME, DEST]
+      - name: station_type
+        type: string
+        nullable: false
+        description: "Charging hardware tier"
+        enum_values: [home_l1, home_l2, public_dc_fast, destination_l2]
+      - name: connector_types
+        type: array<string>
+        nullable: false
+        description: "Available connectors"
+      - name: max_power_kw
+        type: double
+        nullable: false
+        description: "Station-rated maximum power (kW)"
+        range: [1.4, 400.0]
+      - name: stall_count
+        type: int
+        nullable: false
+        description: "Number of charging stalls at this station"
+        range: [1.0, 64.0]
+      - name: latitude
+        type: double
+        nullable: true
+        description: "Station latitude (null for synthetic home stations to preserve privacy)"
+        range: [-90.0, 90.0]
+      - name: longitude
+        type: double
+        nullable: true
+        description: "Station longitude (null for synthetic home)"
+        range: [-180.0, 180.0]
+      - name: city
+        type: string
+        nullable: true
+        description: "City (null for home/destination synthetic)"
+      - name: state
+        type: string
+        nullable: true
+        description: "US state code (null for home/destination synthetic)"
+      - name: country
+        type: string
+        nullable: false
+        description: "ISO 3166-1 alpha-2"
+      - name: opened_date
+        type: date
+        nullable: true
+        description: "Date this station opened (null for home)"
+      - name: dimension_version
+        type: string
+        nullable: false
+        description: "Dimension catalog version"
