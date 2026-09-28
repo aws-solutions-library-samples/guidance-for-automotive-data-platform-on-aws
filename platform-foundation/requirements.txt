@@ -1,0 +1,44 @@
+# ADP foundation Python dependencies
+# Pinned exact versions per ~/.kiro/steering/dependency-versions.md.
+# All versions chosen for Python 3.14 wheel availability (architect's
+# system runs Python 3.14.2 and pyarrow/pandas/numpy older than the
+# bumps below have no cp314 wheels).
+# See decisions.md "2026-05-28 — Python 3.14 dependency bumps" for
+# the rationale and the spec/tech.md alignment.
+
+# CDK app dependencies (pure-python)
+aws-cdk-lib==2.255.0
+constructs==10.6.0
+cdk-nag==2.36.0
+
+# Data generation + Iceberg manipulation
+boto3==1.40.0
+pyiceberg==0.7.1
+pyarrow==24.0.0
+pandas==2.3.3
+numpy==2.4.6
+faker==30.3.0
+
+# Schema loader + tests
+pyyaml==6.0.2
+pytest==8.3.3
+# pytest-timeout: hard wall-clock timeout per test. Catches infinite
+# retries / unmocked HTTP / deadlocked synth before they appear as
+# silent CI hangs. Released 2025-04 (well past 7-day quarantine).
+pytest-timeout==2.4.0
+
+# Markdown contract-doc parser used by test_data_contracts.py
+markdown-it-py==3.0.0
+
+# PySpark (local Spark sample-tier execution + offline import).
+# pyspark 3.5.x is pure-Python at the package level (the JVM bundle
+# is fetched on first SparkSession start), so the install resolves on
+# the architect's Python 3.14 venv even though upstream metadata caps
+# Python compatibility at 3.12. Glue 4.0 ships its own PySpark 3.3 +
+# Python 3.10 in the default classpath, so this pin governs ONLY
+# local sample-scale execution and offline pytest import-checks.
+# py4j is the exact pin pyspark==3.5.6's metadata Requires-Dist
+# declares (`Requires-Dist: py4j==0.10.9.7`); pinned explicitly per
+# `~/.kiro/steering/dependency-versions.md`.
+pyspark==3.5.6
+py4j==0.10.9.7

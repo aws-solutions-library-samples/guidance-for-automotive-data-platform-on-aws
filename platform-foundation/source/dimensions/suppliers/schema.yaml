@@ -1,0 +1,43 @@
+name: suppliers
+kind: dimension
+domain: dimension
+display_name: "Suppliers"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: suppliers
+    storage_format: parquet
+    primary_key: [supplier_id]
+    columns:
+      - name: supplier_id
+        type: string
+        nullable: false
+        description: "Supplier identifier"
+        pattern: "^SUP-[0-9]{4}$"
+      - name: ordinal_index
+        type: bigint
+        nullable: false
+        description: "Generator ordinal"
+        range: [0.0, 500.0]
+      - name: supplier_name
+        type: string
+        nullable: false
+        description: "Synthetic supplier company name"
+      - name: country
+        type: string
+        nullable: false
+        description: "ISO 3166-1 alpha-2"
+      - name: supplier_tier
+        type: string
+        nullable: false
+        description: "Supply chain tier"
+        enum_values: [tier_1, tier_2, tier_3]
+      - name: category
+        type: string
+        nullable: false
+        description: "Supplier specialty"
+        enum_values: [battery_cells, battery_pack, motor, power_electronics, body_chassis, interior, software, other]
+      - name: dimension_version
+        type: string
+        nullable: false
+        description: "Dimension catalog version"

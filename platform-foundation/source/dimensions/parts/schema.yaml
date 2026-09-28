@@ -1,0 +1,61 @@
+name: parts
+kind: dimension
+domain: dimension
+display_name: "Parts"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: parts
+    storage_format: parquet
+    primary_key: [part_number]
+    columns:
+      - name: part_number
+        type: string
+        nullable: false
+        description: "Part number (8 alphanumeric + dash + 4 alphanumeric)"
+        pattern: "^[A-Z0-9]{8}-[A-Z0-9]{4}$"
+      - name: ordinal_index
+        type: bigint
+        nullable: false
+        description: "Generator ordinal"
+        range: [0.0, 50000.0]
+      - name: supplier_id
+        type: string
+        nullable: false
+        description: "FK -> suppliers"
+        pattern: "^SUP-[0-9]{4}$"
+      - name: part_name
+        type: string
+        nullable: false
+        description: "Human-readable part name"
+      - name: part_category
+        type: string
+        nullable: false
+        description: "High-level category"
+        enum_values:
+          - battery_cell
+          - battery_module
+          - battery_pack
+          - bms
+          - motor
+          - inverter
+          - charger_onboard
+          - dc_dc_converter
+          - body
+          - chassis
+          - tire
+          - brake
+          - hvac
+          - infotainment
+          - sensor
+          - other
+      - name: list_price_usd
+        type: decimal
+        precision: 12
+        scale: 2
+        nullable: true
+        description: "MSRP service price (USD)"
+      - name: dimension_version
+        type: string
+        nullable: false
+        description: "Dimension catalog version"

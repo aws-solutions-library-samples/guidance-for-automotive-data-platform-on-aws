@@ -1,0 +1,129 @@
+name: service_records
+kind: product
+domain: service
+display_name: "Service Records"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: service_records
+    storage_format: iceberg
+    provenance: single-vintage
+    primary_key: [service_id]
+    partition_keys: [service_month]
+    bucketing:
+      vin: 16
+    columns:
+      - name: service_id
+        type: string
+        nullable: false
+        description: "Unique service event identifier"
+      - name: service_date
+        type: date
+        nullable: false
+        description: "Service event date"
+      - name: service_month
+        type: date
+        nullable: false
+        description: "First-of-month derived from service_date. Partition key (monthly grain)."
+      - name: vin
+        type: string
+        nullable: false
+        description: "FK -> vins"
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      - name: customer_id
+        type: string
+        nullable: true
+        pii: true
+        description: "FK -> customers"
+        pattern: "^CUST-[0-9A-F]{8}$"
+      - name: dealer_id
+        type: string
+        nullable: false
+        description: "FK -> dealers"
+        pattern: "^DLR-[0-9]{5}$"
+      - name: service_type
+        type: string
+        nullable: false
+        description: "Category of service"
+        enum_values:
+          - scheduled_maintenance
+          - warranty_repair
+          - safety_recall
+          - software_recall
+          - body_repair
+          - tire_service
+          - charging_system
+          - battery_replacement
+          - hv_battery_diagnostic
+          - software_update
+      - name: complaint_text
+        type: string
+        nullable: true
+        pii: true
+        pii_drift_target: true
+        description: "Customer-reported complaint (free-text; routinely contains PII)"
+        edge_case_eligible: true
+      - name: dtc_codes
+        type: array<string>
+        nullable: true
+        description: "DTC codes captured at intake (e.g., ['P0AA6', 'P1A0F'])"
+      - name: parts_used
+        type: array<string>
+        nullable: true
+        description: "List of part_numbers replaced during service"
+      - name: labor_hours
+        type: double
+        nullable: true
+        description: "Total labor hours billed"
+        range: [0.0, 80.0]
+        edge_case_eligible: true
+      - name: total_cost_usd
+        type: decimal
+        precision: 12
+        scale: 2
+        nullable: true
+        description: "Total invoice (USD); null if covered by warranty"
+      - name: warranty_covered
+        type: boolean
+        nullable: false
+        description: "True if service was covered by manufacturer warranty"
+      - name: technician_id
+        type: string
+        nullable: true
+        description: "Servicing technician identifier (synthetic)"
+      - name: outcome
+        type: string
+        nullable: false
+        description: "Outcome"
+        enum_values: [resolved, parts_pending, follow_up_required, lemon_law_buyback]
+      - name: csat_score
+        type: int
+        nullable: true
+        description: "Customer satisfaction (1-5)"
+        range: [1.0, 5.0]
+      - name: linked_interaction_id
+        type: string
+        nullable: true
+        description: "Optional link to customer_interactions.interaction_id"
+      - name: linked_campaign_id
+        type: string
+        nullable: true
+        description: "Optional link to ota_campaigns.campaign_id (for software-recall services)"
+      - name: event_time
+        type: timestamp
+        nullable: false
+        description: "Source-truth event time (= service_date 00:00 UTC)"
+      - name: ingest_time
+        type: timestamp
+        nullable: false
+        description: "When the loader wrote this row"
+    foreign_keys:
+      - column: vin
+        references_table: vins
+        references_column: vin
+      - column: customer_id
+        references_table: customers
+        references_column: customer_id
+      - column: dealer_id
+        references_table: dealers
+        references_column: dealer_id

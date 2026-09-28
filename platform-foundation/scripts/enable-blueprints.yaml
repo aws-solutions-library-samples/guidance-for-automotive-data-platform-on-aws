@@ -1,0 +1,75 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Enable essential blueprints for tire prediction ML project
+
+Parameters:
+  DomainId:
+    Type: String
+    Description: DataZone domain ID
+  ManageAccessRoleArn:
+    Type: String
+    Description: IAM role ARN to manage access
+  ProvisioningRoleArn:
+    Type: String
+    Description: IAM role ARN to provision environments
+  S3Bucket:
+    Type: String
+    Description: S3 bucket for environment storage
+  VpcId:
+    Type: String
+    Description: VPC ID for environments
+  SubnetIds:
+    Type: CommaDelimitedList
+    Description: Comma-separated subnet IDs
+
+Resources:
+  MLExperiments:
+    Type: AWS::DataZone::EnvironmentBlueprintConfiguration
+    Properties:
+      DomainIdentifier: !Ref DomainId
+      EnvironmentBlueprintIdentifier: MLExperiments
+      ManageAccessRoleArn: !Ref ManageAccessRoleArn
+      ProvisioningRoleArn: !Ref ProvisioningRoleArn
+      RegionalParameters:
+        - Region: !Ref AWS::Region
+          Parameters:
+            S3Location: !Ref S3Bucket
+            Subnets: !Join [',', !Ref SubnetIds]
+            VpcId: !Ref VpcId
+      EnabledRegions: [!Ref AWS::Region]
+
+  Tooling:
+    Type: AWS::DataZone::EnvironmentBlueprintConfiguration
+    DependsOn: MLExperiments
+    Properties:
+      DomainIdentifier: !Ref DomainId
+      EnvironmentBlueprintIdentifier: Tooling
+      ManageAccessRoleArn: !Ref ManageAccessRoleArn
+      ProvisioningRoleArn: !Ref ProvisioningRoleArn
+      RegionalParameters:
+        - Region: !Ref AWS::Region
+          Parameters:
+            S3Location: !Ref S3Bucket
+            Subnets: !Join [',', !Ref SubnetIds]
+            VpcId: !Ref VpcId
+      EnabledRegions: [!Ref AWS::Region]
+
+  LakehouseCatalog:
+    Type: AWS::DataZone::EnvironmentBlueprintConfiguration
+    DependsOn: Tooling
+    Properties:
+      DomainIdentifier: !Ref DomainId
+      EnvironmentBlueprintIdentifier: LakehouseCatalog
+      ManageAccessRoleArn: !Ref ManageAccessRoleArn
+      ProvisioningRoleArn: !Ref ProvisioningRoleArn
+      RegionalParameters:
+        - Region: !Ref AWS::Region
+          Parameters: {}
+      EnabledRegions: [!Ref AWS::Region]
+
+Outputs:
+  MLExperimentsId:
+    Value: !GetAtt MLExperiments.EnvironmentBlueprintId
+  ToolingId:
+    Value: !GetAtt Tooling.EnvironmentBlueprintId
+  LakehouseCatalogId:
+    Value: !GetAtt LakehouseCatalog.EnvironmentBlueprintId
