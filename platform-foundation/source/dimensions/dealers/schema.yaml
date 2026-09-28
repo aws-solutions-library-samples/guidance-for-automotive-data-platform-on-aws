@@ -1,0 +1,50 @@
+name: dealers
+kind: dimension
+domain: dimension
+display_name: "Dealers"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: dealers
+    storage_format: parquet
+    primary_key: [dealer_id]
+    columns:
+      - name: dealer_id
+        type: string
+        nullable: false
+        description: "Dealer identifier"
+        pattern: "^DLR-[0-9]{5}$"
+      - name: ordinal_index
+        type: bigint
+        nullable: false
+        description: "Generator ordinal"
+        range: [0.0, 200.0]
+      - name: dealer_name
+        type: string
+        nullable: false
+        description: "Synthetic dealer name"
+      - name: city
+        type: string
+        nullable: false
+        description: "City"
+      - name: state
+        type: string
+        nullable: false
+        description: "US state code"
+      - name: country
+        type: string
+        nullable: false
+        description: "ISO 3166-1 alpha-2"
+      - name: dealer_type
+        type: string
+        nullable: false
+        description: "Dealer category"
+        enum_values: [flagship, urban, suburban, rural, service_only]
+      - name: opened_date
+        type: date
+        nullable: false
+        description: "Date this location opened"
+      - name: dimension_version
+        type: string
+        nullable: false
+        description: "Dimension catalog version"

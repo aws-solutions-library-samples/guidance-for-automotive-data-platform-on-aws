@@ -1,0 +1,1602 @@
+[
+  {
+    "primary_part_number": "DMS-P0001-STD",
+    "replacement_part_number": "DMS-P0001-PRO",
+    "relationship_type": "supersession",
+    "notes": "Oil filter supersession chain step 1: STD → PRO (capacity upgrade)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0001-PRO",
+    "replacement_part_number": "DMS-P0001-PREMIUM",
+    "relationship_type": "supersession",
+    "notes": "Oil filter supersession chain step 2: PRO → PREMIUM (synthetic media upgrade)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0007-STD",
+    "replacement_part_number": "DMS-P0007-PRO",
+    "relationship_type": "supersession",
+    "notes": "Air filter supersession: STD → PRO (extended service life)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0007-PRO",
+    "replacement_part_number": "DMS-P0007-PREMIUM",
+    "relationship_type": "supersession",
+    "notes": "Air filter supersession: PRO → PREMIUM (OE-matched high-flow)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0013-STD",
+    "replacement_part_number": "DMS-P0013-PRO",
+    "relationship_type": "supersession",
+    "notes": "Brake pad fanout 1: STD → PRO (ceramic premium formulation)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0013-STD",
+    "replacement_part_number": "DMS-P0013-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Brake pad fanout 2: STD → OEM (original equipment cross-reference)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0013-STD",
+    "replacement_part_number": "DMS-P0013-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Brake pad fanout 3: STD → ECO (economy aftermarket alternative)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0037-STD",
+    "replacement_part_number": "DMS-P0037-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "P0420: Catalytic converter OE cross-reference (DMS-PT-007)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0037-STD",
+    "replacement_part_number": "DMS-P0037-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "P0420: Catalytic converter aftermarket alternative (DMS-PT-007)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0031-STD",
+    "replacement_part_number": "DMS-P0031-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "P0420: Oxygen sensor upstream OE cross-reference (DMS-PT-006)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0031-STD",
+    "replacement_part_number": "DMS-P0031-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "P0420: Oxygen sensor upstream aftermarket alternative (DMS-PT-006)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0031-XL",
+    "replacement_part_number": "DMS-P0031-STD",
+    "relationship_type": "supersession",
+    "notes": "P0420: Oxygen sensor supersession — narrow-band → wideband type",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0043-STD",
+    "replacement_part_number": "DMS-P0043-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "P0300: Ignition coil OE cross-reference (DMS-PT-008)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0043-STD",
+    "replacement_part_number": "DMS-P0043-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "P0300: Ignition coil aftermarket alternative (DMS-PT-008)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0043-PRO",
+    "replacement_part_number": "DMS-P0043-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "P0300: High-performance ignition coil OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0277-STD",
+    "replacement_part_number": "DMS-P0277-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "P0300: Crankshaft position sensor OE cross-reference (DMS-PT-047)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0277-STD",
+    "replacement_part_number": "DMS-P0277-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "P0300: Crankshaft position sensor aftermarket alternative (DMS-PT-047)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0043-XL",
+    "replacement_part_number": "DMS-P0043-STD",
+    "relationship_type": "supersession",
+    "notes": "P0300: Ignition coil supersession — legacy single-spark → dual-spark",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0061-STD",
+    "replacement_part_number": "DMS-P0061-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "C0035: ABS wheel speed sensor OE cross-reference (DMS-PT-011)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0061-STD",
+    "replacement_part_number": "DMS-P0061-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "C0035: ABS wheel speed sensor aftermarket alternative (DMS-PT-011)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0307-STD",
+    "replacement_part_number": "DMS-P0307-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "C0035: ABS control module OE cross-reference (DMS-PT-052)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0307-STD",
+    "replacement_part_number": "DMS-P0307-PRO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "C0035: ABS control module remanufactured aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0061-XL",
+    "replacement_part_number": "DMS-P0061-STD",
+    "relationship_type": "supersession",
+    "notes": "C0035: ABS sensor supersession — passive reluctor → active Hall-effect",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0067-STD",
+    "replacement_part_number": "DMS-P0067-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "U0100: CAN bus module OE cross-reference (DMS-PT-012)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0067-STD",
+    "replacement_part_number": "DMS-P0067-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "U0100: CAN bus module aftermarket remanufactured alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0325-STD",
+    "replacement_part_number": "DMS-P0325-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "U0100: CAN gateway module OE cross-reference (DMS-PT-055)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0325-STD",
+    "replacement_part_number": "DMS-P0325-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "U0100: CAN gateway module aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0067-XL",
+    "replacement_part_number": "DMS-P0325-STD",
+    "relationship_type": "supersession",
+    "notes": "U0100: CAN module superseded by multi-network gateway (protocol upgrade)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0049-STD",
+    "replacement_part_number": "DMS-P0049-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "P0171: Fuel injector OE cross-reference (DMS-PT-009)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0049-STD",
+    "replacement_part_number": "DMS-P0049-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "P0171: Fuel injector remanufactured aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0049-PRO",
+    "replacement_part_number": "DMS-P0049-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "P0171: High-flow fuel injector OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0055-STD",
+    "replacement_part_number": "DMS-P0055-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "P0171: MAF sensor OE cross-reference (DMS-PT-010)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0055-STD",
+    "replacement_part_number": "DMS-P0055-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "P0171: MAF sensor aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0055-XL",
+    "replacement_part_number": "DMS-P0055-STD",
+    "relationship_type": "supersession",
+    "notes": "P0171: MAF sensor supersession — hot-film → hot-wire element",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0073-STD",
+    "replacement_part_number": "DMS-P0073-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "B0001: SRS clock spring OE cross-reference (DMS-PT-013)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0073-STD",
+    "replacement_part_number": "DMS-P0073-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "B0001: SRS clock spring aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0313-STD",
+    "replacement_part_number": "DMS-P0313-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "B0001: Driver airbag module OE cross-reference (DMS-PT-053)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0313-STD",
+    "replacement_part_number": "DMS-P0313-PRO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "B0001: Driver airbag module remanufactured alternative (Azide-free propellant)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0073-XL",
+    "replacement_part_number": "DMS-P0073-STD",
+    "relationship_type": "supersession",
+    "notes": "B0001: Clock spring supersession — 4-pin → 6-pin (added cruise + audio)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0019-STD",
+    "replacement_part_number": "DMS-P0019-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Brake rotor OE cross-reference (DMS-PT-004)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0019-STD",
+    "replacement_part_number": "DMS-P0019-PRO",
+    "relationship_type": "supersession",
+    "notes": "Brake rotor supersession: standard → cross-drilled performance variant",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0019-PRO",
+    "replacement_part_number": "DMS-P0019-PREMIUM",
+    "relationship_type": "supersession",
+    "notes": "Brake rotor supersession: cross-drilled → slotted-and-drilled premium",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0013-OEM",
+    "replacement_part_number": "DMS-P0013-PREMIUM",
+    "relationship_type": "supersession",
+    "notes": "Brake pad OE matched superseded by premium ceramic formulation",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0025-STD",
+    "replacement_part_number": "DMS-P0025-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Spark plug OE cross-reference (DMS-PT-005)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0025-STD",
+    "replacement_part_number": "DMS-P0025-PRO",
+    "relationship_type": "supersession",
+    "notes": "Spark plug supersession: copper → iridium extended life",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0025-PRO",
+    "replacement_part_number": "DMS-P0025-PREMIUM",
+    "relationship_type": "supersession",
+    "notes": "Spark plug supersession: single iridium → double iridium",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0025-STD",
+    "replacement_part_number": "DMS-P0025-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Spark plug aftermarket alternative: budget copper tip",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0115-STD",
+    "replacement_part_number": "DMS-P0115-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Strut assembly OE cross-reference (DMS-PT-020)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0115-STD",
+    "replacement_part_number": "DMS-P0115-PRO",
+    "relationship_type": "supersession",
+    "notes": "Strut assembly supersession: standard → sport-tuned valving",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0115-STD",
+    "replacement_part_number": "DMS-P0115-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Strut assembly aftermarket economy alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0127-STD",
+    "replacement_part_number": "DMS-P0127-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Control arm OE cross-reference (DMS-PT-022)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0127-STD",
+    "replacement_part_number": "DMS-P0127-PRO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Control arm heavy-duty aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0157-STD",
+    "replacement_part_number": "DMS-P0157-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Fuel pump assembly OE cross-reference (DMS-PT-027)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0157-STD",
+    "replacement_part_number": "DMS-P0157-PRO",
+    "relationship_type": "supersession",
+    "notes": "Fuel pump supersession: 90 L/h → 120 L/h high-flow",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0157-STD",
+    "replacement_part_number": "DMS-P0157-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Fuel pump aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0163-STD",
+    "replacement_part_number": "DMS-P0163-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Alternator OE cross-reference (DMS-PT-028)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0163-STD",
+    "replacement_part_number": "DMS-P0163-PRO",
+    "relationship_type": "supersession",
+    "notes": "Alternator supersession: 120A → 140A (improved electrical load capacity)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0217-STD",
+    "replacement_part_number": "DMS-P0217-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Thermostat OE cross-reference (DMS-PT-037)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0217-STD",
+    "replacement_part_number": "DMS-P0217-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Thermostat aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0223-STD",
+    "replacement_part_number": "DMS-P0223-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Water pump OE cross-reference (DMS-PT-038)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0223-STD",
+    "replacement_part_number": "DMS-P0223-PRO",
+    "relationship_type": "supersession",
+    "notes": "Water pump supersession: plastic impeller → metal impeller variant",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0145-STD",
+    "replacement_part_number": "DMS-P0145-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Timing belt kit OE cross-reference (DMS-PT-025)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0145-STD",
+    "replacement_part_number": "DMS-P0145-PRO",
+    "relationship_type": "supersession",
+    "notes": "Timing belt kit supersession: includes balance shaft belt",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0145-STD",
+    "replacement_part_number": "DMS-P0145-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Timing belt kit economy alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0331-STD",
+    "replacement_part_number": "DMS-P0331-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Hub bearing assembly OE cross-reference (DMS-PT-056)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0331-STD",
+    "replacement_part_number": "DMS-P0331-PRO",
+    "relationship_type": "supersession",
+    "notes": "Hub bearing supersession: Gen2 → Gen3 integrated ABS ring",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0331-STD",
+    "replacement_part_number": "DMS-P0331-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Hub bearing aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0295-STD",
+    "replacement_part_number": "DMS-P0295-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "PCM OE cross-reference (DMS-PT-050)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0295-STD",
+    "replacement_part_number": "DMS-P0295-PRO",
+    "relationship_type": "supersession",
+    "notes": "PCM supersession: updated calibration, revised fuel trim tables",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0049-SM",
+    "replacement_part_number": "DMS-P0049-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Fuel injector compact: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0049-SM",
+    "replacement_part_number": "DMS-P0049-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Fuel injector compact: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0055-SM",
+    "replacement_part_number": "DMS-P0055-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "MAF sensor compact: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0055-SM",
+    "replacement_part_number": "DMS-P0055-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "MAF sensor compact: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0067-PRO",
+    "replacement_part_number": "DMS-P0067-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "CAN module heavy-duty: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0067-PRO",
+    "replacement_part_number": "DMS-P0067-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "CAN module heavy-duty: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0073-PRO",
+    "replacement_part_number": "DMS-P0073-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Clock spring heavy-duty: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0073-PRO",
+    "replacement_part_number": "DMS-P0073-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Clock spring heavy-duty: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0019-OEM",
+    "replacement_part_number": "DMS-P0019-PREMIUM",
+    "relationship_type": "oe_cross",
+    "notes": "Brake rotor premium: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0019-OEM",
+    "replacement_part_number": "DMS-P0019-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Brake rotor premium: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0127-OEM",
+    "replacement_part_number": "DMS-P0127-PRO",
+    "relationship_type": "oe_cross",
+    "notes": "Control arm OE: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0127-OEM",
+    "replacement_part_number": "DMS-P0127-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Control arm OE: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0157-OEM",
+    "replacement_part_number": "DMS-P0157-PRO",
+    "relationship_type": "oe_cross",
+    "notes": "Fuel pump OE: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0157-OEM",
+    "replacement_part_number": "DMS-P0157-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Fuel pump OE: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0331-OEM",
+    "replacement_part_number": "DMS-P0331-PRO",
+    "relationship_type": "oe_cross",
+    "notes": "Hub bearing OE: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0331-OEM",
+    "replacement_part_number": "DMS-P0331-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Hub bearing OE: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0115-OEM",
+    "replacement_part_number": "DMS-P0115-PRO",
+    "relationship_type": "oe_cross",
+    "notes": "Strut OE: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0115-OEM",
+    "replacement_part_number": "DMS-P0115-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Strut OE: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0277-PRO",
+    "replacement_part_number": "DMS-P0277-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Crank sensor heavy-duty: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0277-PRO",
+    "replacement_part_number": "DMS-P0277-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Crank sensor heavy-duty: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0295-PRO",
+    "replacement_part_number": "DMS-P0295-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "PCM heavy-duty: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0295-PRO",
+    "replacement_part_number": "DMS-P0295-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "PCM heavy-duty: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0043-XL",
+    "replacement_part_number": "DMS-P0043-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Ignition coil extended: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0043-XL",
+    "replacement_part_number": "DMS-P0043-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Ignition coil extended: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0037-PRO",
+    "replacement_part_number": "DMS-P0037-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Catalytic converter premium: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0037-PRO",
+    "replacement_part_number": "DMS-P0037-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Catalytic converter premium: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0031-PRO",
+    "replacement_part_number": "DMS-P0031-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "O2 sensor premium: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0031-PRO",
+    "replacement_part_number": "DMS-P0031-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "O2 sensor premium: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0061-PRO",
+    "replacement_part_number": "DMS-P0061-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "ABS sensor premium: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0061-PRO",
+    "replacement_part_number": "DMS-P0061-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "ABS sensor premium: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0313-OEM",
+    "replacement_part_number": "DMS-P0313-PRO",
+    "relationship_type": "oe_cross",
+    "notes": "Airbag module OE: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0313-OEM",
+    "replacement_part_number": "DMS-P0313-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Airbag module OE: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0307-PRO",
+    "replacement_part_number": "DMS-P0307-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "ABS module premium: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0307-PRO",
+    "replacement_part_number": "DMS-P0307-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "ABS module premium: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0325-PRO",
+    "replacement_part_number": "DMS-P0325-OEM",
+    "relationship_type": "oe_cross",
+    "notes": "Gateway module premium: OE cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0325-PRO",
+    "replacement_part_number": "DMS-P0325-ECO",
+    "relationship_type": "aftermarket_equivalent",
+    "notes": "Gateway module premium: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0007-PREMIUM",
+    "replacement_part_number": "DMS-P0007-OEM",
+    "relationship_type": "supersession",
+    "notes": "Air filter: premium superseded by current OEM spec",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0025-PREMIUM",
+    "replacement_part_number": "DMS-P0025-OEM",
+    "relationship_type": "supersession",
+    "notes": "Spark plug: double-iridium cross with OEM",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0037-PREMIUM",
+    "replacement_part_number": "DMS-P0037-OEM",
+    "relationship_type": "supersession",
+    "notes": "Cat converter: premium ↔ OEM cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0031-PREMIUM",
+    "replacement_part_number": "DMS-P0031-OEM",
+    "relationship_type": "supersession",
+    "notes": "O2 sensor: premium ↔ OEM cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0043-PREMIUM",
+    "replacement_part_number": "DMS-P0043-OEM",
+    "relationship_type": "supersession",
+    "notes": "Ignition coil: premium ↔ OEM cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0061-PREMIUM",
+    "replacement_part_number": "DMS-P0061-OEM",
+    "relationship_type": "supersession",
+    "notes": "ABS sensor: premium ↔ OEM cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0073-PREMIUM",
+    "replacement_part_number": "DMS-P0073-OEM",
+    "relationship_type": "supersession",
+    "notes": "Clock spring: premium ↔ OEM",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0145-OEM",
+    "replacement_part_number": "DMS-P0145-PRO",
+    "relationship_type": "supersession",
+    "notes": "Timing belt kit: OEM ↔ Pro cross-reference",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0163-OEM",
+    "replacement_part_number": "DMS-P0163-PRO",
+    "relationship_type": "supersession",
+    "notes": "Alternator: OEM ↔ heavy-duty cross",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0217-OEM",
+    "replacement_part_number": "DMS-P0217-PRO",
+    "relationship_type": "supersession",
+    "notes": "Thermostat: OEM ↔ sport rating",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0223-OEM",
+    "replacement_part_number": "DMS-P0223-PRO",
+    "relationship_type": "supersession",
+    "notes": "Water pump: OEM ↔ high-flow",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0295-ECO",
+    "replacement_part_number": "DMS-P0295-OEM",
+    "relationship_type": "supersession",
+    "notes": "PCM: economy cross to OEM spec",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0307-ECO",
+    "replacement_part_number": "DMS-P0307-OEM",
+    "relationship_type": "supersession",
+    "notes": "ABS module: economy cross to OEM",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0313-ECO",
+    "replacement_part_number": "DMS-P0313-OEM",
+    "relationship_type": "supersession",
+    "notes": "Airbag module: economy cross to OEM",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0019-ECO",
+    "replacement_part_number": "DMS-P0019-STD",
+    "relationship_type": "supersession",
+    "notes": "Brake rotor: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0013-ECO",
+    "replacement_part_number": "DMS-P0013-STD",
+    "relationship_type": "supersession",
+    "notes": "Brake pad: economy superseded by standard ceramic",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0049-ECO",
+    "replacement_part_number": "DMS-P0049-STD",
+    "relationship_type": "supersession",
+    "notes": "Fuel injector: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0055-ECO",
+    "replacement_part_number": "DMS-P0055-STD",
+    "relationship_type": "supersession",
+    "notes": "MAF sensor: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0067-ECO",
+    "replacement_part_number": "DMS-P0067-STD",
+    "relationship_type": "supersession",
+    "notes": "CAN module: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0277-ECO",
+    "replacement_part_number": "DMS-P0277-STD",
+    "relationship_type": "supersession",
+    "notes": "Crank sensor: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0025-ECO",
+    "replacement_part_number": "DMS-P0025-STD",
+    "relationship_type": "supersession",
+    "notes": "Spark plug: economy copper superseded by iridium",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0007-ECO",
+    "replacement_part_number": "DMS-P0007-STD",
+    "relationship_type": "supersession",
+    "notes": "Air filter: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0001-ECO",
+    "replacement_part_number": "DMS-P0001-STD",
+    "relationship_type": "supersession",
+    "notes": "Oil filter: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0115-ECO",
+    "replacement_part_number": "DMS-P0115-STD",
+    "relationship_type": "supersession",
+    "notes": "Strut: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0331-ECO",
+    "replacement_part_number": "DMS-P0331-STD",
+    "relationship_type": "supersession",
+    "notes": "Hub bearing: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0127-ECO",
+    "replacement_part_number": "DMS-P0127-STD",
+    "relationship_type": "supersession",
+    "notes": "Control arm: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0157-ECO",
+    "replacement_part_number": "DMS-P0157-STD",
+    "relationship_type": "supersession",
+    "notes": "Fuel pump: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0163-ECO",
+    "replacement_part_number": "DMS-P0163-STD",
+    "relationship_type": "supersession",
+    "notes": "Alternator: economy superseded by standard",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0079-STD",
+    "replacement_part_number": "DMS-P0079-OEM",
+    "relationship_type": "supersession",
+    "notes": "TPS: OE cross-reference (DMS-PT-014)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0079-STD",
+    "replacement_part_number": "DMS-P0079-ECO",
+    "relationship_type": "supersession",
+    "notes": "TPS: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0085-STD",
+    "replacement_part_number": "DMS-P0085-OEM",
+    "relationship_type": "supersession",
+    "notes": "MAP sensor: OE cross-reference (DMS-PT-015)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0085-STD",
+    "replacement_part_number": "DMS-P0085-ECO",
+    "relationship_type": "supersession",
+    "notes": "MAP sensor: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0091-STD",
+    "replacement_part_number": "DMS-P0091-OEM",
+    "relationship_type": "supersession",
+    "notes": "Coolant temp sensor: OE cross-reference (DMS-PT-016)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0091-STD",
+    "replacement_part_number": "DMS-P0091-ECO",
+    "relationship_type": "supersession",
+    "notes": "Coolant temp sensor: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0097-STD",
+    "replacement_part_number": "DMS-P0097-OEM",
+    "relationship_type": "supersession",
+    "notes": "VVT solenoid: OE cross-reference (DMS-PT-017)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0097-STD",
+    "replacement_part_number": "DMS-P0097-ECO",
+    "relationship_type": "supersession",
+    "notes": "VVT solenoid: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0097-PRO",
+    "replacement_part_number": "DMS-P0097-STD",
+    "relationship_type": "supersession",
+    "notes": "VVT solenoid: PRO supersedes STD (updated flow rate)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0103-STD",
+    "replacement_part_number": "DMS-P0103-OEM",
+    "relationship_type": "supersession",
+    "notes": "EGR valve: OE cross-reference (DMS-PT-018)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0103-STD",
+    "replacement_part_number": "DMS-P0103-ECO",
+    "relationship_type": "supersession",
+    "notes": "EGR valve: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0109-STD",
+    "replacement_part_number": "DMS-P0109-OEM",
+    "relationship_type": "supersession",
+    "notes": "Turbocharger: OE cross-reference (DMS-PT-019)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0109-STD",
+    "replacement_part_number": "DMS-P0109-PRO",
+    "relationship_type": "supersession",
+    "notes": "Turbocharger: performance hybrid variant",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0229-STD",
+    "replacement_part_number": "DMS-P0229-OEM",
+    "relationship_type": "supersession",
+    "notes": "Radiator: OE cross-reference (DMS-PT-039)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0229-STD",
+    "replacement_part_number": "DMS-P0229-ECO",
+    "relationship_type": "supersession",
+    "notes": "Radiator: economy alternative (2-row core)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0229-PRO",
+    "replacement_part_number": "DMS-P0229-STD",
+    "relationship_type": "supersession",
+    "notes": "Radiator: 3-row PRO supersedes 2-row STD",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0235-STD",
+    "replacement_part_number": "DMS-P0235-OEM",
+    "relationship_type": "supersession",
+    "notes": "EVAP purge solenoid: OE cross-reference (DMS-PT-040)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0235-STD",
+    "replacement_part_number": "DMS-P0235-ECO",
+    "relationship_type": "supersession",
+    "notes": "EVAP purge solenoid: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0241-STD",
+    "replacement_part_number": "DMS-P0241-OEM",
+    "relationship_type": "supersession",
+    "notes": "EVAP vent solenoid: OE cross-reference (DMS-PT-041)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0241-STD",
+    "replacement_part_number": "DMS-P0241-ECO",
+    "relationship_type": "supersession",
+    "notes": "EVAP vent solenoid: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0253-STD",
+    "replacement_part_number": "DMS-P0253-OEM",
+    "relationship_type": "supersession",
+    "notes": "Fuel pressure regulator: OE cross-reference (DMS-PT-043)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0253-STD",
+    "replacement_part_number": "DMS-P0253-ECO",
+    "relationship_type": "supersession",
+    "notes": "Fuel pressure regulator: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0265-STD",
+    "replacement_part_number": "DMS-P0265-OEM",
+    "relationship_type": "supersession",
+    "notes": "Knock sensor: OE cross-reference (DMS-PT-045)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0265-STD",
+    "replacement_part_number": "DMS-P0265-ECO",
+    "relationship_type": "supersession",
+    "notes": "Knock sensor: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0271-STD",
+    "replacement_part_number": "DMS-P0271-OEM",
+    "relationship_type": "supersession",
+    "notes": "Camshaft position sensor: OE cross-reference (DMS-PT-046)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0271-STD",
+    "replacement_part_number": "DMS-P0271-ECO",
+    "relationship_type": "supersession",
+    "notes": "Camshaft position sensor: aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0319-STD",
+    "replacement_part_number": "DMS-P0319-OEM",
+    "relationship_type": "supersession",
+    "notes": "Body control module: OE cross-reference (DMS-PT-054)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0301-STD",
+    "replacement_part_number": "DMS-P0301-OEM",
+    "relationship_type": "supersession",
+    "notes": "TCM: OE cross-reference (DMS-PT-051)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0301-STD",
+    "replacement_part_number": "DMS-P0301-ECO",
+    "relationship_type": "supersession",
+    "notes": "TCM: remanufactured aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0139-STD",
+    "replacement_part_number": "DMS-P0139-OEM",
+    "relationship_type": "supersession",
+    "notes": "Power steering pump: OE cross-reference (DMS-PT-024)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0139-STD",
+    "replacement_part_number": "DMS-P0139-ECO",
+    "relationship_type": "supersession",
+    "notes": "Power steering pump: remanufactured aftermarket",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0175-STD",
+    "replacement_part_number": "DMS-P0175-OEM",
+    "relationship_type": "supersession",
+    "notes": "A/C compressor: OE cross-reference (DMS-PT-030)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0175-STD",
+    "replacement_part_number": "DMS-P0175-ECO",
+    "relationship_type": "supersession",
+    "notes": "A/C compressor: remanufactured aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0169-STD",
+    "replacement_part_number": "DMS-P0169-OEM",
+    "relationship_type": "supersession",
+    "notes": "Starter motor: OE cross-reference (DMS-PT-029)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0169-STD",
+    "replacement_part_number": "DMS-P0169-ECO",
+    "relationship_type": "supersession",
+    "notes": "Starter motor: remanufactured aftermarket",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0151-STD",
+    "replacement_part_number": "DMS-P0151-OEM",
+    "relationship_type": "supersession",
+    "notes": "Timing chain kit: OE cross-reference (DMS-PT-026)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0151-STD",
+    "replacement_part_number": "DMS-P0151-ECO",
+    "relationship_type": "supersession",
+    "notes": "Timing chain kit: economy alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0193-STD",
+    "replacement_part_number": "DMS-P0193-OEM",
+    "relationship_type": "supersession",
+    "notes": "AT filter: OE cross-reference (DMS-PT-033)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0205-STD",
+    "replacement_part_number": "DMS-P0205-OEM",
+    "relationship_type": "supersession",
+    "notes": "CV axle: OE cross-reference (DMS-PT-035)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0205-STD",
+    "replacement_part_number": "DMS-P0205-ECO",
+    "relationship_type": "supersession",
+    "notes": "CV axle: remanufactured aftermarket alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0199-STD",
+    "replacement_part_number": "DMS-P0199-OEM",
+    "relationship_type": "supersession",
+    "notes": "Differential seal: OE cross-reference (DMS-PT-034)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0289-STD",
+    "replacement_part_number": "DMS-P0289-OEM",
+    "relationship_type": "supersession",
+    "notes": "Secondary air pump: OE cross-reference (DMS-PT-049)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0283-STD",
+    "replacement_part_number": "DMS-P0283-OEM",
+    "relationship_type": "supersession",
+    "notes": "Variable intake solenoid: OE cross-reference (DMS-PT-048)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0361-STD",
+    "replacement_part_number": "DMS-P0361-OEM",
+    "relationship_type": "supersession",
+    "notes": "Brake booster: OE cross-reference (DMS-PT-061)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0361-STD",
+    "replacement_part_number": "DMS-P0361-ECO",
+    "relationship_type": "supersession",
+    "notes": "Brake booster: remanufactured aftermarket",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0367-STD",
+    "replacement_part_number": "DMS-P0367-OEM",
+    "relationship_type": "supersession",
+    "notes": "Master cylinder: OE cross-reference (DMS-PT-062)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0367-STD",
+    "replacement_part_number": "DMS-P0367-ECO",
+    "relationship_type": "supersession",
+    "notes": "Master cylinder: remanufactured aftermarket",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0373-STD",
+    "replacement_part_number": "DMS-P0373-OEM",
+    "relationship_type": "supersession",
+    "notes": "Wheel cylinder: OE cross-reference (DMS-PT-063)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0355-STD",
+    "replacement_part_number": "DMS-P0355-OEM",
+    "relationship_type": "supersession",
+    "notes": "Accelerator pedal: OE cross-reference (DMS-PT-060)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0349-STD",
+    "replacement_part_number": "DMS-P0349-OEM",
+    "relationship_type": "supersession",
+    "notes": "EVAP canister: OE cross-reference (DMS-PT-059)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0343-STD",
+    "replacement_part_number": "DMS-P0343-OEM",
+    "relationship_type": "supersession",
+    "notes": "Door lock actuator: OE cross-reference (DMS-PT-058)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0247-STD",
+    "replacement_part_number": "DMS-P0247-OEM",
+    "relationship_type": "supersession",
+    "notes": "PCV valve: OE cross-reference (DMS-PT-042)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0475-STD",
+    "replacement_part_number": "DMS-P0475-OEM",
+    "relationship_type": "supersession",
+    "notes": "Engine mount: OE cross-reference (DMS-PT-080)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0475-STD",
+    "replacement_part_number": "DMS-P0475-ECO",
+    "relationship_type": "supersession",
+    "notes": "Engine mount: economy alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0211-STD",
+    "replacement_part_number": "DMS-P0211-OEM",
+    "relationship_type": "supersession",
+    "notes": "Headlamp: OE cross-reference (DMS-PT-036)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0211-STD",
+    "replacement_part_number": "DMS-P0211-ECO",
+    "relationship_type": "supersession",
+    "notes": "Headlamp: economy alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0133-STD",
+    "replacement_part_number": "DMS-P0133-OEM",
+    "relationship_type": "supersession",
+    "notes": "Tie rod end: OE cross-reference (DMS-PT-023)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0133-STD",
+    "replacement_part_number": "DMS-P0133-ECO",
+    "relationship_type": "supersession",
+    "notes": "Tie rod end: economy alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0385-STD",
+    "replacement_part_number": "DMS-P0385-OEM",
+    "relationship_type": "supersession",
+    "notes": "Brake caliper: OE cross-reference (DMS-PT-065)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0385-STD",
+    "replacement_part_number": "DMS-P0385-ECO",
+    "relationship_type": "supersession",
+    "notes": "Brake caliper: remanufactured aftermarket",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0379-STD",
+    "replacement_part_number": "DMS-P0379-OEM",
+    "relationship_type": "supersession",
+    "notes": "Brake hose: OE cross-reference (DMS-PT-064)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0337-STD",
+    "replacement_part_number": "DMS-P0337-OEM",
+    "relationship_type": "supersession",
+    "notes": "Sway bar link: OE cross-reference (DMS-PT-057)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0337-STD",
+    "replacement_part_number": "DMS-P0337-ECO",
+    "relationship_type": "supersession",
+    "notes": "Sway bar link: economy alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0121-STD",
+    "replacement_part_number": "DMS-P0121-OEM",
+    "relationship_type": "supersession",
+    "notes": "Shock absorber: OE cross-reference (DMS-PT-021)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0121-STD",
+    "replacement_part_number": "DMS-P0121-ECO",
+    "relationship_type": "supersession",
+    "notes": "Shock absorber: economy alternative",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0121-PRO",
+    "replacement_part_number": "DMS-P0121-STD",
+    "relationship_type": "supersession",
+    "notes": "Shock absorber: PRO supersedes STD (sport-tuned)",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  },
+  {
+    "primary_part_number": "DMS-P0475-PRO",
+    "replacement_part_number": "DMS-P0475-STD",
+    "relationship_type": "supersession",
+    "notes": "Engine mount: PRO hydraulic supersedes STD rubber",
+    "access_channel": "franchise",
+    "tenant_id": "dms-reference"
+  }
+]

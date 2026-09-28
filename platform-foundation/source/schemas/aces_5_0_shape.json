@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "aces_5_0_shape",
+  "title": "ACES 5.0 Parts Fitment — shape schema",
+  "description": "Auto Care ACES 5.0 conformant structural shape for the parts_fitment Iceberg product. Encodes element names and structural relationships ONLY. Does NOT encode licensed Auto Care VCdb VehicleConfigurationID value ranges, Qdb QualifierID ranges, or PCdb PartTerminologyID ranges — those are subscription-based licensed property (Auto Care Technology License Agreement, rev. 2025-02-28). Every synthetic identifier in seed data lives in a DMS-prefixed namespace (DMS-VCFG-*, DMS-QT-*, DMS-PT-*). The qualifier_hash column is a SHA-256 of the qualifier text, not a Qdb QualifierID. Source: Auto Care Association ACES 5.0 standard (released 2026-04-02); shape derived from publicly available documentation. Verified: 2026-08-27.",
+  "type": "object",
+  "required": [
+    "part_number",
+    "brand_aaia_id",
+    "vehicle_config_id",
+    "position_id",
+    "qualifier_hash",
+    "quantity",
+    "notes",
+    "access_channel"
+  ],
+  "properties": {
+    "part_number": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "description": "Manufacturer part number (ACES 5.0 PartNumber element). FK to parts_catalog.part_number."
+    },
+    "brand_aaia_id": {
+      "type": "string",
+      "pattern": "^DMS-BR-[0-9]+$",
+      "description": "Brand identifier — opaque varchar. Must match the brand_aaia_id on the corresponding parts_catalog row. In this repo always a DMS-BR-* synthetic value; never a real Auto Care Brand Table BrandAAIAID (licensed). Shape enforced by this schema; value-space enforced by lint_no_licensed_autocare_ids.py.",
+      "examples": ["DMS-BR-001"]
+    },
+    "vehicle_config_id": {
+      "type": "string",
+      "pattern": "^DMS-VCFG-[0-9]+$",
+      "description": "Vehicle configuration identifier — opaque varchar. In this repo always a DMS-VCFG-* synthetic value; never a real Auto Care VCdb VehicleID or VehicleConfigurationID (licensed). The VCFG record captures Year/Make/Model/SubModel/EngineBase at minimum. Shape enforced by this schema; value-space enforced by lint_no_licensed_autocare_ids.py.",
+      "examples": ["DMS-VCFG-0001"]
+    },
+    "vehicle_year": {
+      "type": ["integer", "null"],
+      "minimum": 1900,
+      "maximum": 2100,
+      "description": "Model year of the vehicle configuration (ACES 5.0 Year element). Denormalised for query convenience."
+    },
+    "vehicle_make": {
+      "type": ["string", "null"],
+      "description": "Vehicle make (ACES 5.0 Make element). Denormalised; source of truth is the DMS-VCFG-* record."
+    },
+    "vehicle_model": {
+      "type": ["string", "null"],
+      "description": "Vehicle model (ACES 5.0 Model element). Denormalised."
+    },
+    "vehicle_submodel": {
+      "type": ["string", "null"],
+      "description": "Vehicle sub-model (ACES 5.0 SubModel element). Null when not applicable."
+    },
+    "engine_base_id": {
+      "type": ["string", "null"],
+      "pattern": "^DMS-ENG-[0-9]+$",
+      "description": "Engine base identifier — opaque varchar. In this repo always a DMS-ENG-* synthetic value or null. Never a real Auto Care VCdb EngineBaseID (licensed). Shape enforced by this schema (when non-null); value-space enforced by lint_no_licensed_autocare_ids.py."
+    },
+    "position_id": {
+      "type": "string",
+      "description": "Installation position identifier (ACES 5.0 Position element, e.g., 'Front', 'Rear', 'Left Front'). Forms part of the composite PK with part_number, vehicle_config_id, and qualifier_hash.",
+      "examples": ["Front", "Rear", "Left Front", "Right Rear", "Upper"]
+    },
+    "qualifier_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 (lower-hex) of the concatenated qualifier text. Used as the PK component instead of a Qdb QualifierID (licensed). Empty qualifier set hashes to the SHA-256 of an empty string (e256ba39a13e2e9c22d...)."
+    },
+    "qualifiers": {
+      "type": ["array", "null"],
+      "description": "ACES 5.0 Qualifier elements — zero or more conditions that further restrict the fitment (e.g., 'with Turbo', 'FWD only'). The qualifier_hash is computed over the sorted qualifier text values.",
+      "items": {
+        "type": "object",
+        "required": ["qualifier_text"],
+        "properties": {
+          "qualifier_id": {
+            "type": ["string", "null"],
+            "pattern": "^DMS-QT-[0-9]+$",
+            "description": "Qualifier identifier — opaque varchar. In this repo always a DMS-QT-* synthetic value if set; never a real Auto Care Qdb QualifierID (licensed). Shape enforced by this schema (when non-null); value-space enforced by lint_no_licensed_autocare_ids.py.",
+            "examples": ["DMS-QT-001"]
+          },
+          "qualifier_text": {
+            "type": "string",
+            "description": "Human-readable qualifier condition (e.g., 'with Turbo', 'FWD only', 'DOHC'). This is the canonical form used to compute qualifier_hash."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "quantity": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Quantity of this part required for the application (ACES 5.0 Qty element)."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "maxLength": 2000,
+      "description": "Free-form fitment note (ACES 5.0 Note element). Null when not applicable."
+    },
+    "part_type_id": {
+      "type": ["string", "null"],
+      "pattern": "^DMS-PT-[0-9]+$",
+      "description": "Part type identifier — opaque varchar. In this repo always a DMS-PT-* synthetic value or null; never a real Auto Care PCdb PartTerminologyID (licensed). Shape enforced by this schema (when non-null); value-space enforced by lint_no_licensed_autocare_ids.py."
+    },
+    "mfr_label": {
+      "type": ["string", "null"],
+      "description": "Manufacturer label text (ACES 5.0 MfrLabel element). Null when not present."
+    },
+    "action": {
+      "type": "string",
+      "enum": ["A", "D"],
+      "description": "ACES 5.0 Action attribute: 'A' = Add/active, 'D' = Delete/superseded. Default 'A' for all active fitment records."
+    },
+    "access_channel": {
+      "type": "string",
+      "enum": ["franchise", "independent"],
+      "description": "REPAIR Act forward-readiness dimension (ADP spec Decision 3, 2026-08-27). v1 seeds and enables 'franchise' only. The 'independent' value is a schema placeholder for aftermarket data-access surfaces; no independent-aftermarket persona, API, or seed corpus exists in v1."
+    },
+    "tenant_id": {
+      "type": ["string", "null"],
+      "description": "Catalog partition column per DMS T1.5 invariant. DMS seeds 'dms-reference'; CVX Zone 2 rows use 'cvx-zone2'."
+    }
+  },
+  "additionalProperties": false
+}

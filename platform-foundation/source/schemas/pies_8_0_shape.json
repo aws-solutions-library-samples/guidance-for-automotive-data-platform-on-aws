@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pies_8_0_shape",
+  "title": "PIES 8.0 Parts Catalog — shape schema",
+  "description": "Auto Care PIES 8.0 conformant structural shape for the parts_catalog Iceberg product. Encodes element names and structural relationships ONLY. Does NOT encode licensed Auto Care Brand Table BrandAAIAID value ranges, PCdb PartTerminologyID ranges, or PAdb AttributeID ranges — those are subscription-based licensed property (Auto Care Technology License Agreement, rev. 2025-02-28). Every synthetic identifier in seed data lives in a DMS-prefixed namespace (DMS-BR-*, DMS-PT-*, DMS-PA-*). Source: Auto Care Association PIES 8.0 standard (released 2026-04-02); shape derived from publicly available documentation. Verified: 2026-08-27.",
+  "type": "object",
+  "required": [
+    "brand_aaia_id",
+    "part_number",
+    "part_terminology_id",
+    "part_terminology_name",
+    "description",
+    "quantity_per_application",
+    "upc",
+    "hazardous_material_code",
+    "country_of_origin",
+    "package_unit_of_measure",
+    "package_quantity",
+    "package_weight",
+    "package_height",
+    "package_width",
+    "package_length",
+    "superseded_part_number",
+    "access_channel"
+  ],
+  "properties": {
+    "brand_aaia_id": {
+      "type": "string",
+      "pattern": "^DMS-BR-[0-9]+$",
+      "description": "Brand identifier — opaque varchar. In this repo always a DMS-BR-* synthetic value; never a real Auto Care Brand Table BrandAAIAID (licensed). Pattern enforced by lint_no_licensed_autocare_ids.py (value-space) and by this schema (shape).",
+      "examples": ["DMS-BR-001"]
+    },
+    "part_number": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "description": "Manufacturer part number (PIES 8.0 PartNumber element)."
+    },
+    "part_terminology_id": {
+      "type": "string",
+      "pattern": "^DMS-PT-[0-9]+$",
+      "description": "Part terminology identifier — opaque varchar. In this repo always a DMS-PT-* synthetic value; never a real Auto Care PCdb PartTerminologyID (licensed). Shape enforced by this schema; value-space enforced by lint_no_licensed_autocare_ids.py.",
+      "examples": ["DMS-PT-001"]
+    },
+    "part_terminology_name": {
+      "type": "string",
+      "description": "Human-readable part type name (e.g., 'Brake Pad Set', 'Oil Filter'). May reference PCdb terminology names where publicly known from documentation."
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Long description of the part (PIES 8.0 DescriptionCode='DES')."
+    },
+    "quantity_per_application": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Quantity required per vehicle application (PIES 8.0 Quantity element)."
+    },
+    "upc": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9]{12}$",
+      "description": "Universal Product Code (PIES 8.0 ItemLevelGTIN13/UPC element). Null if not assigned."
+    },
+    "hazardous_material_code": {
+      "type": ["string", "null"],
+      "description": "Hazardous material identifier (PIES 8.0 HazardousMaterialCode element). Null if non-hazardous."
+    },
+    "country_of_origin": {
+      "type": ["string", "null"],
+      "minLength": 2,
+      "maxLength": 2,
+      "description": "ISO 3166-1 alpha-2 country code for country of origin (PIES 8.0 CountryOfOrigin element)."
+    },
+    "package_unit_of_measure": {
+      "type": "string",
+      "description": "Unit of measure for packaging (PIES 8.0 PackageUOM element, e.g., 'EA', 'PR', 'KT')."
+    },
+    "package_quantity": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of items per package (PIES 8.0 QuantityOfEaches element)."
+    },
+    "package_weight": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Package weight in kilograms (PIES 8.0 Weight element). Null if not specified."
+    },
+    "package_height": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Package height in centimetres (PIES 8.0 Height element). Null if not specified."
+    },
+    "package_width": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Package width in centimetres (PIES 8.0 Width element). Null if not specified."
+    },
+    "package_length": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Package length in centimetres (PIES 8.0 Length element). Null if not specified."
+    },
+    "superseded_part_number": {
+      "type": ["string", "null"],
+      "description": "If this part supersedes another, the previous part number (PIES 8.0 SupersededPartNumber element). Null if no supersession on the catalog row; full supersession chain lives in parts_interchange."
+    },
+    "extended_attributes": {
+      "type": ["array", "null"],
+      "description": "PIES 8.0 ExtendedInformation / Attribute elements. Array of attribute objects.",
+      "items": {
+        "type": "object",
+        "required": ["attribute_id", "attribute_value"],
+        "properties": {
+          "attribute_id": {
+            "type": "string",
+            "pattern": "^DMS-PA-[0-9]+$",
+            "description": "Attribute identifier — opaque varchar. In this repo always a DMS-PA-* synthetic value; never a real Auto Care PAdb AttributeID (licensed). Shape enforced by this schema; value-space enforced by lint_no_licensed_autocare_ids.py.",
+            "examples": ["DMS-PA-001"]
+          },
+          "attribute_name": {
+            "type": ["string", "null"],
+            "description": "Human-readable attribute name (e.g., 'Material', 'Finish')."
+          },
+          "attribute_value": {
+            "type": "string",
+            "description": "Value for this attribute (PIES 8.0 Attribute value text)."
+          },
+          "uom": {
+            "type": ["string", "null"],
+            "description": "Unit of measure for the attribute value, if applicable."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "digital_assets": {
+      "type": ["array", "null"],
+      "description": "PIES 8.0 DigitalAssets / Asset elements (product images, diagrams, documents).",
+      "items": {
+        "type": "object",
+        "required": ["asset_type", "asset_filename"],
+        "properties": {
+          "asset_type": {
+            "type": "string",
+            "description": "PIES 8.0 AssetType code (e.g., 'P04' for Product Image, 'P05' for Exploded View)."
+          },
+          "asset_filename": {
+            "type": "string",
+            "description": "Filename of the digital asset."
+          },
+          "mime_type": {
+            "type": ["string", "null"],
+            "description": "MIME type (e.g., 'image/jpeg', 'application/pdf')."
+          },
+          "asset_description": {
+            "type": ["string", "null"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "access_channel": {
+      "type": "string",
+      "enum": ["franchise", "independent"],
+      "description": "REPAIR Act forward-readiness dimension (ADP spec Decision 3, 2026-08-27). v1 seeds and enables 'franchise' only. The 'independent' value is a schema placeholder for aftermarket data-access surfaces; no independent-aftermarket persona, API, or seed corpus exists in v1. Presence of this column avoids a schema rewrite when/if REPAIR Act (H.R. 1566 / S. 1379) advances."
+    },
+    "tenant_id": {
+      "type": ["string", "null"],
+      "description": "Catalog partition column per DMS T1.5 invariant. DMS seeds 'dms-reference'; CVX Zone 2 rows use 'cvx-zone2'. Queries MUST scope on tenant_id. Null only on rows seeded before the partition invariant was introduced (backfill pending)."
+    }
+  },
+  "additionalProperties": false
+}

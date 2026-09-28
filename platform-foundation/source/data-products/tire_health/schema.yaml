@@ -1,0 +1,102 @@
+name: tire_health
+kind: product
+domain: automotive
+display_name: "Tire Health (Daily Aggregate)"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: tire_health
+    storage_format: iceberg
+    provenance: single-vintage
+    # Grain: per-(vin, tire_position, event_date) daily aggregate.
+    # Directly joinable to vehicle_telemetry_aggregated on (vin, event_date).
+    # Joinable to service_records on (vin, service_date ≈ event_date, service_type='tire_service').
+    primary_key: [vin, tire_position, event_date]
+    partition_keys: [event_date]
+    bucketing:
+      vin: 16
+    columns:
+      - name: vin
+        type: string
+        nullable: false
+        pii: false
+        description: "Vehicle Identification Number (FK -> vins)"
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      - name: tire_position
+        type: string
+        nullable: false
+        description: "Tire position: FL (front-left), FR (front-right), RL (rear-left), RR (rear-right)"
+        enum_values: [FL, FR, RL, RR]
+      - name: event_date
+        type: date
+        nullable: false
+        description: "UTC calendar day. Partition key. Directly joinable to vehicle_telemetry_aggregated.event_date."
+      - name: tread_depth_mm
+        type: double
+        nullable: false
+        description: "Daily average tread depth in millimetres. New tyre ~8mm; legal minimum ~1.6mm; replace at <2mm."
+        range: [0.0, 12.0]
+        edge_case_eligible: true
+      - name: pressure_psi_avg
+        type: double
+        nullable: false
+        description: "Average tyre pressure over the day (PSI)"
+        range: [15.0, 55.0]
+        edge_case_eligible: true
+      - name: pressure_psi_min
+        type: double
+        nullable: true
+        description: "Minimum tyre pressure observed during the day (PSI)"
+        range: [0.0, 55.0]
+        edge_case_eligible: true
+      - name: pressure_psi_max
+        type: double
+        nullable: true
+        description: "Maximum tyre pressure observed during the day (PSI)"
+        range: [15.0, 80.0]
+        edge_case_eligible: true
+      - name: temp_c_avg
+        type: double
+        nullable: true
+        description: "Average tyre temperature over the day (Celsius)"
+        range: [-30.0, 120.0]
+        edge_case_eligible: true
+      - name: temp_c_max
+        type: double
+        nullable: true
+        description: "Peak tyre temperature during the day (Celsius)"
+        range: [-30.0, 150.0]
+        edge_case_eligible: true
+      - name: distance_km
+        type: double
+        nullable: false
+        description: "Distance driven on this tyre during the day (km). Cumulative odometer delta."
+        range: [0.0, 1500.0]
+        edge_case_eligible: true
+      - name: wear_rate_mm_per_1k_km
+        type: double
+        nullable: true
+        description: "Derived: tread depth loss per 1,000 km (monotonically increasing with noise). NULL when distance_km == 0."
+        range: [0.0, 2.0]
+        edge_case_eligible: true
+      - name: needs_replacement
+        type: boolean
+        nullable: false
+        description: "Supervised label: true when tread_depth_mm < 2.0 OR pressure anomaly indicates structural risk."
+      - name: wear_category
+        type: string
+        nullable: false
+        description: "Ordinal wear label: ok (tread >= 4mm), monitor (2mm <= tread < 4mm), replace (tread < 2mm)"
+        enum_values: [ok, monitor, replace]
+      - name: event_time
+        type: timestamp
+        nullable: false
+        description: "Source-truth event time (UTC microseconds) — midnight of event_date"
+      - name: ingest_time
+        type: timestamp
+        nullable: false
+        description: "When the loader wrote this row (UTC microseconds)"
+    foreign_keys:
+      - column: vin
+        references_table: vins
+        references_column: vin

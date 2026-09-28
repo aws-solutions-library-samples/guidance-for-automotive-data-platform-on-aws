@@ -1,0 +1,114 @@
+name: vehicle_identity
+kind: product
+domain: automotive
+display_name: "Vehicle Identity Graph"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: vehicle_identity
+    storage_format: iceberg
+    provenance: single-vintage
+    primary_key: [vin]
+    partition_keys: [model_year]
+    columns:
+      - name: vin
+        type: string
+        nullable: false
+        description: "Vehicle Identification Number (FK -> vins, 1:1)"
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      - name: model_year
+        type: int
+        nullable: false
+        description: "Vehicle model year (partition key)"
+        range: [2018.0, 2030.0]
+      - name: make
+        type: string
+        nullable: false
+        description: "Manufacturer (Meridian Motors)"
+      - name: model
+        type: string
+        nullable: false
+        description: "Model name"
+      - name: trim
+        type: string
+        nullable: true
+        description: "Trim level"
+      - name: body_style
+        type: string
+        nullable: false
+        description: "Body style"
+        enum_values: [sedan, suv, truck, hatchback, coupe]
+      - name: drive_type
+        type: string
+        nullable: false
+        description: "VSS .Transmission.DriveType"
+        enum_values: [awd, fwd, rwd]
+      - name: powertrain_type
+        type: string
+        nullable: false
+        description: "VSS Vehicle.Powertrain.Type"
+        enum_values: [electric, hybrid, erev]
+      - name: battery_chemistry
+        type: string
+        nullable: true
+        description: "Battery cell chemistry"
+        enum_values: [nca, ncm, lfp, lto]
+      - name: battery_pack_kwh
+        type: double
+        nullable: false
+        description: "VSS .GrossCapacity (kWh)"
+        range: [40.0, 250.0]
+      - name: battery_net_kwh
+        type: double
+        nullable: false
+        description: "VSS .NetCapacity (kWh)"
+        range: [40.0, 250.0]
+      - name: motor_count
+        type: int
+        nullable: false
+        description: "Number of traction motors"
+        range: [1.0, 4.0]
+      - name: max_charging_rate_kw
+        type: double
+        nullable: false
+        description: "VSS .MaximumChargingCurrent.DC equivalent (kW)"
+        range: [50.0, 400.0]
+      - name: connector_type
+        type: string
+        nullable: false
+        description: "VSS .ChargingType (charge port connector)"
+        enum_values: [J1772, CCS1, NACS, CHAdeMO]
+      - name: range_epa_mi
+        type: double
+        nullable: false
+        description: "EPA-rated range, US dev (miles)"
+        range: [100.0, 800.0]
+        edge_case_eligible: true
+      - name: assembly_plant
+        type: string
+        nullable: true
+        description: "Assembly plant code (3-char, Meridian plants: CGA=Casa Grande, RNO=Reno)"
+      - name: assembly_plant_location
+        type: string
+        nullable: true
+        description: "Assembly plant human-readable location string (D12.i, e.g. 'Casa Grande, AZ, USA')"
+      - name: manufacture_date
+        type: date
+        nullable: false
+        description: "Vehicle manufacture date"
+      - name: build_software_version
+        type: string
+        nullable: true
+        description: "Factory-installed software version (semver)"
+      - name: current_software_version
+        type: string
+        nullable: true
+        description: "Latest installed software version (semver, post-OTA)"
+      - name: vss_version
+        type: string
+        nullable: false
+        description: "VSS catalog version applicable to this vehicle"
+    foreign_keys:
+      - column: vin
+        references_table: vins
+        references_column: vin

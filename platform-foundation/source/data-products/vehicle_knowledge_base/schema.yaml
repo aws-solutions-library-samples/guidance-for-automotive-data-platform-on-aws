@@ -1,0 +1,74 @@
+name: vehicle_knowledge_base
+kind: product
+domain: knowledge
+display_name: "Vehicle Knowledge Base"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: vehicle_knowledge_base
+    storage_format: documents
+    provenance: managed
+    primary_key: [chunk_id]
+    columns:
+      - name: chunk_id
+        type: string
+        nullable: false
+        description: "Stable chunk identifier (UUIDv5 from source_doc_id + chunk_index)"
+      - name: source_doc_id
+        type: string
+        nullable: false
+        description: "Source document identifier (e.g., DTC guide ID, TSB number)"
+      - name: source_category
+        type: string
+        nullable: false
+        description: "Document category"
+        enum_values:
+          - dtc_guide
+          - tsb_recall
+          - owner_manual
+          - parts_catalog
+          - service_network
+          - service_policy
+          - charging_narrative
+          - ota_rollout_summary
+          - dealer_bulletin
+          - warranty_policy
+      - name: title
+        type: string
+        nullable: false
+        description: "Human-readable document title"
+      - name: chunk_index
+        type: int
+        nullable: false
+        description: "0-based index of this chunk within the source document"
+        range: [0.0, 100000.0]
+      - name: chunk_text
+        type: string
+        nullable: false
+        description: "Plain-text body of the chunk"
+      - name: chunk_size_tokens
+        type: int
+        nullable: false
+        description: "Token count for the chunk"
+        range: [1.0, 4096.0]
+      - name: chunk_overlap_tokens
+        type: int
+        nullable: false
+        description: "Token overlap with adjacent chunk"
+        range: [0.0, 512.0]
+      - name: embedding_model
+        type: string
+        nullable: false
+        description: "Bedrock embedding model identifier (e.g., 'amazon.titan-embed-text-v2:0')"
+      - name: s3_uri
+        type: string
+        nullable: false
+        description: "S3 URI of the source artifact (PDF / text)"
+      - name: language
+        type: string
+        nullable: false
+        description: "ISO 639-1 language code"
+      - name: indexed_at
+        type: timestamp
+        nullable: false
+        description: "When the Bedrock KB ingested this chunk"

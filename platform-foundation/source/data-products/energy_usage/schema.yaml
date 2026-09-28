@@ -1,0 +1,120 @@
+name: energy_usage
+kind: product
+domain: ev_operations
+display_name: "Energy Usage"
+version: 1.0.0
+deterministic_seed: 42
+tables:
+  - name: energy_usage
+    storage_format: iceberg
+    provenance: single-vintage
+    primary_key: [vin, usage_date]
+    partition_keys: [usage_date]
+    bucketing:
+      vin: 16
+    columns:
+      - name: vin
+        type: string
+        nullable: false
+        description: "FK -> vins"
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      - name: usage_date
+        type: date
+        nullable: false
+        description: "Local-day rollup. Partition key."
+      - name: start_soc_pct
+        type: double
+        nullable: false
+        description: "SOC at 00:00 local"
+        range: [0.0, 100.0]
+        edge_case_eligible: true
+      - name: end_soc_pct
+        type: double
+        nullable: false
+        description: "SOC at 23:59 local"
+        range: [0.0, 100.0]
+        edge_case_eligible: true
+      - name: min_soc_pct
+        type: double
+        nullable: false
+        description: "Minimum SOC over the day"
+        range: [0.0, 100.0]
+      - name: max_soc_pct
+        type: double
+        nullable: false
+        description: "Maximum SOC over the day"
+        range: [0.0, 100.0]
+      - name: avg_soc_pct
+        type: double
+        nullable: false
+        description: "Mean SOC over the day"
+        range: [0.0, 100.0]
+      - name: total_kwh_consumed
+        type: double
+        nullable: false
+        description: "Total drive consumption (kWh)"
+        range: [0.0, 200.0]
+        edge_case_eligible: true
+      - name: total_kwh_charged
+        type: double
+        nullable: false
+        description: "Sum of charging_sessions.kwh_delivered for this VIN/day (kWh)"
+        range: [0.0, 250.0]
+      - name: regen_kwh_recovered
+        type: double
+        nullable: false
+        description: "Energy recovered via regenerative braking (kWh)"
+        range: [0.0, 50.0]
+      - name: total_miles_driven
+        type: double
+        nullable: false
+        description: "Total miles driven this day, US dev"
+        range: [0.0, 1000.0]
+        edge_case_eligible: true
+      - name: efficiency_kwh_per_100mi
+        type: double
+        nullable: false
+        description: "Derived: total_kwh_consumed / total_miles_driven * 100"
+        range: [10.0, 100.0]
+      - name: range_estimate_start_mi
+        type: double
+        nullable: true
+        description: "Vehicle-reported range estimate at start of day, US dev (miles)"
+        range: [0.0, 800.0]
+      - name: range_estimate_end_mi
+        type: double
+        nullable: true
+        description: "Vehicle-reported range estimate at end of day, US dev (miles)"
+        range: [0.0, 800.0]
+      - name: battery_pack_temp_avg_c
+        type: double
+        nullable: true
+        description: "Daily average battery pack temperature (Celsius)"
+        range: [-40.0, 80.0]
+      - name: ambient_temp_avg_c
+        type: double
+        nullable: true
+        description: "Daily average ambient temperature (Celsius)"
+        range: [-50.0, 60.0]
+      - name: state_of_health_pct
+        type: double
+        nullable: true
+        description: "Battery state of health (percent); declines slowly"
+        range: [50.0, 100.0]
+      - name: battery_age_days
+        type: int
+        nullable: false
+        description: "Days since vehicle_identity.manufacture_date"
+        range: [0.0, 7300.0]
+      - name: event_time
+        type: timestamp
+        nullable: false
+        description: "End-of-day timestamp (UTC)"
+      - name: ingest_time
+        type: timestamp
+        nullable: false
+        description: "When the loader wrote this row"
+    foreign_keys:
+      - column: vin
+        references_table: vins
+        references_column: vin

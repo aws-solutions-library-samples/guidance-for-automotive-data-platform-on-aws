@@ -1,0 +1,81 @@
+# Deployment outputs
+deployment/stack-outputs.env
+deployment/*.json
+/tmp/
+
+# AWS
+.aws/
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# CDK
+cdk.out/
+cdk.out.standalone/
+cdk.out.standalone.*/
+.cdk.staging/
+cdk.context.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+ash-output/
+
+# Deployment outputs
+*.env
+stack-outputs.env
+datazone-outputs.env
+
+# Large data files
+platform-foundation/source/input_data/*.csv
+
+# Platform-foundation runtime output (generator outputs, manifests, etc.).
+# Default --output-root for generators like
+# source/data-products/vehicle_knowledge_base/generator.py is
+# `curated/vehicle_knowledge_base/`; outputs are regenerated on demand
+# and should never be committed (they bake in the deployer's account /
+# region into S3 URIs).
+platform-foundation/curated/
+
+# Seed dimension parquet (~142MB: 5M-row vins/customers + 5 more dims).
+# Regenerated deterministically via `make seed-dimensions` (seed=42).
+# Same class as curated/ above — generated data, never committed (repo
+# bloat + manifests bake in account/region).
+platform-foundation/dimensions/
+
+# Data-profiling reports (profile.json / profile.md per product).
+# Regenerated via `scripts/profile-data.py`; contain account IDs and
+# row-level stats — generated artifacts, not source.
+platform-foundation/quality-reports/
+
+# Lambda layer binaries
+datasource/cx-analytics/lambda-layer/
+datasource/cx-analytics/psycopg2-layer.zip
+
+# DSR artifacts (internal)
+dsr-artifacts/
+
+# ASH scan output
+ash-output/
