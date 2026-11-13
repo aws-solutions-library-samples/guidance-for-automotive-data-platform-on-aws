@@ -37,8 +37,8 @@ markdown-it-py==3.0.0
 # Python compatibility at 3.12. Glue 4.0 ships its own PySpark 3.3 +
 # Python 3.10 in the default classpath, so this pin governs ONLY
 # local sample-scale execution and offline pytest import-checks.
-# py4j is the exact pin pyspark==3.5.6's metadata Requires-Dist
+# py4j is the exact pin pyspark==3.5.8's metadata Requires-Dist
 # declares (`Requires-Dist: py4j==0.10.9.7`); pinned explicitly per
 # `~/.kiro/steering/dependency-versions.md`.
-pyspark==3.5.6
+pyspark==3.5.8
 py4j==0.10.9.7
